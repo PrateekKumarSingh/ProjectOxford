@@ -1,4 +1,4 @@
-Function Get-AgeAndGender
+Function Get-AgeGenderFromImage
 {
 [CmdletBinding()]
 Param(
@@ -101,4 +101,4 @@ Function Draw-Image($Result)
     [GC]::Collect()
 }
 
-Get-AgeAndGender -ImagePath C:\Users\prateesi\Desktop\profile.jpg
+Get-AgeGenderFromImage -ImagePath C:\Users\prateesi\Desktop\profile.jpg
