@@ -1,4 +1,4 @@
-Function Get-Emotion
+Function Get-EmotionFromImage
 {
 [CmdletBinding()]
 Param(
@@ -116,4 +116,4 @@ Function Draw-Image($Result)
     [GC]::Collect()
 }
 
-Get-Emotion -ImagePath C:\Users\prateesi\Desktop\profile.jpg
+Get-EmotionFromImage -ImagePath C:\Users\prateesi\Desktop\profile.jpg
