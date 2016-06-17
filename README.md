@@ -5,7 +5,7 @@ Offer wide variety of features including -<br />
 <b>Optical Character Reading (OCR)<br />
 Spell Check<br />
 Image Analysis<br />
-Detect Age, Gender and EMotion in Image<br />
+Detect Age, Gender and Emotion in Image<br />
 Entity linking<br />
 Text Analytics<br /></b>
 
