@@ -1,4 +1,4 @@
-﻿Function Test-AdultContent
+Function Test-AdultContent
 {
 [CmdletBinding()]
 Param(
@@ -40,13 +40,13 @@ Param(
     }
 }
 
-@(
-	"http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg", `
-        "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg", `
-        "http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg", `
-        "http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg", `
-        "http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg", `
-        "http://img01.thedrum.com/s3fs-public/styles/news_article_lightbox/public/news/tmp/103031/nrm_1418898205-cosmopolitan_february_cover.jpg?itok=2b0rU0Db"
-) #| Test-AdultContent |ft * -AutoSize
+#@(
+#	"http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg", `
+#        "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg", `
+#        "http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg", `
+#        "http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg", `
+#        "http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg", `
+#        "http://img01.thedrum.com/s3fs-public/styles/news_article_lightbox/public/news/tmp/103031/nrm_1418898205-cosmopolitan_february_cover.jpg?itok=2b0rU0Db"
+#) | Test-AdultContent |ft * -AutoSize
 
-#(iwr -Uri 'http:\\geekeefy.wordpress.com' -UseBasicParsing).images.src | Test-AdultContent -ErrorAction SilentlyContinue
+(iwr -Uri 'http:\\geekeefy.wordpress.com' -UseBasicParsing).images.src | Test-AdultContent -ErrorAction SilentlyContinue
