@@ -1,4 +1,4 @@
-﻿Function Get-Celebrity
+﻿Function Get-CelebrityInImage
 {
 [CmdletBinding()]
 Param(
@@ -52,4 +52,4 @@ $URLs = "http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-65290
         "http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg", `
         "http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg"
 
-$URLs | Get-Celebrity |ft * -AutoSize
+$URLs | Get-CelebrityInImage |ft * -AutoSize
