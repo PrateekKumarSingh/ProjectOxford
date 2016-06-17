@@ -116,4 +116,4 @@ Function Draw-Image($Result)
     [GC]::Collect()
 }
 
-Get-EmotionFromImage -ImagePath C:\Users\prateesi\Desktop\profile.jpg
+Get-EmotionFromImage -ImagePath C:\Users\prateek\Desktop\profile.jpg
