@@ -1,3 +1,19 @@
+<#.Synopsis
+Cmdlet is capable of inserting spaces in words that lack spaces.
+.DESCRIPTION
+Insert spaces into a string of words lacking spaces, like a hashtag or part of a URL. Punctuation or exotic characters can prevent a string from being broken.
+So it’s best to limit input strings to lower-case, alpha-numeric characters.
+NOTE : You need to subscribe the "Web language Model API (WebLM)" before using this powershell script from the following link and setup an environment variable like, $env:MS_WebLM_API_key = "YOUR API KEY"
+    
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+.EXAMPLE
+PS Root\> "ilovepowershell", "Helloworld" | Split-IntoWords
+
+Original        Formatted        
+--------        ---------        
+ilovepowershell i love powershell
+Helloworld      hello world
+#>
 Function Split-IntoWords
 {
 [CmdletBinding()]
@@ -29,7 +45,7 @@ Process{
         }
             $Headers = @{
             
-            'Ocp-Apim-Subscription-Key' = "2c40da8ae13a4bd1b3b7b8ee77f5fb34"
+            'Ocp-Apim-Subscription-Key' = $Env:MS_WebLM_API_KEy
         }
             Try{
                 $Data = Invoke-RestMethod @SplatInput -Headers $Headers
@@ -44,6 +60,3 @@ Process{
         }
     }
 }
-
-
-"ilovepowershell", "Hello world" | Split-IntoWords
