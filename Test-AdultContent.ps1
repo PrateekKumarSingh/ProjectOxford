@@ -1,3 +1,33 @@
+<#.Synopsis
+Get Adult and Racy score of an Web hosted Images.
+.DESCRIPTION
+Function identifies any adult or racy content on a web hosted Image and flags them with a Boolean value [$true/$false]
+NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
+    
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+
+.EXAMPLE
+PS Root\> "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg" | Test-AdultContent
+
+isAdultContent isRacyContent URL                                                                 
+-------------- ------------- ---                                                                 
+         False         False http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg
+
+pass the Image URL to the function through a pipeline to get the results.
+.EXAMPLE
+PS Root\> (Invoke-WebRequest -Uri 'http:\\geekeefy.wordpress.com' -UseBasicParsing).images.src | Test-AdultContent -ErrorAction SilentlyContinue |ft -AutoSize
+
+isAdultContent isRacyContent URL                                                                                                  
+-------------- ------------- ---                                                                                                  
+         False         False https://geekeefy.files.wordpress.com/2016/06/tip2.gif?w=596&amp;h=300&amp;crop=1                     
+         False         False https://geekeefy.files.wordpress.com/2016/06/wil.png?w=900&amp;h=152&amp;crop=1                      
+         False         False https://geekeefy.files.wordpress.com/2016/06/windowserror1.gif?w=900&amp;h=300&amp;crop=1            
+         False         False https://geekeefy.files.wordpress.com/2016/06/gist3.png?w=711&amp;h=133&amp;crop=1                    
+         False         False https://geekeefy.files.wordpress.com/2016/05/ezgif-com-video-to-gif-11.gif?w=900&amp;h=300&amp;crop=1
+
+You can also pass a series of Image URL's to the Cmdlet, like in the above example I passed it Image URL's of all images from my Blog homepage.
+Please note that, API has a limitation of 20 requests per min, so you may see errors after the limitation is breached
+#>
 Function Test-AdultContent
 {
 [CmdletBinding()]
@@ -23,7 +53,7 @@ Param(
                                             -Method 'Post' `
                                             -ContentType 'application/json' `
                                             -Body $(@{"URL"= $URL} | ConvertTo-Json) `
-                                            -Headers @{'Ocp-Apim-Subscription-Key' = "7ee8dc424cc8406ca2503f063a955a38"} `
+                                            -Headers @{'Ocp-Apim-Subscription-Key' = $env:MS_ComputerVision_API_key} `
                                             -ErrorVariable E
 
                 $result.adult | select IsAdultContent, isRacyContent, @{n='URL';e={$Item}}
@@ -39,14 +69,3 @@ Param(
     {
     }
 }
-
-#@(
-#	"http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg", `
-#        "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg", `
-#        "http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg", `
-#        "http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg", `
-#        "http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg", `
-#        "http://img01.thedrum.com/s3fs-public/styles/news_article_lightbox/public/news/tmp/103031/nrm_1418898205-cosmopolitan_february_cover.jpg?itok=2b0rU0Db"
-#) | Test-AdultContent |ft * -AutoSize
-
-(iwr -Uri 'http:\\geekeefy.wordpress.com' -UseBasicParsing).images.src | Test-AdultContent -ErrorAction SilentlyContinue
