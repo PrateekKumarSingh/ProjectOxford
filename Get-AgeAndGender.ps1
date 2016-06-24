@@ -1,21 +1,53 @@
-Function Get-AgeGenderFromImage
+<#.Synopsis
+Returns information about Age and Gender of indentified faces in a local Image.
+.DESCRIPTION
+Function returns Age and Gender of indentified faces in an Image, in addition if used with "-draw" switch it will draw the identified face rectangles on the local Image, depicting age and gender.And show you results in a GUI.
+NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
+    
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+
+.EXAMPLE
+PS Root\> Get-AgeAndGender -Path .\pic.jpg
+
+age gender faceRectangle                              
+--- ------ -------------                              
+ 28 Male   @{left=352; top=128; width=342; height=342}
+ 35 Male   @{left=136; top=364; width=51; height=51}
+
+Passing an local image path to the cmdlet will return you the Age and gender of identified faces in the Image.
+
+.EXAMPLE
+PS Root\> Get-AgeAndGender -Path C:\Users\prateesi\Desktop\pic.jpg -Draw
+
+If you use '-Draw' switch with the cmdlet it will draw the face rectangle on the local Image, depicting age and gender.And show you results in a GUI.
+#>
+Function Get-AgeAndGender
 {
 [CmdletBinding()]
 Param(
         [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
-        [string] $ImagePath
+        [string] $Path,
+        [Switch] $Draw
       )
 
     $Splat = @{
         
-        Uri= "https://api.projectoxford.ai/vision/v1/analyses?visualFeatures=All&subscription-key=0436bc9abdbe4f6a90d64b68ef4e96cf"
+        Uri= "https://api.projectoxford.ai/vision/v1/analyses?visualFeatures=All&subscription-key=$env:MS_ComputerVision_API_key"
         Method = 'Post'
-        InFile = $ImagePath
+        InFile = $Path
         ContentType = 'application/octet-stream'
     }
-    Try{
+    Try
+    {    
+        If($Draw)
+        {
+            Draw-Image ((Invoke-RestMethod @Splat).Faces)
+        }
+        Else
+        {
+            (Invoke-RestMethod @Splat).Faces
+        }
 
-        Draw-Image ((Invoke-RestMethod @Splat).Faces)
     }
     Catch
     {
@@ -28,7 +60,7 @@ Function Draw-Image($Result)
     #Calling the Assemblies
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 
-    $Image = [System.Drawing.Image]::fromfile($ImagePath)
+    $Image = [System.Drawing.Image]::fromfile($Path)
     $Graphics = [System.Drawing.Graphics]::FromImage($Image)
 
     Foreach($R in $Result)
@@ -100,5 +132,3 @@ Function Draw-Image($Result)
     $Form.Dispose()
     [GC]::Collect()
 }
-
-Get-AgeGenderFromImage -ImagePath C:\Users\prateesi\Desktop\profile.jpg
