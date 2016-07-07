@@ -30,6 +30,11 @@ Begin
         Return $str
     }
 
+    If(!$Env:MS_WebLM_API_KEy)
+    {
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_WebLM_API_key = `"YOUR API KEY`" `n`n"
+    }
+
 }
 
 Process{
@@ -103,6 +108,12 @@ Param(
 
     Begin
     {
+
+    If(!$env:MS_ComputerVision_API_key)
+    {
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+    }
+
     }
     
     Process
@@ -164,33 +175,9 @@ Param(
         [string] $Path,
         [Switch] $Draw
       )
-
-    $Splat = @{
-        
-        Uri= "https://api.projectoxford.ai/vision/v1/analyses?visualFeatures=All&subscription-key=$env:MS_ComputerVision_API_key"
-        Method = 'Post'
-        InFile = $Path
-        ContentType = 'application/octet-stream'
-    }
-    Try
-    {    
-        If($Draw)
-        {
-            Draw-AgeAndGenderOnImage ((Invoke-RestMethod @Splat).Faces)
-        }
-        Else
-        {
-            (Invoke-RestMethod @Splat).Faces
-        }
-
-    }
-    Catch
+ 
+    Function DrawAgeAndGenderOnImage($Result)
     {
-    Write-Host "Something went wrong, please try running the script again" -fore Cyan
-    }
-}
-Function Draw-AgeAndGenderOnImage($Result)
-{
     #Calling the Assemblies
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 
@@ -267,6 +254,36 @@ Function Draw-AgeAndGenderOnImage($Result)
     [GC]::Collect()
 }
 
+    If(!$env:MS_ComputerVision_API_key)
+    {
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+    }
+    
+    $Splat = @{
+        
+        Uri= "https://api.projectoxford.ai/vision/v1/analyses?visualFeatures=All&subscription-key=$env:MS_ComputerVision_API_key"
+        Method = 'Post'
+        InFile = $Path
+        ContentType = 'application/octet-stream'
+    }
+    Try
+    {    
+        If($Draw)
+        {
+            DrawAgeAndGenderOnImage ((Invoke-RestMethod @Splat).Faces)
+        }
+        Else
+        {
+            (Invoke-RestMethod @Splat).Faces
+        }
+
+    }
+    Catch
+    {
+    Write-Host "Something went wrong, please try running the script again" -fore Cyan
+    }
+}
+
 <#
 .SYNOPSIS
     Cmdlet is capable to identify the Names and total numbers of Celebrities in a web hosted Image.
@@ -320,6 +337,12 @@ Param(
 
     Begin
     {
+
+        If(!$env:MS_ComputerVision_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+        }
+
     }
     
     Process
@@ -352,33 +375,58 @@ Param(
     }
 }
 
-Function Get-EmotionFromImage
+<#
+.SYNOPSIS
+    Cmdlet is capable to detect the Emotion on the Faces identified in a Image on local machine. 
+.DESCRIPTION
+    This cmdlet is Using Microsoft cognitive service's "Computer Vision" API as a service to get the information needed by issuing an HTTP request to the API
+    NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
+    
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
+
+.PARAMETER Url
+    Image URL where you want to identify the Celebrities.
+.EXAMPLE
+    PS Root\> Get-Celebrity -URL "http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg"
+
+    Celebrities                                        Count URL                                                            
+    -----------                                        ----- ---                                                            
+    {David Schwimmer, Matthew Perry, Jennifer Aniston}     3 http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg   
+    
+    In above example, Function identifies all celebrities in the web hosted image and their head count. Then returns the Information like, Celebrity name, Count and URL searched.
+
+.EXAMPLE
+    PS Root\> $URLs = "http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg", 
+        "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg","http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg",
+        "Http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg",
+        "http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg"
+
+    $URLs | Get-Celebrity |ft * -AutoSize
+
+    Celebrities                                                    Count URL                                                                                         
+    -----------                                                    ----- ---                                                                                         
+    {Bradley Cooper, Ellen DeGeneres, Jennifer Lawrence}               3 http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg
+    Satya Nadella                                                      1 http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg                        
+    {David Schwimmer, Matthew Perry, Jennifer Aniston}                 3 http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg                             
+    David Schwimmer                                                    1 http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg  
+    {David Schwimmer, Lisa Kudrow, Matthew Perry, Matt LeBlanc...}     5 http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg
+
+    You can also, pass multiple URL's to the cmdlet as it accepts the Pipeline input and will return the results.
+.NOTES
+    Author: Prateek Singh - @SinghPrateik
+       
+#>
+Function Get-Emotion
 {
 [CmdletBinding()]
 Param(
         [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
-        [string] $ImagePath
+        [string] $ImagePath,
+        [Switch] $Draw
       )
-
-    $Splat = @{
-        
-        Uri= "https://api.projectoxford.ai/emotion/v1.0/recognize?language=en&detect=true&subscription-key=60a44ded0c024b77b61c6d7e9efe2afa"
-        Method = 'Post'
-        InFile = $ImagePath
-        ContentType = 'application/octet-stream'
-    }
-
-    Try{
-
-        Draw-EmotionOnImage (Invoke-RestMethod @Splat)
-    }
-    Catch
+    
+    Function DrawEmotionOnImage($Result)
     {
-    Write-Host "Something went wrong, please try running the script again" -fore Cyan
-    }
-}
-Function Draw-EmotionOnImage($Result)
-{
     #Calling the Assemblies
     [void][System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms")
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
@@ -468,6 +516,37 @@ Function Draw-EmotionOnImage($Result)
     $Form.Dispose()
     [GC]::Collect()
 }
+    
+    If(!$env:MS_Emotion_API_key)
+    {
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+    }
+
+    $Splat = @{
+        
+        Uri= "https://api.projectoxford.ai/emotion/v1.0/recognize?language=en&detect=true&subscription-key=$env:MS_Emotion_API_key"
+        Method = 'Post'
+        InFile = $ImagePath
+        ContentType = 'application/octet-stream'
+    }
+
+    Try{
+
+        If($Draw)
+        {
+            DrawEmotionOnImage (Invoke-RestMethod @Splat)
+        }
+        Else
+        {
+            Invoke-RestMethod @Splat | Select @{n='Face';e={$_.FaceRectangle}}, @{n='EmotionScores';e={$_.scores}}
+        }
+    }
+    Catch
+    {
+    Write-Host "Something went wrong, please try running the script again" -fore Cyan
+    }
+}
+
 
 <#
 .SYNOPSIS
@@ -1231,5 +1310,3 @@ Param(
     {
     }
 }
-
-Export-ModuleMember -Function Get-AgeAndGender,Get-Celebrity,Get-EmotionFromImage,Get-EntityLink,Get-ImageAnalysis,Get-ImageText,Get-KeyPhrase,Get-News,Get-Sentiment,Invoke-SpellCheck,Search-Bing,Split-IntoWords,Test-AdultContent
