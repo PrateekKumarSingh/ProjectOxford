@@ -379,39 +379,42 @@ Param(
 .SYNOPSIS
     Cmdlet is capable to detect the Emotion on the Faces identified in a Image on local machine. 
 .DESCRIPTION
-    This cmdlet is Using Microsoft cognitive service's "Computer Vision" API as a service to get the information needed by issuing an HTTP request to the API
-    NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
+    This cmdlet is Using Microsoft cognitive service's "Emotion" API as a service to get the information needed by issuing an HTTP request to the API
+    NOTE : You need to subscribe the "Emotion API" before using the powershell script from the following link and setup an environment variable like, $env:$env:MS_Emotion_API_key = "YOUR API KEY"
     
     API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 
-.PARAMETER Url
-    Image URL where you want to identify the Celebrities.
+.PARAMETER ImagePath
+    Image path on the local machine on which you want to identify emotion
+.PARAMETER Draw
+    Choose this switch to draw rectangle around facees denoting emotion on the image.
 .EXAMPLE
-    PS Root\> Get-Celebrity -URL "http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg"
+    PS Root\> Get-Emotion -ImagePath C:\2.jpg
 
-    Celebrities                                        Count URL                                                            
-    -----------                                        ----- ---                                                            
-    {David Schwimmer, Matthew Perry, Jennifer Aniston}     3 http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg   
+    Face      : @{height=369; left=503; top=256; width=369}
+    Anger     : 0.00
+    Contempt  : 0.01
+    Disgust   : 0.00
+    Fear      : 0.00
+    Happiness : 0.81
+    Sadness   : 0.00
+    Surprise  : 0.00
     
-    In above example, Function identifies all celebrities in the web hosted image and their head count. Then returns the Information like, Celebrity name, Count and URL searched.
+    Face      : @{height=295; left=94; top=189; width=295}
+    Anger     : 0.00
+    Contempt  : 0.00
+    Disgust   : 0.00
+    Fear      : 0.00
+    Happiness : 1.00
+    Sadness   : 0.00
+    Surprise  : 0.00  
+    
+    In above example, Function identifies all Face Rectangle in the Image and returns the Emotion scores (0 to 1) on each and every face.
 
 .EXAMPLE
-    PS Root\> $URLs = "http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg", 
-        "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg","http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg",
-        "Http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg",
-        "http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg"
+    PS Root\> Get-Emotion -ImagePath C:\2.jpg -Draw
 
-    $URLs | Get-Celebrity |ft * -AutoSize
-
-    Celebrities                                                    Count URL                                                                                         
-    -----------                                                    ----- ---                                                                                         
-    {Bradley Cooper, Ellen DeGeneres, Jennifer Lawrence}               3 http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg
-    Satya Nadella                                                      1 http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg                        
-    {David Schwimmer, Matthew Perry, Jennifer Aniston}                 3 http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg                             
-    David Schwimmer                                                    1 http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg  
-    {David Schwimmer, Lisa Kudrow, Matthew Perry, Matt LeBlanc...}     5 http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg
-
-    You can also, pass multiple URL's to the cmdlet as it accepts the Pipeline input and will return the results.
+    You can use '-Draw' switch and to draw a Rectangle around each face in the image denoting the emotion name, like Happiness, Anger, contempt.
 .NOTES
     Author: Prateek Singh - @SinghPrateik
        
@@ -519,7 +522,7 @@ Param(
     
     If(!$env:MS_Emotion_API_key)
     {
-        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_Emotion_API_key= `"YOUR API KEY`" `n`n"
     }
 
     $Splat = @{
@@ -538,15 +541,20 @@ Param(
         }
         Else
         {
-            Invoke-RestMethod @Splat | Select @{n='Face';e={$_.FaceRectangle}}, `
-                                              @{n='Anger';e={"{0:N2}" -f [Decimal]$_.scores.anger}},`
-                                              @{n='Contempt';e={"{0:N2}" -f [Decimal]$_.scores.contempt}},`
-                                              @{n='Disgust';e={"{0:N2}" -f [Decimal]$_.scores.disgust}},`
-                                              @{n='Fear';e={"{0:N2}" -f [Decimal]$_.scores.fear}},`
-                                              @{n='Happiness';e={"{0:N2}" -f [Decimal]$_.scores.happiness}},`
-                                              @{n='Sadness';e={"{0:N2}" -f [Decimal]$_.scores.sadness}},`
-                                              @{n='Surprise';e={"{0:N2}" -f [Decimal]$_.scores.Surprise}}
-
+            $result = Invoke-RestMethod @Splat 
+            
+            Foreach($item in $result)
+            { 
+            
+                ''| Select @{n='Face';e={$item.FaceRectangle}}, `
+                           @{n='Anger';e={"{0:N2}" -f [Decimal]$item.scores.anger}},`
+                           @{n='Contempt';e={"{0:N2}" -f [Decimal]$item.scores.contempt}},`
+                           @{n='Disgust';e={"{0:N2}" -f [Decimal]$item.scores.disgust}},`
+                           @{n='Fear';e={"{0:N2}" -f [Decimal]$item.scores.fear}},`
+                           @{n='Happiness';e={"{0:N2}" -f [Decimal]$item.scores.happiness}},`
+                           @{n='Sadness';e={"{0:N2}" -f [Decimal]$item.scores.sadness}},`
+                           @{n='Surprise';e={"{0:N2}" -f [Decimal]$item.scores.Surprise}}
+            }
         }
     }
     Catch
@@ -611,6 +619,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_EntityLink_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_EntityLink_API_key= `"YOUR API KEY`" `n`n"
+        }
     }
     
     Process
@@ -649,7 +661,8 @@ Param(
     }
 }
 
-<#.Synopsis
+<#
+.Synopsis
 Returns information about visual content found in web hosted images.
 .DESCRIPTION
 Function returns variety of information about visual content found in an image, like Color schemes, Face rectangles, Tags, caption (Small description of Image), head couts, Age & gender of people in Image, celebrity identification and much much more.
@@ -699,6 +712,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_ComputerVision_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+        }     
     }
     
     Process
@@ -796,6 +813,14 @@ Param(
 		[String] $URL
 )
 
+Begin
+{
+        If(!$env:MS_ComputerVision_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+        } 
+}
+
 Process{
             $SplatInput = @{
             Uri= "https://api.projectoxford.ai/vision/v1/ocr"
@@ -878,6 +903,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_TextAnalytics_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_TextAnalytics_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -985,6 +1014,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_BingSearch_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_BingSearch_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -1073,6 +1106,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_TextAnalytics_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_TextAnalytics_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -1158,8 +1195,13 @@ Param(
 
 Begin
 {
-    # Function to Remove special character s and punctuations from Input string
-    Function Remove-SpecialChars($Str) { Foreach($Char in [Char[]]"!@#$%^&*(){}|\/?><,.][+=-_"){$str=$str.replace("$Char",'')}; Return $str}
+        # Function to Remove special character s and punctuations from Input string
+        Function Remove-SpecialChars($Str) { Foreach($Char in [Char[]]"!@#$%^&*(){}|\/?><,.][+=-_"){$str=$str.replace("$Char",'')}; Return $str}
+
+        If(!$env:MS_SpellCheck_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_SpellCheck_API_key= `"YOUR API KEY`" `n`n"
+        }    
 }
 
 Process{
@@ -1286,6 +1328,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_BingSearch_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_BingSearch_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -1302,6 +1348,7 @@ Param(
                                             -Headers @{'Ocp-Apim-Subscription-Key' = $env:MS_BingSearch_API_key } `
                                             -ErrorVariable E `
 
+                
                 Write-Verbose "Total of $($Result.webPages.totalEstimatedMatches) keyword matches."
 
                 $Result.webPages.value | select @{n="Query";e={$q}},@{n='Result';e={$_.name}}, @{n='URL';e={$_.displayURL}}, @{n='Snippet';e={$_.snippet}}, @{n='DateLastCrawled';e={($_.dateLastCrawled).split('T')[0]}}
