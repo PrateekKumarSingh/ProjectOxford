@@ -538,7 +538,15 @@ Param(
         }
         Else
         {
-            Invoke-RestMethod @Splat | Select @{n='Face';e={$_.FaceRectangle}}, @{n='EmotionScores';e={$_.scores}}
+            Invoke-RestMethod @Splat | Select @{n='Face';e={$_.FaceRectangle}}, `
+                                              @{n='Anger';e={"{0:N2}" -f [Decimal]$_.scores.anger}},`
+                                              @{n='Contempt';e={"{0:N2}" -f [Decimal]$_.scores.contempt}},`
+                                              @{n='Disgust';e={"{0:N2}" -f [Decimal]$_.scores.disgust}},`
+                                              @{n='Fear';e={"{0:N2}" -f [Decimal]$_.scores.fear}},`
+                                              @{n='Happiness';e={"{0:N2}" -f [Decimal]$_.scores.happiness}},`
+                                              @{n='Sadness';e={"{0:N2}" -f [Decimal]$_.scores.sadness}},`
+                                              @{n='Surprise';e={"{0:N2}" -f [Decimal]$_.scores.Surprise}}
+
         }
     }
     Catch
