@@ -1,150 +1,4 @@
 <#.Synopsis
-Cmdlet is capable of inserting spaces in words that lack spaces.
-.DESCRIPTION
-Insert spaces into a string of words lacking spaces, like a hashtag or part of a URL. Punctuation or exotic characters can prevent a string from being broken.
-So it's best to limit input strings to lower-case, alpha-numeric characters.
-NOTE : You need to subscribe the "Web language Model API (WebLM)" before using this powershell script from the following link and setup an environment variable like, $env:MS_WebLM_API_key = "YOUR API KEY"
-    
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
-.EXAMPLE
-PS Root\> "ilovepowershell", "Helloworld" | Split-IntoWords
-
-Original        Formatted        
---------        ---------        
-ilovepowershell i love powershell
-Helloworld      hello world
-#>
-Function Split-IntoWords
-{
-[CmdletBinding()]
-Param(
-        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)]
-        [string] $String
-)
-
-Begin
-{
-    Function Clean-String($Str)
-    {
-        Foreach($Char in [Char[]]"!@#$%^&*(){}|\/?><,.][+=-_"){$str=$str.replace("$Char",'')}
-        Return $str
-    }
-
-    If(!$Env:MS_WebLM_API_KEy)
-    {
-        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_WebLM_API_key = `"YOUR API KEY`" `n`n"
-    }
-
-}
-
-Process{
-
-
-
-        Foreach($S in (Clean-String $String))
-        {
-            $SplatInput = @{
-            
-            Uri= "https://api.projectoxford.ai/text/weblm/v1.0/breakIntoWords?model=anchor&text=$S&maxNumOfCandidatesReturned=5"
-            Method = 'Post'
-        }
-            $Headers = @{
-            
-            'Ocp-Apim-Subscription-Key' = $Env:MS_WebLM_API_KEy
-        }
-            Try{
-                $Data = Invoke-RestMethod @SplatInput -Headers $Headers
-                Return  new-object psobject -Property @{               
-                Original=$String; 
-                Formatted =($data.candidates |select words, Probability|sort -Descending)[0].words
-                }|select Original, Formatted
-            }
-            Catch{
-                Write-Host "Something went wrong, please try running the script again" -fore Cyan
-            }
-        }
-    }
-}
-
-<#.Synopsis
-Get Adult and Racy score of an Web hosted Images.
-.DESCRIPTION
-Function identifies any adult or racy content on a web hosted Image and flags them with a Boolean value [$true/$false]
-NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
-    
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
-
-.EXAMPLE
-PS Root\> "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg" | Test-AdultContent
-
-isAdultContent isRacyContent URL                                                                 
--------------- ------------- ---                                                                 
-         False         False http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg
-
-pass the Image URL to the function through a pipeline to get the results.
-.EXAMPLE
-PS Root\> (Invoke-WebRequest -Uri 'http:\\geekeefy.wordpress.com' -UseBasicParsing).images.src | Test-AdultContent -ErrorAction SilentlyContinue |ft -AutoSize
-
-isAdultContent isRacyContent URL                                                                                                  
--------------- ------------- ---                                                                                                  
-         False         False https://geekeefy.files.wordpress.com/2016/06/tip2.gif?w=596&amp;h=300&amp;crop=1                     
-         False         False https://geekeefy.files.wordpress.com/2016/06/wil.png?w=900&amp;h=152&amp;crop=1                      
-         False         False https://geekeefy.files.wordpress.com/2016/06/windowserror1.gif?w=900&amp;h=300&amp;crop=1            
-         False         False https://geekeefy.files.wordpress.com/2016/06/gist3.png?w=711&amp;h=133&amp;crop=1                    
-         False         False https://geekeefy.files.wordpress.com/2016/05/ezgif-com-video-to-gif-11.gif?w=900&amp;h=300&amp;crop=1
-
-You can also pass a series of Image URL's to the Cmdlet, like in the above example I passed it Image URL's of all images from my Blog homepage.
-Please note that, API has a limitation of 20 requests per min, so you may see errors after the limitation is breached
-#>
-Function Test-AdultContent
-{
-[CmdletBinding()]
-Param(
-        #[Parameter(ValueFromPipeline=$True)]
-		#[String] $Path,
-		[Parameter(ValueFromPipeline=$True)]
-		[String] $URL
-)
-
-    Begin
-    {
-
-    If(!$env:MS_ComputerVision_API_key)
-    {
-        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
-    }
-
-    }
-    
-    Process
-    {
-        Foreach($Item in $URL)
-        {
-    
-            Try
-            {
-                $result = Invoke-RestMethod -Uri "https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=Adult" `
-                                            -Method 'Post' `
-                                            -ContentType 'application/json' `
-                                            -Body $(@{"URL"= $URL} | ConvertTo-Json) `
-                                            -Headers @{'Ocp-Apim-Subscription-Key' = $env:MS_ComputerVision_API_key} `
-                                            -ErrorVariable E
-
-                $result.adult | select IsAdultContent, isRacyContent, @{n='URL';e={$Item}}
-            }
-            Catch
-            {
-                Writ ($E.errorrecord.ErrorDetails.Message -split '"')[-2]
-            }
-        }
-    }
-
-    End
-    {
-    }
-}
-
-<#.Synopsis
 Returns information about Age and Gender of indentified faces in a local Image.
 .DESCRIPTION
 Function returns Age and Gender of indentified faces in an Image, in addition if used with "-draw" switch it will draw the identified face rectangles on the local Image, depicting age and gender.And show you results in a GUI.
@@ -153,135 +7,171 @@ NOTE : You need to subscribe the "Computer Vision API" before using the powershe
     API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 
 .EXAMPLE
-PS Root\> Get-AgeAndGender -Path .\pic.jpg
+PS Root\> Get-AgeAndGender -Path .\group.jpg
 
-age gender faceRectangle                              
---- ------ -------------                              
- 28 Male   @{left=352; top=128; width=342; height=342}
- 35 Male   @{left=136; top=364; width=51; height=51}
+Age Gender FaceRectangle                             Image    
+--- ------ -------------                             -----    
+ 41 Female @{left=40; top=70; width=49; height=49}   group.jpg
+ 24 Female @{left=231; top=123; width=47; height=47} group.jpg
+ 35 Female @{left=161; top=98; width=47; height=47}  group.jpg
+ 30 Female @{left=307; top=88; width=45; height=45}  group.jpg
+ 38 Male   @{left=127; top=43; width=42; height=42}  group.jpg
+ 37 Male   @{left=238; top=42; width=37; height=37}  group.jpg
 
 Passing an local image path to the cmdlet will return you the Age and gender of identified faces in the Image.
 
 .EXAMPLE
-PS Root\> Get-AgeAndGender -Path C:\Users\prateesi\Desktop\pic.jpg -Draw
+PS Root\> Get-AgeAndGender -Path .\pic.jpg -Draw
 
 If you use '-Draw' switch with the cmdlet it will draw the face rectangle on the local Image, depicting age and gender.And show you results in a GUI.
+
+.EXAMPLE
+PS Root\> "C:\Users\prateesi\Documents\Data\Powershell\Scripts\group.jpg","C:\Users\prateesi\Documents\Data\Powershell\Scripts\profile.jpg" | Get-AgeAndGender
+
+Age Gender FaceRectangle                               Image      
+--- ------ -------------                               -----      
+ 41 Female @{left=40; top=70; width=49; height=49}     group.jpg  
+ 24 Female @{left=231; top=123; width=47; height=47}   group.jpg  
+ 35 Female @{left=161; top=98; width=47; height=47}    group.jpg  
+ 30 Female @{left=307; top=88; width=45; height=45}    group.jpg  
+ 38 Male   @{left=127; top=43; width=42; height=42}    group.jpg  
+ 37 Male   @{left=238; top=42; width=37; height=37}    group.jpg  
+ 31 Male   @{left=418; top=142; width=222; height=222} profile.jpg
+
+ You can also pass multiple local images through pipeline to get the Age and gender information.
 #>
 Function Get-AgeAndGender
 {
 [CmdletBinding()]
 Param(
-        [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
+        [Parameter(Mandatory=$true,ValueFromPipeline=$true, position=1)]
         [string] $Path,
         [Switch] $Draw
       )
- 
-    Function DrawAgeAndGenderOnImage($Result)
-    {
-    #Calling the Assemblies
-    [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
-
-    $Image = [System.Drawing.Image]::fromfile($Path)
-    $Graphics = [System.Drawing.Graphics]::FromImage($Image)
-
-    Foreach($R in $Result)
-    {
-    #Individual Emotion score and rectangle dimensions of all Faces identified
-    $Age = $R.Age
-    $Gender = $R.Gender
-    $FaceRect = $R.faceRectangle
-
-    $LabelText = "$Age, $Gender"
     
-    #Create a Rectangle object to box each Face
-    $FaceRectangle = New-Object System.Drawing.Rectangle ($FaceRect.left,$FaceRect.top,$FaceRect.width,$FaceRect.height)
-
-    #Create a Rectangle object to Sit above the Face Rectangle and express the emotion
-    $AgeGenderRectangle = New-Object System.Drawing.Rectangle ($FaceRect.left,($FaceRect.top-22),$FaceRect.width,22)
-    $Pen = New-Object System.Drawing.Pen ([System.Drawing.Brushes]::crimson,5)
-
-    #Creating the Rectangles
-    $Graphics.DrawRectangle($Pen,$FaceRectangle)    
-    $Graphics.DrawRectangle($Pen,$AgeGenderRectangle)
-    $Region = New-Object System.Drawing.Region($AgeGenderRectangle)
-    $Graphics.FillRegion([System.Drawing.Brushes]::Crimson,$Region)
-
-    #Defining the Fonts for Emotion Name
-    $FontSize = 14
-    $Font = New-Object System.Drawing.Font("lucida sans",$FontSize,[System.Drawing.FontStyle]::bold) 
-    
-      $TextWidth = ($Graphics.MeasureString($LabelText,$Font)).width
-    $TextHeight = ($Graphics.MeasureString($LabelText,$Font)).Height
-
-        #A While Loop to reduce the size of font until it fits in the Emotion Rectangle
-        While(($Graphics.MeasureString($LabelText,$Font)).width -gt $AgeGenderRectangle.width -or ($Graphics.MeasureString($LabelText,$Font)).Height -gt $AgeGenderRectangle.height )
+    Begin
+    {
+        Function DrawAgeAndGenderOnImage($Result)
         {
-        $FontSize = $FontSize-1
-        $Font = New-Object System.Drawing.Font("lucida sans",$FontSize,[System.Drawing.FontStyle]::bold)  
+            #Calling the Assemblies
+            [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
+            [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+
+            $Image = [System.Drawing.Image]::fromfile($Item)
+            $Graphics = [System.Drawing.Graphics]::FromImage($Image)
+
+            Foreach($R in $Result)
+            {
+                #Individual Emotion score and rectangle dimensions of all Faces identified
+                $Age = $R.Age
+                $Gender = $R.Gender
+                $FaceRect = $R.faceRectangle
+
+                $LabelText = "$Age, $Gender"
+                
+                #Create a Rectangle object to box each Face
+                $FaceRectangle = New-Object System.Drawing.Rectangle ($FaceRect.left,$FaceRect.top,$FaceRect.width,$FaceRect.height)
+
+                #Create a Rectangle object to Sit above the Face Rectangle and express the emotion
+                $AgeGenderRectangle = New-Object System.Drawing.Rectangle ($FaceRect.left,($FaceRect.top-22),$FaceRect.width,22)
+                $Pen = New-Object System.Drawing.Pen ([System.Drawing.Brushes]::crimson,5)
+
+                #Creating the Rectangles
+                $Graphics.DrawRectangle($Pen,$FaceRectangle)    
+                $Graphics.DrawRectangle($Pen,$AgeGenderRectangle)
+                $Region = New-Object System.Drawing.Region($AgeGenderRectangle)
+                $Graphics.FillRegion([System.Drawing.Brushes]::Crimson,$Region)
+
+                #Defining the Fonts for Emotion Name
+                $FontSize = 14
+                $Font = New-Object System.Drawing.Font("lucida sans",$FontSize,[System.Drawing.FontStyle]::bold) 
+                
+                  $TextWidth = ($Graphics.MeasureString($LabelText,$Font)).width
+                $TextHeight = ($Graphics.MeasureString($LabelText,$Font)).Height
+
+                    #A While Loop to reduce the size of font until it fits in the Emotion Rectangle
+                    While(($Graphics.MeasureString($LabelText,$Font)).width -gt $AgeGenderRectangle.width -or ($Graphics.MeasureString($LabelText,$Font)).Height -gt $AgeGenderRectangle.height )
+                    {
+                    $FontSize = $FontSize-1
+                    $Font = New-Object System.Drawing.Font("lucida sans",$FontSize,[System.Drawing.FontStyle]::bold)  
+                    }
+
+                #Inserting the Emotion Name in the EmotionRectabgle
+                $Graphics.DrawString($LabelText,$Font,[System.Drawing.Brushes]::White,$AgeGenderRectangle.x,$AgeGenderRectangle.y)
+            }
+
+            #Define a Windows Form to insert the Image
+            $Form = New-Object system.Windows.Forms.Form
+            $Form.BackColor = 'white'
+            $Form.AutoSize = $true
+            $Form.StartPosition = "CenterScreen"
+            $Form.Text = "Get-AgeAndGender | Microsoft Project Oxford"
+            $Form.Activate()
+
+            #Create a PictureBox to place the Image
+            $PictureBox = New-Object System.Windows.Forms.PictureBox
+            $PictureBox.Image = $Image
+            $PictureBox.Height =  700
+            $PictureBox.Width = 600
+            $PictureBox.Sizemode = 'autosize'
+            $PictureBox.BackgroundImageLayout = 'stretch'
+            
+            #Adding PictureBox to the Form
+            $Form.Controls.Add($PictureBox)
+
+            [void]$Form.ShowDialog()
+
+            #Disposing Objects and Garbage Collection
+            $Image.Dispose()
+            $Pen.Dispose()
+            $PictureBox.Dispose()
+            $Graphics.Dispose()
+            $Form.Dispose()
+            [GC]::Collect()
         }
 
-    #Inserting the Emotion Name in the EmotionRectabgle
-    $Graphics.DrawString($LabelText,$Font,[System.Drawing.Brushes]::White,$AgeGenderRectangle.x,$AgeGenderRectangle.y)
-}
-
-    #Define a Windows Form to insert the Image
-    $Form = New-Object system.Windows.Forms.Form
-    $Form.BackColor = 'white'
-    $Form.AutoSize = $true
-    $Form.StartPosition = "CenterScreen"
-    $Form.Text = "Get-AgeAndGender | Microsoft Project Oxford"
-
-    #Create a PictureBox to place the Image
-    $PictureBox = New-Object System.Windows.Forms.PictureBox
-    $PictureBox.Image = $Image
-    $PictureBox.Height =  700
-    $PictureBox.Width = 600
-    $PictureBox.Sizemode = 'autosize'
-    $PictureBox.BackgroundImageLayout = 'stretch'
-    
-    #Adding PictureBox to the Form
-    $Form.Controls.Add($PictureBox)
-    
-    #Making Form Visible
-    [void]$Form.ShowDialog()
-
-    #Disposing Objects and Garbage Collection
-    $Image.Dispose()
-    $Pen.Dispose()
-    $PictureBox.Dispose()
-    $Graphics.Dispose()
-    $Form.Dispose()
-    [GC]::Collect()
-}
-
-    If(!$env:MS_ComputerVision_API_key)
-    {
-        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
-    }
-    
-    $Splat = @{
-        
-        Uri= "https://api.projectoxford.ai/vision/v1/analyses?visualFeatures=All&subscription-key=$env:MS_ComputerVision_API_key"
-        Method = 'Post'
-        InFile = $Path
-        ContentType = 'application/octet-stream'
-    }
-    Try
-    {    
-        If($Draw)
+        If(!$env:MS_ComputerVision_API_key)
         {
-            DrawAgeAndGenderOnImage ((Invoke-RestMethod @Splat).Faces)
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
         }
-        Else
-        {
-            (Invoke-RestMethod @Splat).Faces
-        }
-
     }
-    Catch
+    Process
     {
-    Write-Host "Something went wrong, please try running the script again" -fore Cyan
+        Foreach($item in $path)
+        {
+
+            $Item = (Get-Item $Item).versioninfo.filename
+    
+            $Splat = @{
+                
+                Uri= "https://api.projectoxford.ai/vision/v1/analyses?visualFeatures=All&subscription-key=$env:MS_ComputerVision_API_key"
+                Method = 'Post'
+                InFile = $Item
+                ContentType = 'application/octet-stream'
+            }
+            Try
+            {    
+                If($Draw)
+                {
+                    DrawAgeAndGenderOnImage ((Invoke-RestMethod @Splat).Faces)
+                }
+                Else
+                {
+                    (Invoke-RestMethod @Splat).Faces | Select @{n='Age';e={$_.Age}},`
+                                                              @{n='Gender';e={$_.Gender}},`
+                                                              @{n='FaceRectangle';e={$_.FaceRectangle}},`
+                                                              @{n='Image';e={Split-path $item -Leaf}}
+                }
+
+            }
+            Catch
+            {
+            Write-Host "Something went wrong, please try running the script again" -fore Cyan
+            }
+        }
     }
+    end
+    {}
 }
 
 <#
@@ -377,7 +267,7 @@ Param(
 
 <#
 .SYNOPSIS
-    Cmdlet is capable to detect the Emotion on the Faces identified in a Image on local machine. 
+    Cmdlet is capable to detect the Emotion on the Faces identified in an Image on local machine. 
 .DESCRIPTION
     This cmdlet is Using Microsoft cognitive service's "Emotion" API as a service to get the information needed by issuing an HTTP request to the API
     NOTE : You need to subscribe the "Emotion API" before using the powershell script from the following link and setup an environment variable like, $env:$env:MS_Emotion_API_key = "YOUR API KEY"
@@ -424,17 +314,18 @@ Function Get-Emotion
 [CmdletBinding()]
 Param(
         [Parameter(Mandatory=$true,ValueFromPipeline=$true)]
-        [string] $ImagePath,
+        [string] $Path,
         [Switch] $Draw
       )
-    
-    Function DrawEmotionOnImage($Result)
+    Begin
     {
+        Function DrawEmotionOnImage($Result)
+        {
     #Calling the Assemblies
     [void][System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms")
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 
-    $Image = [System.Drawing.Image]::fromfile($ImagePath)
+    $Image = [System.Drawing.Image]::fromfile($Item)
     $Graphics = [System.Drawing.Graphics]::FromImage($Image)
 
     Foreach($R in $Result)
@@ -519,50 +410,58 @@ Param(
     $Form.Dispose()
     [GC]::Collect()
 }
-    
-    If(!$env:MS_Emotion_API_key)
-    {
-        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_Emotion_API_key= `"YOUR API KEY`" `n`n"
-    }
-
-    $Splat = @{
         
-        Uri= "https://api.projectoxford.ai/emotion/v1.0/recognize?language=en&detect=true&subscription-key=$env:MS_Emotion_API_key"
-        Method = 'Post'
-        InFile = $ImagePath
-        ContentType = 'application/octet-stream'
-    }
-
-    Try{
-
-        If($Draw)
+        If(!$env:MS_Emotion_API_key)
         {
-            DrawEmotionOnImage (Invoke-RestMethod @Splat)
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_Emotion_API_key= `"YOUR API KEY`" `n`n"
         }
-        Else
+    }
+    Process
+    {
+        Foreach($item in $path)
         {
-            $result = Invoke-RestMethod @Splat 
-            
-            Foreach($item in $result)
-            { 
-            
-                ''| Select @{n='Face';e={$item.FaceRectangle}}, `
-                           @{n='Anger';e={"{0:N2}" -f [Decimal]$item.scores.anger}},`
-                           @{n='Contempt';e={"{0:N2}" -f [Decimal]$item.scores.contempt}},`
-                           @{n='Disgust';e={"{0:N2}" -f [Decimal]$item.scores.disgust}},`
-                           @{n='Fear';e={"{0:N2}" -f [Decimal]$item.scores.fear}},`
-                           @{n='Happiness';e={"{0:N2}" -f [Decimal]$item.scores.happiness}},`
-                           @{n='Sadness';e={"{0:N2}" -f [Decimal]$item.scores.sadness}},`
-                           @{n='Surprise';e={"{0:N2}" -f [Decimal]$item.scores.Surprise}}
+
+            $Item = (Get-Item $Item).versioninfo.filename
+
+            $Splat = @{ 
+                        Uri= "https://api.projectoxford.ai/emotion/v1.0/recognize?language=en&detect=true&subscription-key=$env:MS_Emotion_API_key"
+                        Method = 'Post'
+                        InFile = $Item
+                        ContentType = 'application/octet-stream'
+            }
+
+            Try{
+
+                If($Draw)
+                {
+                    DrawEmotionOnImage (Invoke-RestMethod @Splat)
+                }
+                Else
+                {
+                    $result = Invoke-RestMethod @Splat 
+                    
+                    Foreach($r in $result)
+                    { 
+                    
+                        ''| Select @{n='Face';e={$r.FaceRectangle}}, `
+                                   @{n='Anger';e={"{0:N2}" -f [Decimal]$r.scores.anger}},`
+                                   @{n='Contempt';e={"{0:N2}" -f [Decimal]$r.scores.contempt}},`
+                                   @{n='Disgust';e={"{0:N2}" -f [Decimal]$r.scores.disgust}},`
+                                   @{n='Fear';e={"{0:N2}" -f [Decimal]$r.scores.fear}},`
+                                   @{n='Happiness';e={"{0:N2}" -f [Decimal]$r.scores.happiness}},`
+                                   @{n='Sadness';e={"{0:N2}" -f [Decimal]$r.scores.sadness}},`
+                                   @{n='Surprise';e={"{0:N2}" -f [Decimal]$r.scores.Surprise}},`
+                                   @{n='Image';e={Split-Path $item -Leaf}}
+                    }
+                }
+            }
+            Catch
+            {
+            Write-Host "Something went wrong, please try running the script again" -fore Cyan
             }
         }
     }
-    Catch
-    {
-    Write-Host "Something went wrong, please try running the script again" -fore Cyan
-    }
 }
-
 
 <#
 .SYNOPSIS
@@ -1357,6 +1256,152 @@ Param(
             Catch
             {
                 "Something went wrong While extracting Text from Image, please try running the script again`nError Message : "+$E.Message
+            }
+        }
+    }
+
+    End
+    {
+    }
+}
+
+<#.Synopsis
+Cmdlet is capable of inserting spaces in words that lack spaces.
+.DESCRIPTION
+Insert spaces into a string of words lacking spaces, like a hashtag or part of a URL. Punctuation or exotic characters can prevent a string from being broken.
+So it's best to limit input strings to lower-case, alpha-numeric characters.
+NOTE : You need to subscribe the "Web language Model API (WebLM)" before using this powershell script from the following link and setup an environment variable like, $env:MS_WebLM_API_key = "YOUR API KEY"
+    
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
+.EXAMPLE
+PS Root\> "ilovepowershell", "Helloworld" | Split-IntoWords
+
+Original        Formatted        
+--------        ---------        
+ilovepowershell i love powershell
+Helloworld      hello world
+#>
+Function Split-IntoWords
+{
+[CmdletBinding()]
+Param(
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)]
+        [string] $String
+)
+
+Begin
+{
+    Function Clean-String($Str)
+    {
+        Foreach($Char in [Char[]]"!@#$%^&*(){}|\/?><,.][+=-_"){$str=$str.replace("$Char",'')}
+        Return $str
+    }
+
+    If(!$Env:MS_WebLM_API_KEy)
+    {
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_WebLM_API_key = `"YOUR API KEY`" `n`n"
+    }
+
+}
+
+Process{
+
+
+
+        Foreach($S in (Clean-String $String))
+        {
+            $SplatInput = @{
+            
+            Uri= "https://api.projectoxford.ai/text/weblm/v1.0/breakIntoWords?model=anchor&text=$S&maxNumOfCandidatesReturned=5"
+            Method = 'Post'
+        }
+            $Headers = @{
+            
+            'Ocp-Apim-Subscription-Key' = $Env:MS_WebLM_API_KEy
+        }
+            Try{
+                $Data = Invoke-RestMethod @SplatInput -Headers $Headers
+                Return  new-object psobject -Property @{               
+                Original=$String; 
+                Formatted =($data.candidates |select words, Probability|sort -Descending)[0].words
+                }|select Original, Formatted
+            }
+            Catch{
+                Write-Host "Something went wrong, please try running the script again" -fore Cyan
+            }
+        }
+    }
+}
+
+<#.Synopsis
+Get Adult and Racy score of an Web hosted Images.
+.DESCRIPTION
+Function identifies any adult or racy content on a web hosted Image and flags them with a Boolean value [$true/$false]
+NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
+    
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
+
+.EXAMPLE
+PS Root\> "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg" | Test-AdultContent
+
+isAdultContent isRacyContent URL                                                                 
+-------------- ------------- ---                                                                 
+         False         False http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg
+
+pass the Image URL to the function through a pipeline to get the results.
+.EXAMPLE
+PS Root\> (Invoke-WebRequest -Uri 'http:\\geekeefy.wordpress.com' -UseBasicParsing).images.src | Test-AdultContent -ErrorAction SilentlyContinue |ft -AutoSize
+
+isAdultContent isRacyContent URL                                                                                                  
+-------------- ------------- ---                                                                                                  
+         False         False https://geekeefy.files.wordpress.com/2016/06/tip2.gif?w=596&amp;h=300&amp;crop=1                     
+         False         False https://geekeefy.files.wordpress.com/2016/06/wil.png?w=900&amp;h=152&amp;crop=1                      
+         False         False https://geekeefy.files.wordpress.com/2016/06/windowserror1.gif?w=900&amp;h=300&amp;crop=1            
+         False         False https://geekeefy.files.wordpress.com/2016/06/gist3.png?w=711&amp;h=133&amp;crop=1                    
+         False         False https://geekeefy.files.wordpress.com/2016/05/ezgif-com-video-to-gif-11.gif?w=900&amp;h=300&amp;crop=1
+
+You can also pass a series of Image URL's to the Cmdlet, like in the above example I passed it Image URL's of all images from my Blog homepage.
+Please note that, API has a limitation of 20 requests per min, so you may see errors after the limitation is breached
+#>
+Function Test-AdultContent
+{
+[CmdletBinding()]
+Param(
+        #[Parameter(ValueFromPipeline=$True)]
+		#[String] $Path,
+		[Parameter(ValueFromPipeline=$True)]
+		[String] $URL
+)
+
+    Begin
+    {
+
+    If(!$env:MS_ComputerVision_API_key)
+    {
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+    }
+
+    }
+    
+    Process
+    {
+        Foreach($Item in $URL)
+        {
+    
+            Try
+            {
+                $result = Invoke-RestMethod -Uri "https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=Adult" `
+                                            -Method 'Post' `
+                                            -ContentType 'application/json' `
+                                            -Body $(@{"URL"= $URL} | ConvertTo-Json) `
+                                            -Headers @{'Ocp-Apim-Subscription-Key' = $env:MS_ComputerVision_API_key} `
+                                            -ErrorVariable E
+
+                $result.adult | select IsAdultContent, isRacyContent, @{n='URL';e={$Item}}
+            }
+            Catch
+            {
+                Writ ($E.errorrecord.ErrorDetails.Message -split '"')[-2]
             }
         }
     }
