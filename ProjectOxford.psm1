@@ -1,5 +1,5 @@
 <#.Synopsis
-Returns information about Age and Gender of indentified faces in a local Image.
+Returns information about Age and Gender of identified faces in a local Image.
 .DESCRIPTION
 Function returns Age and Gender of indentified faces in an Image, in addition if used with "-draw" switch it will draw the identified face rectangles on the local Image, depicting age and gender.And show you results in a GUI.
 NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
@@ -148,6 +148,7 @@ Param(
                 Method = 'Post'
                 InFile = $Item
                 ContentType = 'application/octet-stream'
+                Errorvariable = E
             }
             Try
             {    
@@ -166,7 +167,8 @@ Param(
             }
             Catch
             {
-            Write-Host "Something went wrong, please try running the script again" -fore Cyan
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -255,7 +257,8 @@ Param(
             }
             Catch
             {
-                "Something went wrong While extracting Text from Image, please try running the script again`nError Message : "+$E.Message
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -428,6 +431,7 @@ Param(
                         Method = 'Post'
                         InFile = $Item
                         ContentType = 'application/octet-stream'
+                        ErrorVariable = E
             }
 
             Try{
@@ -457,7 +461,8 @@ Param(
             }
             Catch
             {
-            Write-Host "Something went wrong, please try running the script again" -fore Cyan
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -549,8 +554,10 @@ Param(
             }
             Catch
             {
-                $error = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                $error.parameter+": "+$error.Message
+                #$Err = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
+                #$Err.parameter+": "+$Err.Message
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -645,7 +652,8 @@ Param(
             }
             Catch
             {
-                ($E.errorrecord.ErrorDetails.Message -split '"')[-2]
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -726,6 +734,7 @@ Process{
             Method = 'Post'
 			#InFile = $Path
 			ContentType = 'application/json'
+            ErrorVariable = E
 			}
 
             $Headers =  @{
@@ -748,8 +757,10 @@ Process{
                 }
 
             }
-            Catch{
-                "Something went wrong While extracting Text from Image, please try running the script again`nError Message : "+$E.Message
+            Catch
+            {
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
     }
 }
@@ -830,8 +841,8 @@ Param(
             }
             Catch
             {
-                $error = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                $error.parameter+": "+$error.Message
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -949,8 +960,8 @@ Param(
             }
             Catch
             {
-                $error = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                $error.parameter+": "+$error.Message
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -975,7 +986,7 @@ Param(
 .EXAMPLE
     PS Root\> Get-Sentiment -String "Hello Prateek, how are you?"
     
-    String                      Positive % Negetive % OverallSentiment
+    String                      Positive % Negative % OverallSentiment
     ------                      ---------- ---------- ----------------
     Hello Prateek, how are you? 93.37      6.63       Positive        
     
@@ -983,11 +994,11 @@ Param(
 .EXAMPLE
     PS Root\> "howdy","what the hell","damn" | Get-Sentiment
     
-    String        Positive % Negetive % OverallSentiment
+    String        Positive % Negative % OverallSentiment
     ------        ---------- ---------- ----------------
     howdy         99.12      0.88       Positive        
-    what the hell 23.91      76.09      Negitive        
-    damn          0.80       99.20      Negitive
+    what the hell 23.91      76.09      Negative        
+    damn          0.80       99.20      Negative
     
     You can also pass multiple strings as an argument through pipeline to the cmdlet to get the sentiment analysis
 .NOTES
@@ -1029,13 +1040,13 @@ Param(
                 
                 $sentiment = "{0:n2}" -f ($Results.documents.score  *100)
 
-                '' | select @{n="String";e={$s}},@{n='Positive %';e={$sentiment}}, @{n='Negetive %';e={"{0:n2}" -f (100 - $sentiment)}},@{n='OverallSentiment';e={if($sentiment -gt 50){"Positive"}elseif($sentiment -eq 50){"Neutral"}else{"Negitive"}}}
+                '' | select @{n="String";e={$s}},@{n='Positive %';e={$sentiment}}, @{n='Negative %';e={"{0:n2}" -f (100 - $sentiment)}},@{n='OverallSentiment';e={if($sentiment -gt 50){"Positive"}elseif($sentiment -eq 50){"Neutral"}else{"Negative"}}}
 
             }
             Catch
             {
-                $error = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                $error.parameter+": "+$error.Message
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -1116,7 +1127,7 @@ Process{
             $Headers =  @{'Ocp-Apim-Subscription-Key' = $env:MS_SpellCheck_API_key}
 			$body =     @{'text'= $s}
             Try{
-                $SpellingErrors = (Invoke-RestMethod @SplatInput -Headers $Headers -Body $body ).flaggedTokens
+                $SpellingErrors = (Invoke-RestMethod @SplatInput -Headers $Headers -Body $body -ErrorVariable E).flaggedTokens
 				$OutString = $String # Make a copy of string to replace the errorswith suggestions.
 
 				If($SpellingErrors)  # If Errors are Found
@@ -1153,8 +1164,10 @@ Process{
 				}
 				
             }
-            Catch{
-                "Something went wrong, please try running the script again"
+            Catch
+            {
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -1255,7 +1268,8 @@ Param(
             }
             Catch
             {
-                "Something went wrong While extracting Text from Image, please try running the script again`nError Message : "+$E.Message
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -1319,15 +1333,18 @@ Process{
             
             'Ocp-Apim-Subscription-Key' = $Env:MS_WebLM_API_KEy
         }
-            Try{
-                $Data = Invoke-RestMethod @SplatInput -Headers $Headers
+            Try
+            {
+                $Data = Invoke-RestMethod @SplatInput -Headers $Headers -ErrorVariable E
                 Return  new-object psobject -Property @{               
                 Original=$String; 
                 Formatted =($data.candidates |select words, Probability|sort -Descending)[0].words
                 }|select Original, Formatted
             }
-            Catch{
-                Write-Host "Something went wrong, please try running the script again" -fore Cyan
+            Catch
+            {
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
             }
         }
     }
@@ -1401,7 +1418,8 @@ Param(
             }
             Catch
             {
-                Writ ($E.errorrecord.ErrorDetails.Message -split '"')[-2]
+                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
+                $Host.UI.WriteWarningLine("StatusCode $($Err.Statuscode), $($Err.Message)")
             }
         }
     }
