@@ -167,8 +167,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -257,8 +267,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -461,8 +481,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -554,10 +584,18 @@ Param(
             }
             Catch
             {
-                #$Err = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                #$Err.parameter+": "+$Err.Message
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -652,8 +690,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -759,8 +807,18 @@ Process{
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
     }
 }
@@ -841,8 +899,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -960,8 +1028,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -1045,8 +1123,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -1059,11 +1147,11 @@ Param(
 <#.Synopsis
 Identify and Rectify spelling mistakes in an input String
 .DESCRIPTION
-Identify spelling meistakes and repeated token in a string and suggests possible combination of correct spellings, able to identify Nouns in the string and converts first alphabet in Uppercase.
+Identify spelling mistakes and repeated token in a string and suggests possible combination of correct spellings, able to identify Nouns in the string and converts first alphabet in Uppercase.
 Cmdlet is Using Microsoft cognitive service's "Spell Check" API as a service to get the information needed by making HTTP calls to the API
 NOTE : You need to subscribe the "Spell Check API" before using the powershell script from the following link and setup an environment variable like, $env:MS_SpellCheck_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
+API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
 .EXAMPLE
 Hello world
 .EXAMPLE
@@ -1105,13 +1193,8 @@ Param(
 
 Begin
 {
-        # Function to Remove special character s and punctuations from Input string
-        Function Remove-SpecialChars($Str) { Foreach($Char in [Char[]]"!@#$%^&*(){}|\/?><,.][+=-_"){$str=$str.replace("$Char",'')}; Return $str}
-
-        If(!$env:MS_SpellCheck_API_key)
-        {
-            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_SpellCheck_API_key= `"YOUR API KEY`" `n`n"
-        }    
+    # Function to Remove special character s and punctuations from Input string
+    Function Remove-SpecialChars($Str) { Foreach($Char in [Char[]]"!@#$%^&*(){}|\/?><,.][+=-_"){$str=$str.replace("$Char",'')}; Return $str}
 }
 
 Process{
@@ -1120,7 +1203,7 @@ Process{
         Foreach($S in $String)
         {
             $SplatInput = @{
-            Uri= "https://bingapis.azure-api.net/api/v5/spellcheck?Proof"
+            Uri= "https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?Proof"
             Method = 'Post'
 			}
 
@@ -1165,9 +1248,19 @@ Process{
 				
             }
             Catch
-            {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+            {              
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -1175,6 +1268,7 @@ Process{
 End
 {
 }
+
 }
 
 <#
@@ -1268,8 +1362,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -1343,8 +1447,18 @@ Process{
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                Write-Error -Message $Err.Message -ErrorId $Err.statuscode
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -1418,8 +1532,18 @@ Param(
             }
             Catch
             {
-                $Err = $E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json
-                $Host.UI.WriteWarningLine("StatusCode $($Err.Statuscode), $($Err.Message)")
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
