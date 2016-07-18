@@ -57,7 +57,7 @@ Process{
         Foreach($S in $String)
         {
             $SplatInput = @{
-            Uri= "https://bingapis.azure-api.net/api/v5/spellcheck?Proof"
+            Uri= "https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?Proof"
             Method = 'Post'
 			}
 
