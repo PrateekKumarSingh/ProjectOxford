@@ -1,7 +1,7 @@
 <#.Synopsis
 Identify and Rectify spelling mistakes in an input String
 .DESCRIPTION
-Identify spelling meistakes and repeated token in a string and suggests possible combination of correct spellings, able to identify Nouns in the string and converts first alphabet in Uppercase.
+Identify spelling mistakes and repeated token in a string and suggests possible combination of correct spellings, able to identify Nouns in the string and converts first alphabet in Uppercase.
 Cmdlet is Using Microsoft cognitive service's "Spell Check" API as a service to get the information needed by making HTTP calls to the API
 NOTE : You need to subscribe the "Spell Check API" before using the powershell script from the following link and setup an environment variable like, $env:MS_SpellCheck_API_key = "YOUR API KEY"
     
