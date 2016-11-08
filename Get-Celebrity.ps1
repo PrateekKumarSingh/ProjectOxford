@@ -1,84 +1,107 @@
-<#
-.SYNOPSIS
-    Cmdlet is capable to identify the Names and total numbers of Celebrities in a web hosted Image.
-.DESCRIPTION
-    This cmdlet is Using Microsoft cognitive service's "Computer Vision" API as a service to get the information needed by issuing an HTTP request to the API
-    NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
-    
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
-
-.PARAMETER Url
-    Image URL where you want to identify the Celebrities.
-.EXAMPLE
-    PS Root\> Get-Celebrity -URL "http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg"
-
-    Celebrities                                        Count URL                                                            
-    -----------                                        ----- ---                                                            
-    {David Schwimmer, Matthew Perry, Jennifer Aniston}     3 http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg   
-    
-    In above example, Function identifies all celebrities in the web hosted image and their head count. Then returns the Information like, Celebrity name, Count and URL searched.
-
-.EXAMPLE
-    PS Root\> $URLs = "http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg", 
-        "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg","http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg",
-        "Http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg",
-        "http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg"
-
-    $URLs | Get-Celebrity |ft * -AutoSize
-
-    Celebrities                                                    Count URL                                                                                         
-    -----------                                                    ----- ---                                                                                         
-    {Bradley Cooper, Ellen DeGeneres, Jennifer Lawrence}               3 http://az616578.vo.msecnd.net/files/2015/12/19/635861460485772096-652901092_selfieoscars.jpg
-    Satya Nadella                                                      1 http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg                        
-    {David Schwimmer, Matthew Perry, Jennifer Aniston}                 3 http://img2.tvtome.com/i/u/aa0f2214136945d8c57879a5166c4271.jpg                             
-    David Schwimmer                                                    1 http://www.newstatesman.com/sites/default/files/images/2014%2B36_Friends_Cast_Poker(1).jpg  
-    {David Schwimmer, Lisa Kudrow, Matthew Perry, Matt LeBlanc...}     5 http://i.huffpost.com/gen/2018240/images/o-FRIENDS-SHOW-JENNIFER-ANISTON-facebook.jpg
-
-    You can also, pass multiple URL's to the cmdlet as it accepts the Pipeline input and will return the results.
-.NOTES
-    Author: Prateek Singh - @SinghPrateik
-       
-#>
-Function Get-Celebrity
+Function Get-FrequencyDistribution ($Content)
 {
-[CmdletBinding()]
-Param(
-        #[Parameter(ValueFromPipeline=$True)]
-		#[String] $Path,
-		[Parameter(ValueFromPipeline=$True)]
-		[String] $URL
-)
+    $Content.split(" ") |?{-not [String]::IsNullOrEmpty($_)} | %{[Regex]::Replace($_,'[^a-zA-Z0-9]','')} |group |sort count -Descending
+}
 
-    Begin
-    {
-    }
+Function Get-Intersection($Sentence1, $Sentence2)
+{
+    $CommonWords = Compare-Object -ReferenceObject $Sentence1 -DifferenceObject $Sentence2 -IncludeEqual |?{$_.sideindicator -eq '=='} | select Inputobject -ExpandProperty Inputobject
+
+    $CommonWords.Count / ($Sentence1.Count + $Sentence2.Count) /2
+}
+
+Function Get-SentenceRank($Content)
+{
+    $Sentences = $content -split [environment]::NewLine | ?{$_}
+    $NoOfSentences = $Sentences.count
+    $values = New-Object 'object[,]' $NoOfSentences,$NoOfSentences
+    $CommonContentWeight = New-Object double[] $NoOfSentences
     
-    Process
+    #Get important words that where length is greater than 3 to avoid - in, on, of, to, by etc
+    $ImportantWords = Get-FrequencyDistribution $Content |?{$_.name.length -gt 3} | select @{n='ImportanceWeight';e={$_.Count * 0.01}}, @{n='ImportantWord';e={$_.Name}} -First 10
+
+    Foreach($i in (0..($NoOfSentences-1)))
     {
-        Foreach($Item in $URL)
+        $ImportanceWeight = 0
+
+        #Score each Sentence on basis of words common in every other sentence
+        #More a sentence has common words from all other sentences, more it defines the complete document
+                
+        Foreach($j in (0..($NoOfSentences-1)))
         {
-    
-            Try
-            {
-                $result = Invoke-RestMethod -Uri "https://api.projectoxford.ai/vision/v1.0/models/celebrities/analyze" `
-                                            -Method 'Post' `
-                                            -ContentType 'application/json' `
-                                            -Body $(@{"URL"= $Url} | ConvertTo-Json) `
-                                            -Headers @{'Ocp-Apim-Subscription-Key' = $env:MS_ComputerVision_API_key } `
-                                            -ErrorVariable E
+            $WordsInReferenceSentence = $Sentences[$i].Split(" ") | Foreach{[Regex]::Replace($_,'[^a-zA-Z0-9]','')}
+            $WordsInDifferenceSentence = $Sentences[$j].Split(" ") | Foreach{[Regex]::Replace($_,'[^a-zA-Z0-9]','')}
+        
+            $CommonContentWeight[$i] = $CommonContentWeight[$i] + (Get-Intersection  $WordsInReferenceSentence $WordsInDifferenceSentence)
+        }
 
-                $Celebs =  $result.result.celebrities.name
-
-                ''|select @{n='Celebrities';e={$Celebs}}, @{n='Count';e={$Celebs.count}}, @{n='URL';e={$URL}}
-            }
-            Catch
+        Foreach($Item in $WordsInReferenceSentence |select -unique)
+        {
+            #Keep adding ImportanceWeight if an Important word found in the sentence
+            If($Item -in $ImportantWords.ImportantWord)
             {
-                "Something went wrong While extracting Text from Image, please try running the script again`nError Message : "+$E.Message
+                $ImportanceWeight += ($ImportantWords| ?{$_.ImportantWord -eq $Item}).ImportanceWeight
             }
         }
+    
+        ''| select  @{n='LineNumber';e={$i}},@{n='SentenceScore';e={"{0:N3}"-f ($CommonContentWeight[$i]+$ImportanceWeight)}} ,  @{n='CommonContentScore';e={"{0:N3}"-f $CommonContentWeight[$i]}}, @{n='ImportanceScore';e={$ImportanceWeight}}, @{n='WordCount';e={($Sentences[$i].Split(" ")).count}} , @{n='Sentence';e={$Sentences[$i]}}
     }
+}
 
-    End
+Function Get-Summary
+{
+[cmdletbinding()]
+Param(
+        [Parameter(Position=0, Mandatory = $true)] $Content,
+        [Parameter(Position=1)] $WordLimit = 100        
+)
+
+Begin
+{
+
+}
+Process
+{
+    $TotalWords = 0
+    $Summary=@()
+    
+    #Extracting Best sentences with highest Ranks within the word limit
+    $BestSentences = Foreach($Item in (Get-SentenceRank $Content | Sort SentenceScore -Descending))
     {
+        #Condition to limit Total word Count
+        $TotalWords += $Item.WordCount
+    
+        If($TotalWords -gt $WordLimit)
+        {
+            break
+        }
+        else
+        {
+            $Item
+        }
     }
+    
+    #Constructing a paragraph with sentences in Chronological order
+    Foreach($best in (($BestSentences |sort Linenumber).sentence))
+    {
+        If(-not $Best.endswith("."))
+        {
+            $Summary += -join ($Best, ".")
+        
+        }
+        else
+        {
+            $Summary += -join ($Best, "")
+        }
+    
+    }
+    
+    [String]$Summary
+}
+End
+{
+
+}
+
+ 
 }
