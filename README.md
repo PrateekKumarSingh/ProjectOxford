@@ -10,3 +10,5 @@ Entity linking<br />
 Text Analytics<br /></b>
 
 and Much more :)
+
+Following is link to Blog with Details of this project - https://geekeefy.wordpress.com/2016/07/08/powershell-module-for-microsoft-congnitive-services/
