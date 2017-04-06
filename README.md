@@ -89,6 +89,8 @@ You need to do one-time registration for each Microsoft Cognitive Services API f
 I would suggest to Save the API Keys into your Powershell $Profile so that it automatically loads every time the console is fired.
 Below is a screenshot on – how to keep the API keys in your $Profile to make your life a bit easy
 
+[[ https://geekeefy.files.wordpress.com/2016/07/apikey.png ]]
+
 # Project URI (Details of the module on my Powershell blog)
 
 https://geekeefy.wordpress.com/2016/07/08/powershell-module-for-microsoft-congnitive-services/
