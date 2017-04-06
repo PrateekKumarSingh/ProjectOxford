@@ -1,9 +1,27 @@
 # Microsoft Cognitive Services (aka, ProjectOxford)
 Microsoft Cognitive Services (aka -  <b><i>Project Oxford</b></i> - https://www.microsoft.com/cognitive-services ) are some machine learning AI API's to give Human Side to your code and a beatiful user experience. These are RESTfull API's and are easily accessible once subscribed.
 
-I managed to wrap these RESTful API's in a powershell module and results and things we can achieve with this are amazing! 🙂
+Further expanding the evolving portfolio of machine learning APIs with a vision for more personal computing experiences and enhanced productivity aided by systems that increasingly can see, hear, speak, understand and even begin to reason
+
+Enabling developers to easily add intelligent features such as
+
+1. Emotion and video detection;
+2. Facial, Speech and Vision recognition;
+3. Speech and Language understanding  
+4. Image Analysis
+5. Web Searches
+6. Sentiment Analysis
+7. Entity Linking and much, much more!
+
+I managed to wrap these RESTful API's in a powershell module and results and things we can achieve with this are just amazing! 🙂
 
 ![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/GIFs/Main.gif)
+
+# Module Installation
+
+You can directly Install-Module from the PowerShell Gallery if you’ve the PowershellGet module
+
+![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/GIFs/INSTALL-MODULE.gif)
 
 This powershell module offers following functionalities -
 
