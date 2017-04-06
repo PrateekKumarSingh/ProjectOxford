@@ -1,6 +1,10 @@
 # Microsoft Cognitive Services (aka, ProjectOxford)
 Microsoft Cognitive Services (aka -  <b><i>Project Oxford</b></i> - https://www.microsoft.com/cognitive-services ) are some machine learning AI API's to give Human Side to your code and a beatiful user experience. These are RESTfull API's and are easily accessible once subscribed.
 
+I managed to wrap these RESTful API's in a powershell module and results and things we can achieve with this are amazing! 🙂
+
+![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/GIFs/Main.gif)
+
 This powershell module offers following functionalities -
 
 ## Get-EntityLink
