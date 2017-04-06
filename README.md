@@ -3,95 +3,92 @@ Microsoft Cognitive Services (aka -  <b><i>Project Oxford</b></i> - https://www.
 
 Following are the functionalities I’ve written till date in  my module for Powershell cognitive services known as ProjectOxford
 
-#Get-EntityLink –
+# Get-EntityLink –
 
 Recognizes a named-entity from given text and aligning a textual mention of the entity to an appropriate entry in a knowledge base, like Wikipedia.
 
-![Alt Text](https://geekeefy.files.wordpress.com/2016/07/get-entitylink.gif?w=908&h=281)
+![Get-EntityLink](https://geekeefy.files.wordpress.com/2016/07/get-entitylink.gif?w=908&h=281)
 
-#Get-ImageAnalysis –
+# Get-ImageAnalysis –
 
 Returns information on visual content found in web hosted images. Like Color schemes, Face rectangles, Tags, caption (Small description of Image), head counts, Age & gender of people in Image, celebrity identification and much much more.
 
-Get-ImageAnalysis
+![Get-ImageAnalysis](https://geekeefy.files.wordpress.com/2016/07/get-imageanalysis.gif?w=900)
 
-#Get-AgeAndGender –
+# Get-AgeAndGender –
 
 Returns  Age and Gender of Faces identified in a local Image, and capable to draw rectangle around the faces in the image denoting their Age and Gender
 
+![Get-AgeGender](https://geekeefy.files.wordpress.com/2016/07/get-agegender1.gif?w=807&h=444)
 
-#Get-KeyPhrase –
+# Get-KeyPhrase –
 
 Recognize Key phrases in a given text or string and Documents. Saves lots of time and avoid reading long documents 🙂
 
-Get-KeyPhrase
+![Get-KeyPhrase](https://geekeefy.files.wordpress.com/2016/07/get-keyphrase.gif?w=900)
 
-#Get-Emotion –
+# Get-Emotion –
 
 Capable to detect the Emotion on the Faces identified in an Image on local machine, , and capable to draw rectangle around the faces in the image denoting their Emotion
 
-Get-Emotion
+![Get-Emotion](https://geekeefy.files.wordpress.com/2016/07/get-emotion1.gif?w=819&h=260)
 
-Get-Celebrity –
+# Get-Celebrity –
 
 Capable to identify the Names and total numbers of Celebrities in a web hosted Image. It can identify many celebs from fields like Movies, Sports, Politics.
 
-Get-Celebrity
+![Get-Celebrity](https://geekeefy.files.wordpress.com/2016/07/get-celebrity.gif?w=900)
 
-#Get-ImageText –
+# Get-ImageText –
 
 Capable of extracting text from the web hosted Images, you need to just pass the Image URL as a parameter to this function and it will do the work for you.
 
-Get-ImageText
+![Get-Get-ImageText](https://geekeefy.files.wordpress.com/2016/07/get-imagetext.gif?w=900)
 
-#Get-News –
+# Get-News –
 
 Returns NEWS items and headlines depending upon the categories you provide as a parameter, like Sports, Entertainment, Politics etc.
 
-Get-news
+![Get-news](https://geekeefy.files.wordpress.com/2016/07/get-news1.gif?w=829&h=383)
 
-#Get-Sentiment –
+# Get-Sentiment –
 
 Recognizes Sentiment in an input string, that is positiveness or Negativeness in the string context.
 
-get-Sentiment
+![Get-Sentiment](https://geekeefy.files.wordpress.com/2016/07/get-sentiment.gif?w=900)
 
-#Invoke-SpellCheck –
+# Invoke-SpellCheck –
 
 Identify and Rectify spelling mistakes in an input String and display errors. Also generates all possible permutations of the correct sentence with correct spellings.
 
-Invoke-SpellCheck
+![Invoke-SpellCheck](https://geekeefy.files.wordpress.com/2016/07/invoke-spellcheck.gif?w=900)
 
-#Search-Bing –
+# Search-Bing –
 
 Provides capability to search Bing and facilitate bing results in the powershell
 console.
 
-Search-bing
+![Search-bing](https://geekeefy.files.wordpress.com/2016/07/search-bing.gif?w=900)
 
-#Split-IntoWords –
-
- 
+# Split-IntoWords –
 
 Provides capability of Inserting spaces in words that lack spaces, like URLS, Hashtags etc.
 
-Split-IntoWords
+![Split-IntoWords](https://geekeefy.files.wordpress.com/2016/07/split-intowords.gif?w=900)
 
-#Test-AdultContent –
+# Test-AdultContent –
 
 Identifies any Adult or Racy content on a web hosted Image and flags them with a Boolean value [$true/$false]
 
-Test-AdultContent
+![Test-AdultContent](https://geekeefy.files.wordpress.com/2016/07/test-adultcontent.gif?w=900)
 
 
-Offer wide variety of features including -<br />
-<b>Optical Character Reading (OCR)<br />
-Spell Check<br />
-Image Analysis<br />
-Detect Age, Gender and Emotion in Image<br />
-Entity linking<br />
-Text Analytics<br /></b>
+### Pre-Requisites
+You need to do one-time registration for each Microsoft Cognitive Services API from <a href="https://www.microsoft.com/cognitive-services/en-us/sign-up">HERE</a>, before start using the module, because it won’t work without an API Key.
 
-and Much more :)
+I would suggest to Save the API Keys into your Powershell $Profile so that it automatically loads every time the console is fired.
+Below is a screenshot on – how to keep the API keys in your $Profile to make your life a bit easy
 
-Following is link to Blog with Details of this project - https://geekeefy.wordpress.com/2016/07/08/powershell-module-for-microsoft-congnitive-services/
+### Project URI (Details of the module on my Powershell blog)
+
+https://geekeefy.wordpress.com/2016/07/08/powershell-module-for-microsoft-congnitive-services/
