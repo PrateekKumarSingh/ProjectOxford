@@ -15,13 +15,13 @@ Enabling developers to easily add intelligent features such as
 
 I managed to wrap these RESTful API's in a powershell module and results and things we can achieve with this are just amazing! 🙂
 
-![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/GIFs/Main.gif)
+![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/Media/Main.gif)
 
 # Module Installation
 
 You can directly Install-Module from the PowerShell Gallery if you’ve the PowershellGet module
 
-![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/GIFs/INSTALL-MODULE.gif)
+![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/Media/INSTALL-MODULE.gif)
 
 This powershell module offers following functionalities -
 
