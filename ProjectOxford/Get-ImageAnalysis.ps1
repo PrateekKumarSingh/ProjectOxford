@@ -1,10 +1,11 @@
-<#.Synopsis
+<#
+.Synopsis
 Returns information about visual content found in web hosted images.
 .DESCRIPTION
 Function returns variety of information about visual content found in an image, like Color schemes, Face rectangles, Tags, caption (Small description of Image), head couts, Age & gender of people in Image, celebrity identification and much much more.
 NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 
 .EXAMPLE
 PS Root\> "http://cdn.deccanchronicle.com/sites/default/files/NADELLA2.jpg" | Get-ImageAnalysis
@@ -48,6 +49,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_ComputerVision_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+        }     
     }
     
     Process
@@ -78,7 +83,18 @@ Param(
             }
             Catch
             {
-                ($E.errorrecord.ErrorDetails.Message -split '"')[-2]
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }

@@ -1,3 +1,4 @@
+
 <#
 .SYNOPSIS
     Cmdlet is capable in extracting text from the web hosted Images.
@@ -5,7 +6,7 @@
     This cmdlet is Using Microsoft cognitive service's "Computer Vision" API as a service to extract text from the web hosted images by issuing an HTTP calls to the API.
     NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 
 .PARAMETER Url
     Image URL from where you want to extract the text.
@@ -17,7 +18,7 @@
              1 en           I NEVER DREAMED  
              2 en           ABOUT SUCCESS.   
              3 en           I WORKED FOR IT. 
-             4 en           -Edtée Zaudet      
+             4 en           -EdtÃ©e Zaudet      
         
     In above example, Function extract the text from the URL passed  returns you the sentences and Identified language
 
@@ -30,7 +31,7 @@
              1 en           I NEVER DREAMED      https://assets.entrepreneur.com/article/1440698865_graphic-quote-estee-lauder.jpg      
              2 en           ABOUT SUCCESS.       https://assets.entrepreneur.com/article/1440698865_graphic-quote-estee-lauder.jpg      
              3 en           I WORKED FOR IT.     https://assets.entrepreneur.com/article/1440698865_graphic-quote-estee-lauder.jpg      
-             4 en           -Edtée Zaudet        https://assets.entrepreneur.com/article/1440698865_graphic-quote-estee-lauder.jpg      
+             4 en           -EdtÃ©e Zaudet        https://assets.entrepreneur.com/article/1440698865_graphic-quote-estee-lauder.jpg      
              1 en           STOP HATING          https://s-media-cache-ak0.pinimg.com/736x/41/fe/f6/41fef69d2839b6b9122232c75d568a9e.jpg
              2 en           YOURSELF FOR         https://s-media-cache-ak0.pinimg.com/736x/41/fe/f6/41fef69d2839b6b9122232c75d568a9e.jpg
              3 en           EVERYTHING YOU       https://s-media-cache-ak0.pinimg.com/736x/41/fe/f6/41fef69d2839b6b9122232c75d568a9e.jpg
@@ -55,12 +56,21 @@ Param(
 		[String] $URL
 )
 
+Begin
+{
+        If(!$env:MS_ComputerVision_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+        } 
+}
+
 Process{
             $SplatInput = @{
             Uri= "https://api.projectoxford.ai/vision/v1/ocr"
             Method = 'Post'
 			#InFile = $Path
 			ContentType = 'application/json'
+            ErrorVariable = E
 			}
 
             $Headers =  @{
@@ -83,8 +93,20 @@ Process{
                 }
 
             }
-            Catch{
-                "Something went wrong While extracting Text from Image, please try running the script again`nError Message : "+$E.Message
+            Catch
+            {
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
     }
 }

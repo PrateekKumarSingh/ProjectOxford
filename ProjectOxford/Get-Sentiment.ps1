@@ -1,3 +1,4 @@
+
 <#
 .SYNOPSIS
     Get Sentiment in an input string
@@ -5,7 +6,7 @@
     This cmdlet utlizes Microsoft cognitive service's "Bing Search" API to know the sentiment of the string.
     NOTE : You need to subscribe the "Bing search API" before using the powershell script from the following link and setup an environment variable like, $env:MS_TextAnalytics_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 .PARAMETER Category
     Mention the NEWS category like - Sports, Politics or Entertainment
 .PARAMETER HeadlinesOnly
@@ -13,7 +14,7 @@
 .EXAMPLE
     PS Root\> Get-Sentiment -String "Hello Prateek, how are you?"
     
-    String                      Positive % Negetive % OverallSentiment
+    String                      Positive % Negative % OverallSentiment
     ------                      ---------- ---------- ----------------
     Hello Prateek, how are you? 93.37      6.63       Positive        
     
@@ -21,11 +22,11 @@
 .EXAMPLE
     PS Root\> "howdy","what the hell","damn" | Get-Sentiment
     
-    String        Positive % Negetive % OverallSentiment
+    String        Positive % Negative % OverallSentiment
     ------        ---------- ---------- ----------------
     howdy         99.12      0.88       Positive        
-    what the hell 23.91      76.09      Negitive        
-    damn          0.80       99.20      Negitive
+    what the hell 23.91      76.09      Negative        
+    damn          0.80       99.20      Negative
     
     You can also pass multiple strings as an argument through pipeline to the cmdlet to get the sentiment analysis
 .NOTES
@@ -43,6 +44,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_TextAnalytics_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_TextAnalytics_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -63,13 +68,23 @@ Param(
                 
                 $sentiment = "{0:n2}" -f ($Results.documents.score  *100)
 
-                '' | select @{n="String";e={$s}},@{n='Positive %';e={$sentiment}}, @{n='Negetive %';e={"{0:n2}" -f (100 - $sentiment)}},@{n='OverallSentiment';e={if($sentiment -gt 50){"Positive"}elseif($sentiment -eq 50){"Neutral"}else{"Negitive"}}}
+                '' | select @{n="String";e={$s}},@{n='Positive %';e={$sentiment}}, @{n='Negative %';e={"{0:n2}" -f (100 - $sentiment)}},@{n='OverallSentiment';e={if($sentiment -gt 50){"Positive"}elseif($sentiment -eq 50){"Neutral"}else{"Negative"}}}
 
             }
             Catch
             {
-                $error = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                $error.parameter+": "+$error.Message
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }

@@ -1,3 +1,5 @@
+
+
 <#
 .SYNOPSIS
     Get News from different categories
@@ -5,7 +7,7 @@
     This cmdlet returns NEWS items depending upon the catogoris you provide as a parameter, for which it employs Microsoft cognitive service's "Bing Search" API, by issuing an HTTP GET request to the API
     NOTE : You need to subscribe the "Bing search API" before using the powershell script from the following link and setup an environment variable like, $env:MS_BingSearch_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 .PARAMETER Category
     Mention the NEWS category like - Sports, Politics or Entertainment
 .PARAMETER HeadlinesOnly
@@ -13,8 +15,8 @@
 .EXAMPLE
 PS C:\> Get-News -Category "sports" | sort publisheddate | select -First 1
 
-    Topic         : Roger Federer ready to put ‘one stupid move’ behind him ahead of Wimbledon
-    Description   : All it took was “one stupid move” for Roger Federer’s season to fall into an abyss. For much of his career, the seven-times Wimbledon champion had been blessed with 
+    Topic         : Roger Federer ready to put â€˜one stupid moveâ€™ behind him ahead of Wimbledon
+    Description   : All it took was â€œone stupid moveâ€ for Roger Federerâ€™s season to fall into an abyss. For much of his career, the seven-times Wimbledon champion had been blessed with 
                     a body that seemed bullet-proof against the aches, pains and injuries suffered by ...
     About         : {Roger Federer, Wimbledon}
     Category      : Sports
@@ -70,6 +72,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_BingSearch_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_BingSearch_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -102,8 +108,18 @@ Param(
             }
             Catch
             {
-                $error = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                $error.parameter+": "+$error.Message
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }

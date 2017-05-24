@@ -1,3 +1,5 @@
+
+
 <#.Synopsis
 Identify and Rectify spelling mistakes in an input String
 .DESCRIPTION
@@ -64,7 +66,7 @@ Process{
             $Headers =  @{'Ocp-Apim-Subscription-Key' = $env:MS_SpellCheck_API_key}
 			$body =     @{'text'= $s}
             Try{
-                $SpellingErrors = (Invoke-RestMethod @SplatInput -Headers $Headers -Body $body ).flaggedTokens
+                $SpellingErrors = (Invoke-RestMethod @SplatInput -Headers $Headers -Body $body -ErrorVariable E).flaggedTokens
 				$OutString = $String # Make a copy of string to replace the errorswith suggestions.
 
 				If($SpellingErrors)  # If Errors are Found
@@ -101,8 +103,20 @@ Process{
 				}
 				
             }
-            Catch{
-                "Something went wrong, please try running the script again"
+            Catch
+            {              
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
@@ -110,4 +124,5 @@ Process{
 End
 {
 }
+
 }

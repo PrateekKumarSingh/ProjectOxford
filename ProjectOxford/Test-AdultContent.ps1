@@ -4,7 +4,7 @@ Get Adult and Racy score of an Web hosted Images.
 Function identifies any adult or racy content on a web hosted Image and flags them with a Boolean value [$true/$false]
 NOTE : You need to subscribe the "Computer Vision API" before using the powershell script from the following link and setup an environment variable like, $env:MS_ComputerVision_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 
 .EXAMPLE
 PS Root\> "http://upload.wikimedia.org/wikipedia/commons/6/6c/Satya_Nadella.jpg" | Test-AdultContent
@@ -40,6 +40,12 @@ Param(
 
     Begin
     {
+
+    If(!$env:MS_ComputerVision_API_key)
+    {
+        Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_ComputerVision_API_key= `"YOUR API KEY`" `n`n"
+    }
+
     }
     
     Process
@@ -60,7 +66,18 @@ Param(
             }
             Catch
             {
-                Writ ($E.errorrecord.ErrorDetails.Message -split '"')[-2]
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }

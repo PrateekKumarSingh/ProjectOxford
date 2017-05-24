@@ -5,7 +5,7 @@
     This cmdlet returns Bing web search results Using Microsoft cognitive service's "Bing Search" API, by issuing an HTTP GET request to the API
     NOTE : You need to subscribe the "Bing search API" before using the powershell script from the following link and setup an environment variable like, $env:MS_BingSearch_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 .PARAMETER Query
     String you want to search on Bing
 .PARAMETER Count
@@ -61,6 +61,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_BingSearch_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_BingSearch_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -77,6 +81,7 @@ Param(
                                             -Headers @{'Ocp-Apim-Subscription-Key' = $env:MS_BingSearch_API_key } `
                                             -ErrorVariable E `
 
+                
                 Write-Verbose "Total of $($Result.webPages.totalEstimatedMatches) keyword matches."
 
                 $Result.webPages.value | select @{n="Query";e={$q}},@{n='Result';e={$_.name}}, @{n='URL';e={$_.displayURL}}, @{n='Snippet';e={$_.snippet}}, @{n='DateLastCrawled';e={($_.dateLastCrawled).split('T')[0]}}
@@ -84,7 +89,18 @@ Param(
             }
             Catch
             {
-                "Something went wrong While extracting Text from Image, please try running the script again`nError Message : "+$E.Message
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }

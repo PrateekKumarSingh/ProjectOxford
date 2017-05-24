@@ -1,3 +1,5 @@
+
+
 <#
 .SYNOPSIS
     Recognize Key phrases in a given text or string.
@@ -5,7 +7,7 @@
     Identifies Key phrases in a given text/string using Microsoft cognitive service's "Text Analytics" API.
     NOTE : You need to subscribe the "Text Analytics API." before using the powershell script from the following link and setup an environment variable like, $env:MS_TextAnalytics_API_key = "YOUR API KEY"
     
-    API Subscription Page - https://www.microsoft.com/cognitive-services/en-US/subscriptions
+    API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up
 .PARAMETER String
     String to search for named entities.
 .EXAMPLE
@@ -46,6 +48,10 @@ Param(
 
     Begin
     {
+        If(!$env:MS_TextAnalytics_API_key)
+        {
+            Throw "You need to Subscribe the API to get a key from API Subscription Page - https://www.microsoft.com/cognitive-services/en-us/sign-up `nThen save it as environment variable `$env:MS_TextAnalytics_API_key= `"YOUR API KEY`" `n`n"
+        } 
     }
     
     Process
@@ -70,8 +76,18 @@ Param(
             }
             Catch
             {
-                $error = ($E.errorrecord.ErrorDetails.Message | ConvertFrom-Json).errors
-                $error.parameter+": "+$error.Message
+                $Message = ($E.errorrecord.ErrorDetails.message|Out-String|ConvertFrom-Json).message   
+                $category = $E.errorrecord.categoryInfo
+                
+                Write-Error -Exception ($E.errorrecord.Exception) `
+                            -Message $message `
+                            -Category $category.category `
+                            -CategoryActivity $category.Activity `
+                            -CategoryReason $category.Reason `
+                            -TargetName $category.TargetName `
+                            -TargetType $category.TargetType `
+                            -RecommendedAction ($E.errorrecord.errordetails.RecommendedAction) `
+                            -ErrorId $E.errorRecord.FullyQualifiedErrorId
             }
         }
     }
