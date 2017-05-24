@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/8txqcbse73ga4nj11g3h/branch/master?svg=true)](https://ci.appveyor.com/project/PrateekKumarSingh/ProjectOxford)
 # Microsoft Cognitive Services (aka, ProjectOxford)
 <a href='https://www.microsoft.com/cognitive-services'>Microsoft Cognitive Services</a> are some machine learning Artificial intelligent API's to give Human Side to your code and a beatiful user experience once subscribed.
 
