@@ -4,7 +4,7 @@ class ComputerVision {
     [String] $location
     [String] $query
     [psobject] $result
-    hidden $computer_vision_base_url 
+    hidden $base_url 
     [String] $endpoint
 
 
@@ -12,7 +12,7 @@ class ComputerVision {
     ComputerVision([String] $subscription_key, [Location] $location) {
         $this.subscription_key = $subscription_key
         $this.location = $location
-        $this.computer_vision_base_url = "https://{0}.api.cognitive.microsoft.com/vision/v1.0/" -f $this.location
+        $this.base_url = "https://{0}.api.cognitive.microsoft.com/vision/v1.0/" -f $this.location
     }
 
 #region analyze-overload-methods 
@@ -20,7 +20,7 @@ class ComputerVision {
     # analyze(url)
     [System.Object] analyze([System.Uri] $url) {
         $Service = 'analyze'
-        $this.endpoint = $this.computer_vision_base_url + $Service
+        $this.endpoint = $this.base_url + $Service
         $this.query = '?visualFeatures=categories'
         $params = @{
             Uri         = $this.endpoint + $this.query
@@ -36,7 +36,7 @@ class ComputerVision {
     # analyze(url, visual_features, details)
     [System.Object] analyze([System.Uri] $url, [VisualFeatures[]] $visual_features, [Details[]] $details) {
         $Service = 'analyze'
-        $this.endpoint = $this.computer_vision_base_url + $Service
+        $this.endpoint = $this.base_url + $Service
         $this.query ='?visualFeatures={0}&details={1}' -f $($visual_features -join ',') , $($details -join ',')
         $params = @{
             Uri         = $this.endpoint + $this.query
@@ -52,7 +52,7 @@ class ComputerVision {
     # analyze(path)
     [System.Object] analyze([System.IO.FileInfo] $path) {
         $Service = 'analyze'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?visualFeatures=categories'
         $params = @{        
             Uri         = $this.endpoint + $this.query
@@ -68,7 +68,7 @@ class ComputerVision {
     # analyze(path, visual_features, details)
     [System.Object] analyze([System.IO.FileInfo] $path, [VisualFeatures[]] $visual_features, [Details[]] $details) {
         $Service = 'analyze'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?visualFeatures={0}&details={1}' -f $($visual_features -join ',') , $($details -join ',')    
         $params = @{        
             Uri         = $this.endpoint + $this.query
@@ -86,7 +86,7 @@ class ComputerVision {
     # describe(url)
     [System.Object] describe([System.Uri] $url) {
         $Service = 'describe'
-        $this.endpoint = $this.computer_vision_base_url + $Service
+        $this.endpoint = $this.base_url + $Service
         $this.query = '?maxCandidates=1'
         $params = @{
             Uri         = $this.endpoint + $this.query
@@ -102,7 +102,7 @@ class ComputerVision {
     # describe(url, MaxCandidates)
     [System.Object] describe([System.Uri] $url, [Int] $MaxCandidates) {
         $Service = 'describe'
-        $this.endpoint = $this.computer_vision_base_url + $Service
+        $this.endpoint = $this.base_url + $Service
         $this.query = '?maxCandidates={0}' -f $MaxCandidates
         $params = @{
             Uri         = $this.endpoint + $this.query
@@ -118,7 +118,7 @@ class ComputerVision {
     # describe(path)
     [System.Object] describe([System.IO.FileInfo] $path) {
         $Service = 'describe'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?maxCandidates=1' 
         $params = @{        
         Uri         = $this.endpoint + $this.query
@@ -134,7 +134,7 @@ class ComputerVision {
     # describe(path, MaxCandidates)
     [System.Object] describe([System.IO.FileInfo] $path, [int] $MaxCandidates) {
         $Service = 'describe'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?maxCandidates={0}' -f $MaxCandidates   
         $params = @{        
         Uri         = $this.endpoint + $this.query
@@ -153,7 +153,7 @@ class ComputerVision {
     # ToThumbnail(url, outputFile, width, height, smartCropping)
     [System.Object] toThumbnail([System.Uri] $url, [System.IO.FileInfo] $outputFile, [int] $width, [int] $height, [bool] $smartCropping) {
         $Service = 'generateThumbnail'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?width={0}&height={1}&smartCropping={2}' -f $width, $height, $smartCropping
         $params = @{        
         Uri         = $this.endpoint + $this.query
@@ -178,7 +178,7 @@ class ComputerVision {
     # toThumbnail(path outputFile, width, height, smartCropping)
     [System.Object] toThumbnail([System.IO.FileInfo] $path, [System.IO.FileInfo] $outputFile, [int] $width, [int] $height, [bool] $smartCropping) {
         $Service = 'generateThumbnail'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?width={0}&height={1}&smartCropping={2}' -f $width, $height, $smartCropping
         $params = @{        
         Uri         = $this.endpoint + $this.query
@@ -205,7 +205,7 @@ class ComputerVision {
     # OCR(url)
     [System.Object] OCR([System.Uri] $url) {
         $Service = 'ocr'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?language=unk&&detectOrientation=true'
         $params = @{        
             Uri         = $this.endpoint + $this.query
@@ -222,7 +222,7 @@ class ComputerVision {
     # OCR(path)
     [System.Object] OCR([System.IO.FileInfo] $path) {    
         $Service = 'ocr'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $this.query = '?language=unk&&detectOrientation=true'
         $params = @{        
             Uri         = $this.endpoint + $this.query
@@ -241,7 +241,7 @@ class ComputerVision {
     # tag(url)
     [System.Object] tag([System.Uri] $url) {    
         $Service = 'tag'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $params = @{        
             Uri         = $this.endpoint
             Method      = 'POST'
@@ -257,7 +257,7 @@ class ComputerVision {
     # tag(path)
     [System.Object] tag([System.IO.FileInfo] $path) {    
         $Service = 'tag'
-        $this.endpoint = $this.computer_vision_base_url + $Service        
+        $this.endpoint = $this.base_url + $Service        
         $params = @{        
             Uri         = $this.endpoint
             Method      = 'POST'
@@ -314,7 +314,7 @@ $Object.result.regions.lines | foreach{ $_.words.text -join " " }
 
 
 # tag image from url
-$Object.tag($URL)
+$Object.tag($URL) > null
 $Object.result.tags
 
 # tag image from file
