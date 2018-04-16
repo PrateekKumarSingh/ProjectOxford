@@ -7,6 +7,8 @@ class ComputerVision {
     hidden $base_url 
     [String] $endpoint
 
+    ComputerVision(){
+    }
 
     # constructor
     ComputerVision([String] $subscription_key, [Location] $location) {
@@ -15,7 +17,7 @@ class ComputerVision {
         $this.base_url = "https://{0}.api.cognitive.microsoft.com/vision/v1.0/" -f $this.location
     }
 
-#region analyze-overload-methods 
+    #region analyze-overload-methods 
     # methods  
     # analyze(url)
     [System.Object] analyze([System.Uri] $url) {
@@ -37,7 +39,7 @@ class ComputerVision {
     [System.Object] analyze([System.Uri] $url, [VisualFeatures[]] $visual_features, [Details[]] $details) {
         $Service = 'analyze'
         $this.endpoint = $this.base_url + $Service
-        $this.query ='?visualFeatures={0}&details={1}' -f $($visual_features -join ',') , $($details -join ',')
+        $this.query = '?visualFeatures={0}&details={1}' -f $($visual_features -join ',') , $($details -join ',')
         $params = @{
             Uri         = $this.endpoint + $this.query
             Method      = 'POST'
@@ -82,7 +84,7 @@ class ComputerVision {
     }
     #endregion analyze-overload-methods    
     
-#region describe-overload-methods
+    #region describe-overload-methods
     # describe(url)
     [System.Object] describe([System.Uri] $url) {
         $Service = 'describe'
@@ -121,11 +123,11 @@ class ComputerVision {
         $this.endpoint = $this.base_url + $Service        
         $this.query = '?maxCandidates=1' 
         $params = @{        
-        Uri         = $this.endpoint + $this.query
-        Method      = 'POST'
-        InFile      = $path
-        ContentType = 'application/octet-stream'
-        Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
+            Uri         = $this.endpoint + $this.query
+            Method      = 'POST'
+            InFile      = $path
+            ContentType = 'application/octet-stream'
+            Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
         $this.result = Invoke-RestMethod @params
         return $this.result
@@ -137,39 +139,39 @@ class ComputerVision {
         $this.endpoint = $this.base_url + $Service        
         $this.query = '?maxCandidates={0}' -f $MaxCandidates   
         $params = @{        
-        Uri         = $this.endpoint + $this.query
-        Method      = 'POST'
-        InFile      = $path
-        ContentType = 'application/octet-stream'
-        Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
+            Uri         = $this.endpoint + $this.query
+            Method      = 'POST'
+            InFile      = $path
+            ContentType = 'application/octet-stream'
+            Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
         $this.result = Invoke-RestMethod @params
         return $this.result
     }
     
-#endregion describe-overload-methods
+    #endregion describe-overload-methods
 
-#region toThumbnail-overload-methods    
+    #region toThumbnail-overload-methods    
     # ToThumbnail(url, outputFile, width, height, smartCropping)
     [System.Object] toThumbnail([System.Uri] $url, [System.IO.FileInfo] $outputFile, [int] $width, [int] $height, [bool] $smartCropping) {
         $Service = 'generateThumbnail'
         $this.endpoint = $this.base_url + $Service        
         $this.query = '?width={0}&height={1}&smartCropping={2}' -f $width, $height, $smartCropping
         $params = @{        
-        Uri         = $this.endpoint + $this.query
-        Method      = 'POST'
-        ContentType = 'application/json'
-        Body        = @{'URL' = $url} | ConvertTo-Json
-        Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
+            Uri         = $this.endpoint + $this.query
+            Method      = 'POST'
+            ContentType = 'application/json'
+            Body        = @{'URL' = $url} | ConvertTo-Json
+            Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
     
         $bytes = [byte[]] $(Invoke-RestMethod @params).ToCharArray()
-        [IO.File]::WriteAllBytes($OutputFile,$bytes)
+        [IO.File]::WriteAllBytes($OutputFile, $bytes)
         $this.result = @{
-            Width = $width
-            Height = $height
-            OutputFile = $outputFile
-            ByteArray = $bytes
+            Width         = $width
+            Height        = $height
+            OutputFile    = $outputFile
+            ByteArray     = $bytes
             smartCropping = $true
         }
         return $this.result
@@ -181,27 +183,27 @@ class ComputerVision {
         $this.endpoint = $this.base_url + $Service        
         $this.query = '?width={0}&height={1}&smartCropping={2}' -f $width, $height, $smartCropping
         $params = @{        
-        Uri         = $this.endpoint + $this.query
-        Method      = 'POST'
-        InFile      = $path
-        ContentType = 'application/octet-stream'
-        Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
+            Uri         = $this.endpoint + $this.query
+            Method      = 'POST'
+            InFile      = $path
+            ContentType = 'application/octet-stream'
+            Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
     
         $bytes = [byte[]] $(Invoke-RestMethod @params).ToCharArray()
-        [IO.File]::WriteAllBytes($OutputFile,$bytes)
+        [IO.File]::WriteAllBytes($OutputFile, $bytes)
         $this.result = @{
-            Width = $width
-            Height = $height
-            OutputFile = $outputFile
-            ByteArray = $bytes
+            Width         = $width
+            Height        = $height
+            OutputFile    = $outputFile
+            ByteArray     = $bytes
             smartCropping = $true
         }
         return $this.result
     }
-#endregion toThumbnail-overload-methods    
+    #endregion toThumbnail-overload-methods    
 
-#region ocr-overload-methods
+    #region ocr-overload-methods
     # OCR(url)
     [System.Object] OCR([System.Uri] $url) {
         $Service = 'ocr'
@@ -235,9 +237,9 @@ class ComputerVision {
         $this.result = Invoke-RestMethod @params
         return $this.result
     }    
-#endregion ocr-overload-methods
+    #endregion ocr-overload-methods
 
-#region tag-overload-methods
+    #region tag-overload-methods
     # tag(url)
     [System.Object] tag([System.Uri] $url) {    
         $Service = 'tag'
@@ -269,7 +271,7 @@ class ComputerVision {
         $this.result = Invoke-RestMethod @params
         return $this.result
     }  
-#endregion tag-overload-methods
+    #endregion tag-overload-methods
 
 }
 
@@ -280,8 +282,8 @@ $url = [system.uri] "https://upload.wikimedia.org/wikipedia/commons/d/d9/Bill_ga
 $path = [System.IO.FileInfo]'C:\Tmp\bill.jpg'
 
 # create computer vision object
-$Object = [ComputerVision]::new($key,'SouthEastAsia')
-$o = new-object ComputerVision($key,'SouthEastAsia')
+$Object = [ComputerVision]::new($key, 'SouthEastAsia')
+$o = new-object ComputerVision($key, 'SouthEastAsia')
 
 # analyze image
 $Object.analyze($url)
@@ -295,13 +297,13 @@ $Object.analyze($path, $visual_features, $details)
 $Object.describe($path)
 
 # describe image with 5 candidates
-$Object.describe($path,5)
+$Object.describe($path, 5) | % description  | % captions
 
 # get 50x50 thumbnail
-$Object.ToThumbnail($path,'c:\tmp\unsmart.jpg',50,50,$false)
+$Object.ToThumbnail($path, 'c:\tmp\unsmart.jpg', 50, 50, $false)
 
 # get 50x50 thumbnail with smart cropping
-$Object.ToThumbnail($url,'c:\tmp\smart.jpg',50,50,$true)
+$Object.ToThumbnail($url, 'c:\tmp\smart.jpg', 50, 50, $true)
 
 # Optical Character recognition from URL
 [System.Uri] $quoteURL = 'https://www.brainyquote.com/photos_tr/en/h/helenkeller/101301/helenkeller1-2x.jpg'
@@ -310,7 +312,7 @@ $Object.OCR($quoteURL)
 # Optical Character recognition from file
 [System.IO.FileInfo] $quotepath = 'C:\tmp\quotes.jpg'
 $Object.OCR($quotePath)
-$Object.result.regions.lines | foreach{ $_.words.text -join " " }
+$Object.result.regions.lines | foreach { $_.words.text -join " " }
 
 
 # tag image from url
@@ -323,3 +325,4 @@ $Object.result.tags
 
 
 
+iwr $url | % content

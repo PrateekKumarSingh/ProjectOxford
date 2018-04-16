@@ -43,3 +43,11 @@ enum Location {
     francecentral
     francesouth
 }
+
+enum Extension {
+    png
+    bmp
+    jpg
+    jpeg
+    gif
+}
