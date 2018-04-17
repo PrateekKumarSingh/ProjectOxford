@@ -1,15 +1,14 @@
-[void] [System.Reflection.Assembly]::LoadWithPartialName('System.Drawing')
+using namespace System.Drawing.Imaging;
 
 Class ValidateImage {
-    ValidateImage() {}
+    ValidateImage() {
+    }
     static [IO.Fileinfo] Dimensions($path, $WidthLower, $HeightLower, $WidthUpper, $HeightUpper) {
         $Size = [System.Drawing.Image]::FromFile($path).size
-        if ($Size.width -in $($WidthLower..$WidthUpper) -or $Size.height -in $($HeightLower..$HeightUpper) ) {
-            return $path
-        }
-        else {
+        if (-not ($Size.width -in $($WidthLower..$WidthUpper) -or $Size.height -in $($HeightLower..$HeightUpper)) ) {
             Throw "Image dimensions [{4} x {5}] are out of bounds. Dimensions must be Minimum: [{0} x {1}] to Maximum: [{2} x {3}]" -f $WidthLower, $HeightLower, $WidthUpper, $HeightUpper, $size.Width, $Size.Height
         }
+        return $path
     }
 }
 
