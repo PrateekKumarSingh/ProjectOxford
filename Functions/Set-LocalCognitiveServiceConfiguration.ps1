@@ -36,6 +36,7 @@ Function Set-LocalCognitiveServiceConfiguration {
 
             if($data){
                 & $VerboseEnvVariableSetup
+                $data
             }
         }
     }
