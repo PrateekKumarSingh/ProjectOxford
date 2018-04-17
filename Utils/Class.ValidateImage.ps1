@@ -1,5 +1,4 @@
-using namespace System.Drawing;
-using namespace System.Drawing.Image;
+[void] [System.Reflection.Assembly]::LoadWithPartialName('System.drawing') 
 
 Class ValidateImage {
     ValidateImage() {
