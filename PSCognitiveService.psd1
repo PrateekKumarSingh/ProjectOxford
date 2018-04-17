@@ -9,7 +9,7 @@
 @{
 
     # Script module or binary module file associated with this manifest.
-    RootModule        = 'PSDecode.psm1'
+    RootModule        = 'PSCognitiveService.psm1'
 
     # Version number of this module.
     ModuleVersion     = '0.9.0'
@@ -18,7 +18,7 @@
     # CompatiblePSEditions = @()
 
     # ID used to uniquely identify this module
-    GUID              = '8824f800-a777-49a0-8ded-c918aef72d5c'
+    GUID              = '20568f7c-19d5-4496-9b85-a88010dba762'
 
     # Author of this module
     Author            = 'Prateek Singh'
