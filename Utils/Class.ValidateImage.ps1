@@ -1,4 +1,4 @@
-[System.Reflection.Assembly]::LoadWithPartialName('System.Drawing.Image')
+[void] [System.Reflection.Assembly]::LoadWithPartialName('System.Drawing')
 
 Class ValidateImage {
     ValidateImage() {}

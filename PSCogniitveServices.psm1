@@ -1,7 +1,7 @@
 # Dot Sourcing files
-Get-ChildItem $PSScriptRoot -Recurse  | Where-Object {$_.PSIsContainer -eq $false -and $_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {
-    . $_.FullName
-}
+Get-ChildItem $PSScriptRoot\utils\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
+Get-ChildItem $PSScriptRoot\classes\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
+Get-ChildItem $PSScriptRoot\functions\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
 
 #Get-ImageAnalysis -path 'C:\tmp\Bill.jpg' -Verbose
 #analyze 'C:\tmp\Bill.jpg' -Verbose
