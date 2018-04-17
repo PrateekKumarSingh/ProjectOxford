@@ -52,4 +52,4 @@ Function Set-LocalCognitiveServiceConfiguration {
 
 }
 
-Set-LocalCognitiveServiceConfiguration -FromAzureRM -verbose
+#Set-LocalCognitiveServiceConfiguration -FromAzureRM -verbose
