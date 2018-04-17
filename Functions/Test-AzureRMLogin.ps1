@@ -1,9 +1,7 @@
 function Test-AzureRmLogin {
     [CmdletBinding()]
     [Alias()]
-    Param
-    (
-    )
+    Param()
 
     Begin {
     }
@@ -16,10 +14,10 @@ function Test-AzureRmLogin {
         }
         catch [System.Management.Automation.PSInvalidOperationException] {
             Write-Verbose 'Not logged into Azure. Login now.'
-            Throw $_.Exception.Message
+            Login-AzureRmAccount
         }
         catch {
-            Login-AzureRmAccount
+            Throw $_.Exception.Message
         }
         [bool]$isLoggedIn
     }
