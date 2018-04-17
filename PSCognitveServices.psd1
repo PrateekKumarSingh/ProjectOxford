@@ -27,7 +27,7 @@
     CompanyName       = 'Prateek Singh'
 
     # Copyright statement for this module
-    Copyright         = '(c) 2017 Prateek Singh All rights reserved.'
+    Copyright         = '(c) 2018 Prateek Singh All rights reserved.'
 
     # Description of the functionality provided by this module
     Description       = "PowerShell wrapper around Microsoft Cognitive Services REST API's"
@@ -72,10 +72,10 @@
     FunctionsToExport = 'Set-LocalCognitiveServiceConfiguration','Get-ImageAnalysis'
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    #CmdletsToExport   = '*'
+    CmdletsToExport   = '*'
 
     # Variables to export from this module
-    #VariablesToExport = '*'
+    VariablesToExport = '*'
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
     AliasesToExport   = 'analyze','config'
