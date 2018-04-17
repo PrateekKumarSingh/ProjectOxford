@@ -1,4 +1,5 @@
-using namespace System.Drawing.Imaging;
+using namespace System.Drawing;
+using namespace System.Drawing.Image;
 
 Class ValidateImage {
     ValidateImage() {

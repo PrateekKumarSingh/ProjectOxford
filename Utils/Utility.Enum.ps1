@@ -51,3 +51,12 @@ enum Extension {
     jpeg
     gif
 }
+
+
+enum CognitiveService {
+    vision
+    face 
+    emotion
+    analytics
+    moderate
+}
