@@ -1,4 +1,3 @@
-#Requires -Modules AzureRm.Profile
 function Test-AzureRmLogin {
     [CmdletBinding()]
     [Alias()]
@@ -11,6 +10,7 @@ function Test-AzureRmLogin {
     Process {
         # Verify we are signed into an Azure account
         try {
+            Import-Module AzureRM.profile -Verbose:$false   
             Write-Verbose 'Checking if logged into Azure'
             $isLoggedIn = Get-AzureRmSubscription -ErrorAction Stop
         }
