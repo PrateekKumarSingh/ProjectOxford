@@ -19,7 +19,7 @@ function Test-AzureRmLogin {
             Throw $_.Exception.Message
         }
         catch {
-            Throw $Error[0].Exception.Message
+            Login-AzureRmAccount
         }
         [bool]$isLoggedIn
     }

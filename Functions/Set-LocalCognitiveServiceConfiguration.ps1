@@ -39,17 +39,6 @@ Function Set-LocalCognitiveServiceConfiguration {
             }
         }
     }
-    else {        
-            & $VerboseEnvVariableSetup
-            
-        [System.Object] [Ordered] @{
-            SubscriptionKey = $SubscriptionKey
-            Location        = $Location
-            Service         = $ServiceName
-            Endpoint        = "https://$Location.api.cognitive.microsoft.com/$ServiceName/v1.0/"
-        }
-    }
-
 }
 
 #Set-LocalCognitiveServiceConfiguration -FromAzureRM -verbose
