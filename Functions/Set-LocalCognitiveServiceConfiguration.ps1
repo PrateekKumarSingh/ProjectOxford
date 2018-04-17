@@ -20,7 +20,7 @@ Function Set-LocalCognitiveServiceConfiguration {
         Set-Item -Path "env:API_Location_$ServiceName" -Value $Location
     }
 
-    if(Test-AzureRmLogin){
+    if(Test-AzureRmLogin -verbose){
         Get-AzureRmCognitiveServicesAccount | ForEach-Object {
             $SubscriptionKey = ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
             $Location        = $_.Location
