@@ -275,54 +275,55 @@ class ComputerVision {
 
 }
 
-$visual_features = [enum]::GetNames([visualFeatures])
-$details = [enum]::GetNames([details])
-
-$url = [system.uri] "https://upload.wikimedia.org/wikipedia/commons/d/d9/Bill_gates_portrait.jpg"
-$path = [System.IO.FileInfo]'C:\Tmp\bill.jpg'
-
-# create computer vision object
-$Object = [ComputerVision]::new($key, 'SouthEastAsia')
-$o = new-object ComputerVision($key, 'SouthEastAsia')
-
-# analyze image
-$Object.analyze($url)
-$Object.analyze($path)
-
-# analyze image with visual features and details
-$Object.analyze($url, $visual_features, $details)
-$Object.analyze($path, $visual_features, $details)
-
-# describe image
-$Object.describe($path)
-
-# describe image with 5 candidates
-$Object.describe($path, 5) | % description  | % captions
-
-# get 50x50 thumbnail
-$Object.ToThumbnail($path, 'c:\tmp\unsmart.jpg', 50, 50, $false)
-
-# get 50x50 thumbnail with smart cropping
-$Object.ToThumbnail($url, 'c:\tmp\smart.jpg', 50, 50, $true)
-
-# Optical Character recognition from URL
-[System.Uri] $quoteURL = 'https://www.brainyquote.com/photos_tr/en/h/helenkeller/101301/helenkeller1-2x.jpg'
-$Object.OCR($quoteURL)
-
-# Optical Character recognition from file
-[System.IO.FileInfo] $quotepath = 'C:\tmp\quotes.jpg'
-$Object.OCR($quotePath)
-$Object.result.regions.lines | foreach { $_.words.text -join " " }
-
-
-# tag image from url
-$Object.tag($URL) > null
-$Object.result.tags
-
-# tag image from file
-$Object.tag($path)
-$Object.result.tags
-
-
-
-iwr $url | % content
+#$visual_features = [enum]::GetNames([visualFeatures])
+#$details = [enum]::GetNames([details])
+#
+#$url = [system.uri] "https://upload.wikimedia.org/wikipedia/commons/d/d9/Bill_gates_portrait.jpg"
+#$path = [System.IO.FileInfo]'C:\Tmp\bill.jpg'
+#
+## create computer vision object
+#$Object = [ComputerVision]::new($key, 'SouthEastAsia')
+#$o = new-object ComputerVision($key, 'SouthEastAsia')
+#
+## analyze image
+#$Object.analyze($url)
+#$Object.analyze($path)
+#
+## analyze image with visual features and details
+#$Object.analyze($url, $visual_features, $details)
+#$Object.analyze($path, $visual_features, $details)
+#
+## describe image
+#$Object.describe($path)
+#
+## describe image with 5 candidates
+#$Object.describe($path, 5) | % description  | % captions
+#
+## get 50x50 thumbnail
+#$Object.ToThumbnail($path, 'c:\tmp\unsmart.jpg', 50, 50, $false)
+#
+## get 50x50 thumbnail with smart cropping
+#$Object.ToThumbnail($url, 'c:\tmp\smart.jpg', 50, 50, $true)
+#
+## Optical Character recognition from URL
+#[System.Uri] $quoteURL = 'https://www.brainyquote.com/photos_tr/en/h/helenkeller/101301/helenkeller1-2x.jpg'
+#$Object.OCR($quoteURL)
+#
+## Optical Character recognition from file
+#[System.IO.FileInfo] $quotepath = 'C:\tmp\quotes.jpg'
+#$Object.OCR($quotePath)
+#$Object.result.regions.lines | foreach { $_.words.text -join " " }
+#
+#
+## tag image from url
+#$Object.tag($URL) > null
+#$Object.result.tags
+#
+## tag image from file
+#$Object.tag($path)
+#$Object.result.tags
+#
+#
+#
+#iwr $url | % content
+#

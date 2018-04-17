@@ -1,4 +1,5 @@
-using namespace System.Drawing.Image
+[System.Reflection.Assembly]::LoadWithPartialName('System.Drawing.Image')
+
 Class ValidateImage {
     ValidateImage() {}
     static [IO.Fileinfo] Dimensions($path, $WidthLower, $HeightLower, $WidthUpper, $HeightUpper) {
