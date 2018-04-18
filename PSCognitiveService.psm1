@@ -1,5 +1,6 @@
-#using module C:\Data\Powershell\repository\PSCognitiveService\PSCognitiveService.psm1
-
+using assembly System.Drawing
+[cmdletbinding()]
+param()
 $classList = @(
     'Enum',
     'ValidateFile',
@@ -8,7 +9,7 @@ $classList = @(
 )
 
 foreach ($class in $classList) {
-    Write-host " Class: $class" -ForegroundColor Yellow
+    Write-Verbose " Class: $class" -ForegroundColor Yellow
     . "$psscriptroot\classes\$class.ps1"
 }
 
