@@ -15,4 +15,4 @@ Function Test-LocalConfiguration  {
         return $true
 }
 
-Test-LocalConfiguration -ServiceName vision
+# Test-LocalConfiguration -ServiceName vision
