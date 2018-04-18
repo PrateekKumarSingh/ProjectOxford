@@ -27,9 +27,9 @@ Function Get-ImageAnalysis {
                 "URL" { $Object.analyze($url, $VisualFeatures, $Details); break} 
             }        
         }
+        Remove-Variable -Name Object
     }
     end {
-        Remove-Variable -Name Object
     }
 
 }
