@@ -2,6 +2,8 @@ using assembly System.Drawing
 [cmdletbinding()]
 param()
 
+$BasePath = $PSScriptRoot
+
 # define class sequence
 $classList = @(
     'Enum',
@@ -13,10 +15,13 @@ $classList = @(
 # importing classes sequentially
 foreach ($class in $classList) {
     Write-Verbose "Class '$class'" -Verbose
-    . "$psscriptroot\classes\$class.ps1"
+    . "$BasePath\classes\$class.ps1"
 }
 
 # dot dourcing files
-Get-ChildItem $PSScriptRoot\private\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName}
-Get-ChildItem $PSScriptRoot\public\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
+$FolderNames = @(
+    'Private',
+    'Public'
+)
 
+Get-ChildItem $($FolderNames.ForEach({"$BasePath\$_\"})) -Recurse -Filter *.ps1 | ForEach-Object {. $_.FullName}
