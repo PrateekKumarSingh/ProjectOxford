@@ -1,10 +1,10 @@
 #using module C:\Data\Powershell\repository\PSCognitiveService\PSCognitiveService.psm1
 # Dot Sourcing files
 Get-ChildItem $PSScriptRoot\utils\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {
-    Invoke-Expression $([System.IO.File]::ReadAllText("$PSScriptRoot\Utils\Utility.Enum.ps1"))
+    Invoke-Expression $([System.IO.File]::ReadAllText($_.FullName)) -Verbose
 }
 Get-ChildItem $PSScriptRoot\classes\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {
-    Invoke-Expression $([System.IO.File]::ReadAllText("$PSScriptRoot\Utils\Utility.Class.ps1"))
+    Invoke-Expression $([System.IO.File]::ReadAllText($_.FullName)) -Verbose
 }
 Get-ChildItem $PSScriptRoot\functions\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
 
