@@ -14,6 +14,7 @@ function Test-AzureRmLogin {
         }
         catch [System.Management.Automation.PSInvalidOperationException] {
             Write-Verbose 'Not logged into Azure. Login now.'
+            Write-Host 'Enter your Credentials in the Pop-up window' -ForegroundColor Yellow
             Login-AzureRmAccount
         }
         catch {

@@ -17,13 +17,16 @@ Function Get-ImageAnalysis {
     )
 
     begin {
-        $Object = [ComputerVision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)
     }
     process {
-        switch ($PsCmdlet.ParameterSetName) { 
-            "Path" { $Object.analyze($path, $VisualFeatures, $Details) ; break} 
-            "URL" { $Object.analyze($url, $VisualFeatures, $Details); break} 
-        }        
+        $Object = @()
+        if (Test-LocalConfiguration -ServiceName 'Vision') {            
+            $Object = [ComputerVision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)
+            switch ($PsCmdlet.ParameterSetName) { 
+                "Path" { $Object.analyze($path, $VisualFeatures, $Details) ; break} 
+                "URL" { $Object.analyze($url, $VisualFeatures, $Details); break} 
+            }        
+        }
     }
     end {
         Remove-Variable -Name Object
@@ -32,7 +35,7 @@ Function Get-ImageAnalysis {
 }
 
 #$path =  'C:\tmp\Bill.jpg'
-#Get-ImageAnalysis $path -V
+#Get-ImageAnalysis $path -Verb
 #man analyze
 #
 #
