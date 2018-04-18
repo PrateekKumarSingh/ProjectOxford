@@ -7,7 +7,7 @@ $classList = @(
 )
 
 foreach ($class in $classList) {
-    Write-Verbose " Class: $class"
+    Write-host " Class: $class" -ForegroundColor Yellow
     . "$psscriptroot\classes\$class.ps1"
 }
 
