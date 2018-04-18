@@ -1,4 +1,4 @@
-using module C:\Data\Powershell\repository\PSCognitiveService\PSCognitiveService.psm1
+#using module C:\Data\Powershell\repository\PSCognitiveService\PSCognitiveService.psm1
 # Dot Sourcing files
 Get-ChildItem $PSScriptRoot\utils\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
 Get-ChildItem $PSScriptRoot\classes\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
