@@ -1,5 +1,3 @@
-using assembly system.drawing
-
 Class ValidateImage {
     ValidateImage() {
     }
