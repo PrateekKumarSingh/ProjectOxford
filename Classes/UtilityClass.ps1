@@ -1,4 +1,4 @@
-using namespace System.Drawing
+using assembly System.Drawing
 Class ValidateImage {
     ValidateImage() {
     }
@@ -10,7 +10,7 @@ Class ValidateImage {
         return $path
     }
 }
-
+System.Drawing.Imaging::From
 # [ValidateImage]::Dimensions($Path, 60, 60,400,400)
 # [ValidateImage]::Dimensions($Path, 60, 60,550,521)
 # [ValidateImage]::Dimensions($Path, 600, 600,1000,1000)
