@@ -1,4 +1,3 @@
-using assembly ValidateFile
 Function Get-ImageAnalysis {
     [alias("analyze")]
     [cmdletbinding()]
