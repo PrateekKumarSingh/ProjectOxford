@@ -1,8 +1,9 @@
 #using module C:\Data\Powershell\repository\PSCognitiveService\PSCognitiveService.psm1
 
 $classList = @(
-    'UtilityEnum',
-    'UtilityClass',
+    'Enum',
+    'ValidateFile',
+    'ValidateImage',
     'ComputerVision'
 )
 
