@@ -9,7 +9,7 @@ $classList = @(
 )
 
 foreach ($class in $classList) {
-    Write-Verbose " Class: $class"
+    Write-Verbose "Class '$class'" -Verbose
     . "$psscriptroot\classes\$class.ps1"
 }
 
