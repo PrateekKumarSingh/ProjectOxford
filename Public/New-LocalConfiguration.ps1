@@ -1,4 +1,4 @@
-Function Set-LocalCognitiveServiceConfiguration {
+Function New-LocalConfiguration {
     [alias("config")]
     [cmdletbinding()]
     param(
@@ -10,7 +10,7 @@ Function Set-LocalCognitiveServiceConfiguration {
         [Parameter(Mandatory, ParameterSetName='Manual')]
         [CognitiveService] $ServiceName,
         [Parameter(ParameterSetName='FromAzure')] 
-        [switch] $FromAzureRM
+        [switch] $FromAzure
     )
 
     $VerboseEnvVariableSetup = [scriptblock]{
@@ -19,14 +19,33 @@ Function Set-LocalCognitiveServiceConfiguration {
         Write-Verbose "Setting Environment variable: `$env:API_Location_$ServiceName for Cognitive Service: $ServiceName" 
         Set-Item -Path "env:API_Location_$ServiceName" -Value $Location
     }
-
-    if(Test-AzureRmLogin -verbose){
-        Get-AzureRmCognitiveServicesAccount | ForEach-Object {
-            $SubscriptionKey = ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
-            $Location        = $_.Location
-            $ServiceName     = ([uri]$_.Endpoint).segments[1] -replace "/",""
-            $EndPoint        = $_.Endpoint
-            
+    
+    if($FromAzure){
+        if(Test-AzureRmLogin -verbose){
+            Write-Verbose "Fetching AzureRM Cognitive Service accounts" 
+            $Accounts = Get-AzureRmCognitiveServicesAccount 
+            Write-Verbose $("{0} Service found in AzureRM" -f $Accounts.Count)
+            $Accounts | ForEach-Object {
+                $SubscriptionKey = ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
+                $Location        = $_.Location
+                $ServiceName     = ([uri]$_.Endpoint).segments[1] -replace "/",""
+                $EndPoint        = $_.Endpoint
+                
+                $data = [System.Object] [Ordered] @{
+                    SubscriptionKey =   $SubscriptionKey 
+                    Location        =   $Location       
+                    ServiceName     =   $ServiceName    
+                    EndPoint        =   $EndPoint       
+                }
+    
+                if($data){
+                    & $VerboseEnvVariableSetup
+                    $data
+                }
+            }
+        }
+    }
+    else{
             $data = [System.Object] [Ordered] @{
                 SubscriptionKey =   $SubscriptionKey 
                 Location        =   $Location       
@@ -38,8 +57,7 @@ Function Set-LocalCognitiveServiceConfiguration {
                 & $VerboseEnvVariableSetup
                 $data
             }
-        }
     }
 }
 
-#Set-LocalCognitiveServiceConfiguration -FromAzureRM -verbose
+#New-LocalConfiguration -FromAzure -verbose
