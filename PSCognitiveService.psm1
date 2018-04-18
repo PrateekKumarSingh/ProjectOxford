@@ -1,12 +1,19 @@
 #using module C:\Data\Powershell\repository\PSCognitiveService\PSCognitiveService.psm1
+
+$classList = @(
+    'Utility.Enum',
+    'Utility.Class',
+    'ComputerVision'
+)
+
+foreach ($class in $classList) {
+    Write-Verbose " Class: $class"
+    . "$psscriptroot\classes\$class.ps1"
+}
+
 # Dot Sourcing files
-Get-ChildItem $PSScriptRoot\utils\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {
-    Invoke-Expression $([System.IO.File]::ReadAllText($_.FullName)) -Verbose
-}
-Get-ChildItem $PSScriptRoot\classes\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {
-    Invoke-Expression $([System.IO.File]::ReadAllText($_.FullName)) -Verbose
-}
-Get-ChildItem $PSScriptRoot\functions\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
+Get-ChildItem $PSScriptRoot\private\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName}
+Get-ChildItem $PSScriptRoot\public\ -Recurse  | Where-Object {$_.Extension -eq '.ps1' -and $_.Directory -notlike '*x'} | ForEach-Object {. $_.FullName }
 
 #Get-ImageAnalysis -path 'C:\tmp\Bill.jpg' -Verbose
 #analyze 'C:\tmp\Bill.jpg' -Verbose
