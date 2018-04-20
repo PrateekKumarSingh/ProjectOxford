@@ -7,9 +7,6 @@ class ComputerVision {
     hidden $base_url 
     [String] $endpoint
 
-    ComputerVision(){
-    }
-
     # constructor
     ComputerVision([String] $subscription_key, [Location] $location) {
         $this.subscription_key = $subscription_key
@@ -172,7 +169,7 @@ class ComputerVision {
             Height        = $height
             OutputFile    = $outputFile
             ByteArray     = $bytes
-            smartCropping = $true
+            smartCropping = $smartCropping
         }
         return $this.result
     }
@@ -197,7 +194,7 @@ class ComputerVision {
             Height        = $height
             OutputFile    = $outputFile
             ByteArray     = $bytes
-            smartCropping = $true
+            smartCropping = $smartCropping
         }
         return $this.result
     }

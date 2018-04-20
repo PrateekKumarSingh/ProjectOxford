@@ -1,3 +1,4 @@
+# tests local enviroment variables for a Microsoft Cognitive Service 
 Function Test-LocalConfiguration  {
     param(
         [Parameter(Mandatory)]

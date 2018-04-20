@@ -1,3 +1,5 @@
+# checks and verifies if the logged in to AzureRm
+# returns $True if yes else throws error
 function Test-AzureRmLogin {
     [CmdletBinding()]
     [Alias()]

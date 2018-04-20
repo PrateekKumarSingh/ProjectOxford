@@ -2,7 +2,7 @@ New-LocalConfiguration -FromAzure -verbose
 
 $path = 'C:\tmp\Bill.jpg'
 # by default chooses all visual features and details in the image
-Get-ImageAnalysis -path $path
+Get-ImageAnalysis -path $path -Verbose
 
 # selective visual features and details in the image
 $visual_features = [enum]::GetNames([visualFeatures])
