@@ -9,7 +9,8 @@ $classList = @(
     'Enum',
     'ValidateFile',
     'ValidateImage',
-    'ComputerVision'
+    'ComputerVision',
+    'Face'
 )
 
 # importing classes sequentially
