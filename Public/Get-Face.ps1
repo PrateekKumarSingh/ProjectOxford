@@ -3,8 +3,11 @@ Function Get-Face {
     [cmdletbinding()]
     param(
         [Parameter(ParameterSetName = 'Path', Mandatory, Position = 0)]
-        [ValidateScript( { 
-                [ValidateFile]::Size([ValidateFile]::Extension([ValidateFile]::Path($_), [enum]::getnames([Extension])) , 4)
+        [ValidateScript({ 
+                [ValidateImage]::Dimensions(
+                    [ValidateFile]::Size(
+                        [ValidateFile]::Extension(
+                            [ValidateFile]::Path($_), [enum]::getnames([Extension])) , 4), 36, 36, 4096, 4096)
             })]
         [System.IO.FileInfo] $Path,
 
@@ -35,6 +38,7 @@ Function Get-Face {
     }
 
 }
+
 
 
 #man analyze

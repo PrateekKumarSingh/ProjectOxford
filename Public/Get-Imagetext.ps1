@@ -4,7 +4,10 @@ Function Get-ImageText{
     param(
         [Parameter(ParameterSetName = 'Path',Mandatory, Position = 0)]
         [ValidateScript( { 
-            [ValidateFile]::Size([ValidateFile]::Extension([ValidateFile]::Path($_), [enum]::getnames([Extension])) , 4)
+                [ValidateImage]::Dimensions(
+                    [ValidateFile]::Size(
+                        [ValidateFile]::Extension(
+                            [ValidateFile]::Path($_), [enum]::getnames([Extension])) , 4), 40, 40, 3200, 3200)
         })]
         [System.IO.FileInfo] $Path,
 

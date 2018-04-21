@@ -79,39 +79,8 @@ class Face {
         $this.result = Invoke-RestMethod @params
         return $this.result
     }
-    #endregion analyze-overload-methods    
+    #endregion detect-overload-methods    
 }
-
-
-
-
-# detect face using detect(path)
-$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
-$path = [System.IO.FileInfo] 'C:\Tmp\Bill.jpg'
-$object.detect($path)
-$object.result.facerectangle
-$object.result.facelandmarks
-
-# detect face  using detect(url)
-$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
-$url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
-$object.detect($url)
-
-# using detect(path, Face_Attributes, FaceID, FaceLandmarks)
-$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
-$path = [System.IO.FileInfo] 'C:\Tmp\Bill.jpg'
-$Face_Attributes = [enum]::GetNames([FaceAttributes])
-$object.detect($path, $Face_Attributes, $true, $true)
-$object.result.faceattributes.facialHair
-
-# using detect(url, Face_Attributes, FaceID, FaceLandmarks)
-$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
-$url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
-$Face_Attributes = [enum]::GetNames([FaceAttributes])
-$object.detect($url, $Face_Attributes, $true, $true)
-$object.result.faceattributes
-
-
 
 
 

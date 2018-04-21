@@ -1,16 +1,9 @@
-enum VisualFeatures {
-    Categories
-    Tags
-    Description
-    Faces
-    ImageType
-    Color
-    Adult    
-}
-
-enum Details {
-    Celebrities
-    Landmarks 
+enum CognitiveService {
+    vision
+    face 
+    emotion
+    analytics
+    contentmoderator
 }
 
 enum Location {
@@ -52,11 +45,34 @@ enum Extension {
     gif
 }
 
+enum VisualFeatures {
+    Categories
+    Tags
+    Description
+    Faces
+    ImageType
+    Color
+    Adult    
+}
 
-enum CognitiveService {
-    vision
-    face 
+enum Details {
+    Celebrities
+    Landmarks 
+}
+
+enum FaceAttributes {
+    age
+    gender
+    headPose
+    smile
+    facialHair
+    glasses
     emotion
-    analytics
-    moderate
+    hair
+    makeup
+    occlusion
+    accessories
+    blur
+    exposure
+    noise
 }
