@@ -81,6 +81,3 @@ class Face {
     }
     #endregion detect-overload-methods    
 }
-
-
-
