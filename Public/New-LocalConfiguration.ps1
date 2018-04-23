@@ -17,7 +17,10 @@ Function New-LocalConfiguration {
     )
 
     $Configuration = [scriptblock]{
-        param([switch]$AddKeysToProfile)
+        param([switch]$AddKeysToProfile, $data)
+        $ServiceName = $data.ServiceName
+        $SubscriptionKey = $data.SubscriptionKey
+        $Location = $data.Location
         Write-Verbose "Setting Environment variable: `$env:API_SubscriptionKey_$ServiceName for Cognitive Service: $($ServiceName.ToString().ToUpper())" 
         Set-Item -Path "env:API_SubscriptionKey_$ServiceName" -Value $SubscriptionKey
         Write-Verbose "Setting Environment variable: `$env:API_Location_$ServiceName for Cognitive Service: $($ServiceName.ToString().ToUpper())" 
@@ -44,8 +47,8 @@ Function New-LocalConfiguration {
                         EndPoint        =   $_.Endpoint
                     }
 
-                    if($AddKeysToProfile){ & $Configuration -addKeysToProfile }
-                    else{ & $Configuration }
+                    if($AddKeysToProfile){ & $Configuration -addKeysToProfile $data}
+                    else{ & $Configuration $data}
 
                     $data
                 }
@@ -59,8 +62,8 @@ Function New-LocalConfiguration {
             SubscriptionKey =   $SubscriptionKey 
         }
         
-        if($AddKeysToProfile){ & $Configuration -addKeysToProfile }
-        else{ & $Configuration }
+        if($AddKeysToProfile){ & $Configuration -addKeysToProfile $data}
+        else{ & $Configuration $data}
         $data 
     }
 
