@@ -2,7 +2,7 @@ using assembly System.Drawing
 [cmdletbinding()]
 param()
 
-$BasePath = $PSScriptRoot
+$BasePath = 'C:\Data\Powershell\repository\PSCognitiveService'
 
 # define class sequence
 $classList = @(
@@ -15,9 +15,14 @@ $classList = @(
 )
 
 # importing classes sequentially
+#foreach ($class in $classList) {
+#    Write-Verbose "Dot sourcing class '$class'" -Verbose
+#    . "$BasePath\classes\$class.ps1"
+#}
+
+# importing classes sequentially
 foreach ($class in $classList) {
-    Write-Verbose "Dot sourcing class '$class'" -Verbose
-    . "$BasePath\classes\$class.ps1"
+    Import-Module "$BasePath\classes\$class.ps1"
 }
 
 # dot dourcing files
