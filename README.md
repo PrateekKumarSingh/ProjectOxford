@@ -180,9 +180,8 @@ $object.detect($url, $Face_Attributes, $true, $true)
 $object.result.faceattributes
 ```
 
-### Content Moderation**
-
-#### Test-AdultRacyContent**
+### Content Moderation
+#### Test-AdultRacyContent
 Adult and racy content verification
 
 ```PowerShell
