@@ -1,4 +1,6 @@
 using assembly System.Drawing
+using namespace ComputerVision
+using namespace Face
 [cmdletbinding()]
 param()
 
