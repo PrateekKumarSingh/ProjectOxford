@@ -2,11 +2,11 @@
 
 # convert to thumbnail using a path
 $Path = 'C:\tmp\Bill.jpg'
-ConvertTo-Thumbnail -Path $Path
+ConvertTo-Thumbnail -Path $Path -OutFile 'c:\tmp\oof.png' -Verbose
 
 # convert to thumbnail using a URL
 $URL = 'https://drscdn.500px.org/photo/159533631/m%3D900/v2?webp=true&sig=61eee244d82e8eac7354bf31800c17a8d0627aba1d941f96f5a9e5e4910de693'
-ConvertTo-Thumbnail -URL $URL -Width 100 -Height 100 -Verbose -SmartCropping
+ConvertTo-Thumbnail -URL $URL -Width 100 -Height 300 -Verbose -SmartCropping
 
 
 # convert to thumbnail using a URL with specific dimensions
