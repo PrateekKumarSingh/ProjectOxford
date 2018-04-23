@@ -1,10 +1,13 @@
 Class ValidateImage {
     ValidateImage() {}
     static [IO.Fileinfo] Dimensions($path, $WidthLower, $HeightLower, $WidthUpper, $HeightUpper) {
-        $Size = [System.Drawing.Image]::FromFile($path).size
+        $Image = [System.Drawing.Image]::FromFile($path)
+        $Size = $Image.size
         if (-not ($Size.width -in $($WidthLower..$WidthUpper) -or $Size.height -in $($HeightLower..$HeightUpper)) ) {
             Throw "Image dimensions [{4} x {5}] are out of bounds. Dimensions must be Minimum: [{0} x {1}] to Maximum: [{2} x {3}]" -f $WidthLower, $HeightLower, $WidthUpper, $HeightUpper, $size.Width, $Size.Height
         }
+
+        $Image.Dispose()
         return $path
     }
 }
