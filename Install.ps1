@@ -87,8 +87,6 @@ Try {
     $Files | ForEach-Object {
         $File = $installDirectory, '\', $($_ -replace '/', '\') -join ''
         $URL = $GitPath, '/', $_ -join ''
-        "$URL $File"
-
         $WebClient.DownloadFile($URL, $File)
         Write-Verbose "$ModuleName installed module file '$_'"
     }

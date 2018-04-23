@@ -1,118 +1,227 @@
 # PowerShell Module for Microsoft Cognitive Services (aka, ProjectOxford)
-<a href='https://www.microsoft.com/cognitive-services'>Microsoft Cognitive Services</a> are some machine learning Artificial intelligent REST API's to give Human-like cognition abilities to your code.
-
-This module provides a set of PowerShell cmdlets, which are PowerShell wrappers to query and access MS Cognitve service API's with ease and simplicity.
-
-Enabling developers to easily add intelligent features such as
-
-1. Copmuter Vision
-2. Facial, Speech and Vision recognition;
-3. Speech and Language understanding  
-4. Image Analysis
-5. Web Searches
-6. Sentiment Analysis
-7. Entity Linking and much, much more!
-
-I managed to wrap these RESTful API's in a powershell module and results and things we can achieve with this are just amazing! 🙂
-
-![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/Media/Main.gif)
-
-# Module Installation
-
-You can directly Install-Module from the PowerShell Gallery if you’ve the PowershellGet module
-
-![](https://raw.githubusercontent.com/PrateekKumarSingh/ProjectOxford/master/Media/Install-Module.gif)
-
-This powershell module offers following functionalities -
-
-## Get-EntityLink
-
-Recognizes a named-entity from given text and aligning a textual mention of the entity to an appropriate entry in a knowledge base, like Wikipedia.
-
-![Get-EntityLink](https://geekeefy.files.wordpress.com/2016/07/get-entitylink.gif?w=908&h=281)
-
-## Get-ImageAnalysis
-
-Returns information on visual content found in web hosted images. Like Color schemes, Face rectangles, Tags, caption (Small description of Image), head counts, Age & gender of people in Image, celebrity identification and much much more.
-
-![Get-ImageAnalysis](https://geekeefy.files.wordpress.com/2016/07/get-imageanalysis.gif?w=900)
-
-## Get-AgeAndGender
-
-Returns  Age and Gender of Faces identified in a local Image, and capable to draw rectangle around the faces in the image denoting their Age and Gender
-
-![Get-AgeGender](https://geekeefy.files.wordpress.com/2016/07/get-agegender1.gif?w=807&h=444)
-
-## Get-KeyPhrase
-
-Recognize Key phrases in a given text or string and Documents. Saves lots of time and avoid reading long documents 🙂
-
-![Get-KeyPhrase](https://geekeefy.files.wordpress.com/2016/07/get-keyphrase.gif?w=900)
-
-## Get-Emotion
-
-Capable to detect the Emotion on the Faces identified in an Image on local machine, , and capable to draw rectangle around the faces in the image denoting their Emotion
-
-![Get-Emotion](https://geekeefy.files.wordpress.com/2016/07/get-emotion1.gif?w=819&h=260)
-
-## Get-Celebrity
-
-Capable to identify the Names and total numbers of Celebrities in a web hosted Image. It can identify many celebs from fields like Movies, Sports, Politics.
-
-![Get-Celebrity](https://geekeefy.files.wordpress.com/2016/07/get-celebrity.gif?w=900)
-
-## Get-ImageText
-
-Capable of extracting text from the web hosted Images, you need to just pass the Image URL as a parameter to this function and it will do the work for you.
-
-![Get-Get-ImageText](https://geekeefy.files.wordpress.com/2016/07/get-imagetext.gif?w=900)
-
-## Get-News
-
-Returns NEWS items and headlines depending upon the categories you provide as a parameter, like Sports, Entertainment, Politics etc.
-
-![Get-news](https://geekeefy.files.wordpress.com/2016/07/get-news1.gif?w=829&h=383)
-
-## Get-Sentiment
-
-Recognizes Sentiment in an input string, that is positiveness or Negativeness in the string context.
-
-![Get-Sentiment](https://geekeefy.files.wordpress.com/2016/07/get-sentiment.gif?w=900)
-
-## Invoke-SpellCheck
-
-Identify and Rectify spelling mistakes in an input String and display errors. Also generates all possible permutations of the correct sentence with correct spellings.
-
-![Invoke-SpellCheck](https://geekeefy.files.wordpress.com/2016/07/invoke-spellcheck.gif?w=900)
-
-# Search-Bing
-
-Provides capability to search Bing and facilitate bing results in the powershell
-console.
-
-![Search-bing](https://geekeefy.files.wordpress.com/2016/07/search-bing.gif?w=900)
-
-## Split-IntoWords
-
-Provides capability of Inserting spaces in words that lack spaces, like URLS, Hashtags etc.
-
-![Split-IntoWords](https://geekeefy.files.wordpress.com/2016/07/split-intowords.gif?w=900)
-
-## Test-AdultContent
-
-Identifies any Adult or Racy content on a web hosted Image and flags them with a Boolean value [$true/$false]
-
-![Test-AdultContent](https://geekeefy.files.wordpress.com/2016/07/test-adultcontent.gif?w=900)
-
+<a href='https://www.microsoft.com/cognitive-services'>Microsoft Cognitive Services</a> are some machine learning Artificial intelligent REST API's to give Human-like cognition abilities to your applications.
 
 # Pre-Requisites
 You need to do one-time registration for each Microsoft Cognitive Services API from <a href="https://www.microsoft.com/cognitive-services/en-us/sign-up">HERE</a>, before start using the module, because it won’t work without an API Key.
 
-I would suggest to Save the API Keys into your Powershell $Profile so that it automatically loads every time the console is fired.
-Below is a screenshot on – how to keep the API keys in your $Profile to make your life a bit easy
+# Installation
+### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
+You can install the `Gridify` module directly from the PowerShell Gallery
+* **[Recommended]** Install to your personal PowerShell Modules folder
+```PowerShell
+Install-Module Gridify -scope CurrentUser
+```
+* **[Requires Elevation]** Install for Everyone (computer PowerShell Modules folder)
+```PowerShell
+Install-Module Gridify
+```
+### PowerShell v4 and Earlier
+To install to your personal modules folder run:
+```PowerShell
+iex (new-object System.Net.WebClient).DownloadStrin('https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Install.ps1')
+```
 
-![](https://geekeefy.files.wordpress.com/2016/07/apikey.png)
+# Usage
 
-# Project URI (Details of the module on my Powershell blog)
+This module provides a set of PowerShell cmdlets, which are PowerShell wrappers to query and access MS Cognitve service APIs and endpoints with ease and simplicity.
 
-https://geekeefy.wordpress.com/2016/07/08/powershell-module-for-microsoft-congnitive-services/
+### Computer Vision
+
+#### Get-ImageAnalysis
+Analyze an image and returns visual features and other details
+
+```PowerShell
+$path = 'C:\temp\Picture.jpg'
+# by default chooses all visual features and details in the image
+Get-ImageAnalysis -path $path -Verbose
+
+# selective visual features and details in the image
+$visual_features = [enum]::GetNames([visualFeatures])
+$details = [enum]::GetNames([details])
+Get-ImageAnalysis -path $path -VisualFeatures $visual_features -Details $details
+
+# using computer vision classes and functions
+$url = "https://upload.wikimedia.org/wikipedia/commons/d/d9/Bill_gates_portrait.jpg"
+
+# create computer vision object
+$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+
+# analyze image
+$Object.analyze([uri]$url)
+$Object.analyze([IO.FileInfo]$path)
+
+# analyze image with visual features and details
+$Object.analyze($url, $visual_features, $details)
+$Object.analyze($path, $visual_features, $details)
+
+# help information
+Get-Help analyze
+```
+
+#### Get-ImageText
+Optical character recognition to read and return text,orientation, language from an image
+
+```PowerShell
+# Optical character recognition using a URL
+Get-ImageText -URL 'http://quotesnhumor.com/wp-content/uploads/2016/02/Top-25-Believe-Quotes-believe-images.jpg' -Verbose
+
+# Optical character recognition using a path
+ocr -Path C:\Temp\qoute.jpg -Verbose
+
+# Optical character recognition using computer vision classes and functions
+$path = 'C:\temp\qoute.jpg'
+$url = "http://www.imagesquotes.com/wp-content/uploads/2013/01/inspirational_quotes_motivational.jpg"
+
+# create computer vision object
+$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+
+# using the OCR(url) method
+$Object.OCR([uri]$url)
+$Object.result.regions.lines | foreach {$_.words.text -join ' '} # prints result line-wise
+
+# using the OCR(path) method
+$Object.OCR([IO.FileInfo]$path)
+```
+
+#### Get-ImageTag
+Tags an image with the context of contents and visual features inside the image.
+
+```PowerShell
+# get image tags using a path that are relevant to the content of the supplied image
+$Path = 'C:\temp\Bill.jpg'
+ConvertTo-Thumbnail -Path $Path
+
+# get image tags using a URL
+$URL = 'https://drscdn.500px.org/photo/159533631/m%3D900/v2?webp=true&sig=61eee244d82e8eac7354bf31800c17a8d0627aba1d941f96f5a9e5e4910de693'
+Get-ImageTag -URL $url -Verbose
+
+# using alias
+tag -URL $URL -Verbose
+tag -URL $path -Verbose
+
+# create computer vision object
+$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+
+# using the tag(url) method
+$Object.tag([uri]$url)
+$Object.result.tags.name | foreach {'#'+$_} # prints hashtags
+
+# using the tag(path) method
+$Object.tag([IO.FileInfo]$path)
+```
+
+
+#### ConvertTo-Thumbnail
+Converts an image to a thumbnail with specified dimensions
+```PowerShell
+# convert to thumbnail using a path
+$Path = 'C:\temp\Bill.jpg'
+ConvertTo-Thumbnail -Path $Path
+
+# convert to thumbnail using a URL
+$URL = 'https://drscdn.500px.org/photo/159533631/m%3D900/v2?webp=true&sig=61eee244d82e8eac7354bf31800c17a8d0627aba1d941f96f5a9e5e4910de693'
+ConvertTo-Thumbnail -URL $URL -Width 100 -Height 100 -Verbose -SmartCropping
+
+# convert to thumbnail using a URL with specific dimensions
+Thumbnail -URL $URL -OutFile c:\temp\t.png -Width 100 -Height 100 -Verbose
+Thumbnail -URL $URL -OutFile c:\temp\t.png -Width 100 -Height 100 -Verbose -SmartCropping
+
+# convert to thumbnail using computer vision classes and .toThumbnail() method
+$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+
+# using URL
+$Object.toThumbnail([System.IO.FileInfo] $path, [System.IO.FileInfo] 'c:\temp\test.png', 200, 200, $true)
+
+# using path
+$Object.toThumbnail([System.Uri] $url, [System.IO.FileInfo] 'c:\temp\test.png', 200, 200, $true)
+```
+
+### Face
+
+#### Get-Face
+Identifies faces and attributes in an image.
+
+```PowerShell
+# detect face using a local image
+$path = 'C:\temp\Bill.jpg'
+Get-Face -Path $path -FaceId -FaceLandmarks 
+Get-Face -Path $path -FaceId -FaceLandmarks -FaceAttributes age, gender |fl *
+
+# detect face using [face] object and detect(path) method
+$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
+$path = [System.IO.FileInfo] 'C:\temp\Bill.jpg'
+$object.detect($path)
+$object.result.facerectangle
+$object.result.facelandmarks
+
+# detect face using [face] object and detect(path, Face_Attributes, FaceID, FaceLandmarks) method
+$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
+$path = [System.IO.FileInfo] 'C:\temp\Bill.jpg'
+$Face_Attributes = [enum]::GetNames([FaceAttributes])
+$object.detect($path, $Face_Attributes, $true, $true)
+$object.result.faceattributes.facialHair
+
+# detect face using a url
+$Url = 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
+Get-Face -URL $url -FaceId -FaceLandmarks -Verbose
+Get-Face -URL $url -FaceId -FaceLandmarks -FaceAttributes age, gender -Verbose |fl *
+
+# detect face using [face] object and detect(url) method
+$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
+$url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
+$object.detect($url)
+
+
+# detect face using [face] object and detect(url, Face_Attributes, FaceID, FaceLandmarks) method
+$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
+$url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
+$Face_Attributes = [enum]::GetNames([FaceAttributes])
+$object.detect($url, $Face_Attributes, $true, $true)
+$object.result.faceattributes
+```
+
+### Content Moderation**
+
+#### Test-AdultRacyContent**
+Adult and racy content verification
+
+```PowerShell
+# moderate content using [ContentModerator] object and processimage(path) method
+$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+$path = [System.IO.FileInfo] 'C:\temp\test.png'
+$object.processimage($path)
+
+Test-AdultRacyContent -Text "go eff yourself" -Verbose
+Test-AdultRacyContent -Text "go eff yourself" -AutoCorrect -PersonalIdentifiableInformation -Verbose
+
+# moderate content using [ContentModerator] object and processimage(path, cachesimage) method
+$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+$path = [System.IO.FileInfo] 'C:\temp\test.png'
+$object.processimage($path, $true)
+Test-AdultRacyContent -Path $Path -Verbose -CachesImage
+
+# moderate content using [ContentModerator] object and processimage(url) method
+$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+$url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
+$object.processimage($url)
+
+# moderate content using [ContentModerator] object and processimage(url, cachesimage) method
+$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+$url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
+$object.processimage($url, $true)
+$object.processimage($url, $false)
+Test-AdultRacyContent -URL $url -Verbose -CachesImage
+
+# moderate content using [ContentModerator] object and processtext(text) method
+$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+$text = 'Holy shit! this is crap.'
+$object.processtext($text)
+$object.result.Classification
+
+# moderate content using [ContentModerator] object and processtext(text, autocorrect, personalIdentifiableInfo, listId, classify, language) method
+$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+$text = 'Holy shit! this is crap.'
+$object.processtext($text, $true, $true, '', 'eng')
+$object.result.Status
+```
+
