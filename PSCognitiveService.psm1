@@ -1,8 +1,10 @@
 using assembly System.Drawing
+using namespace ComputerVision
+using namespace Face
 [cmdletbinding()]
 param()
 
-$BasePath = $PSScriptRoot
+$BasePath = 'C:\Data\Powershell\repository\PSCognitiveService'
 
 # define class sequence
 $classList = @(
@@ -19,6 +21,7 @@ foreach ($class in $classList) {
     Write-Verbose "Dot sourcing class '$class'" -Verbose
     . "$BasePath\classes\$class.ps1"
 }
+
 
 # dot dourcing files
 $FolderNames = @(
