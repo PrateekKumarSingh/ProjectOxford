@@ -15,15 +15,12 @@ $classList = @(
 )
 
 # importing classes sequentially
-#foreach ($class in $classList) {
-#    Write-Verbose "Dot sourcing class '$class'" -Verbose
-#    . "$BasePath\classes\$class.ps1"
-#}
-
-# importing classes sequentially
 foreach ($class in $classList) {
-    Import-Module "$BasePath\classes\$class.ps1"
+    Write-Verbose "Dot sourcing class '$class'" -Verbose
+    . "$BasePath\classes\$class.ps1"
 }
+
+iex -Command (gc .\Classes\Face.ps1 | Out-String)
 
 # dot dourcing files
 $FolderNames = @(
