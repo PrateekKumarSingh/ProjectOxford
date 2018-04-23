@@ -10,12 +10,13 @@ $classList = @(
     'ValidateFile',
     'ValidateImage',
     'ComputerVision',
-    'Face'
+    'Face',
+    'ContentModerator'
 )
 
 # importing classes sequentially
 foreach ($class in $classList) {
-    Write-Verbose "Class '$class'" -Verbose
+    Write-Verbose "Dot sourcing class '$class'" -Verbose
     . "$BasePath\classes\$class.ps1"
 }
 

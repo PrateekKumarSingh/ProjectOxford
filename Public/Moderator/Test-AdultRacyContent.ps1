@@ -52,14 +52,3 @@ Function Test-AdultRacyContent {
     }
 
 }
-
-
-$path = [System.IO.FileInfo] 'C:\Tmp\test.png'
-$url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
-Test-AdultRacyContent -Path $path
- -Verbose -CachesImage
-
-
-Test-AdultRacyContent -Text "go fuck yourself" -Verbose
-Test-AdultRacyContent -Text "go fuck yourself" -Verbose
-Test-AdultRacyContent -Text "go fuck yourself" -AutoCorrect -PersonalIdentifiableInformation -Verbose

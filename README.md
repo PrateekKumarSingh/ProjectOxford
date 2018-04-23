@@ -1,12 +1,11 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/8txqcbse73ga4nj11g3h/branch/master?svg=true)](https://ci.appveyor.com/project/PrateekKumarSingh/ProjectOxford)
-# Microsoft Cognitive Services (aka, ProjectOxford)
-<a href='https://www.microsoft.com/cognitive-services'>Microsoft Cognitive Services</a> are some machine learning Artificial intelligent API's to give Human Side to your code and a beatiful user experience once subscribed.
+# PowerShell Module for Microsoft Cognitive Services (aka, ProjectOxford)
+<a href='https://www.microsoft.com/cognitive-services'>Microsoft Cognitive Services</a> are some machine learning Artificial intelligent REST API's to give Human-like cognition abilities to your code.
 
-Further expanding the evolving portfolio of machine learning APIs with a vision for more personal computing experiences and enhanced productivity aided by systems that increasingly can see, hear, speak, understand and even begin to reason
+This module provides a set of PowerShell cmdlets, which are PowerShell wrappers to query and access MS Cognitve service API's with ease and simplicity.
 
 Enabling developers to easily add intelligent features such as
 
-1. Emotion and video detection;
+1. Copmuter Vision
 2. Facial, Speech and Vision recognition;
 3. Speech and Language understanding  
 4. Image Analysis

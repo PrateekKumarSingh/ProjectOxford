@@ -5,9 +5,9 @@ $object.processimage($path)
 Test-AdultRacyContent -Path $Path -Verbose
 
 
-Test-AdultRacyContent -Text "go fuck yourself" -Verbose
-Test-AdultRacyContent -Text "go fuck yourself" -Verbose
-Test-AdultRacyContent -Text "go fuck yourself" -AutoCorrect -PersonalIdentifiableInformation -Verbose
+Test-AdultRacyContent -Text "go eff yourself" -Verbose
+Test-AdultRacyContent -Text "go eff yourself" -Verbose
+Test-AdultRacyContent -Text "go eff yourself" -AutoCorrect -PersonalIdentifiableInformation -Verbose
 
 # moderate content using [ContentModerator] object and processimage(path, cachesimage) method
 $object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
