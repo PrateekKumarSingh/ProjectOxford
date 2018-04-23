@@ -36,17 +36,12 @@ Function New-LocalConfiguration {
             $Accounts = Get-AzureRmCognitiveServicesAccount 
             Write-Verbose $("{0} Service found in AzureRM [{1}] " -f $Accounts.Count, $($Accounts.AccountType -join ', ') ) -Verbose
             if($Accounts){
-                $Accounts | ForEach-Object {
-                    $SubscriptionKey = ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
-                    $Location        = $_.Location
-                    $ServiceName     = ([uri]$_.Endpoint).segments[1] -replace "/",""
-                    $EndPoint        = $_.Endpoint
-                    
+                $Accounts | ForEach-Object {                   
                     $data = [System.Object] [Ordered] @{
-                        ServiceName     =   $ServiceName    
-                        Location        =   $Location       
-                        SubscriptionKey =   $SubscriptionKey 
-                        EndPoint        =   $EndPoint       
+                        ServiceName     =   ([uri]$_.Endpoint).segments[1] -replace "/",""
+                        Location        =   $_.Location
+                        SubscriptionKey =   ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
+                        EndPoint        =   $_.Endpoint
                     }
 
                     if($AddKeysToProfile){ & $Configuration -addKeysToProfile }
