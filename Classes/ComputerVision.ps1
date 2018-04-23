@@ -272,6 +272,7 @@ class ComputerVision {
 
 }
 
+
 #$visual_features = [enum]::GetNames([visualFeatures])
 #$details = [enum]::GetNames([details])
 #
