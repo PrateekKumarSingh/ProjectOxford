@@ -20,7 +20,6 @@ foreach ($class in $classList) {
     . "$BasePath\classes\$class.ps1"
 }
 
-iex -Command (gc .\Classes\Face.ps1 | Out-String)
 
 # dot dourcing files
 $FolderNames = @(
