@@ -1,5 +1,5 @@
 using assembly System.Drawing
-using namespace ComputerVision
+using namespace Vision
 using namespace Face
 [cmdletbinding()]
 param()
@@ -11,9 +11,9 @@ $classList = @(
     'Enum',
     'ValidateFile',
     'ValidateImage',
-    'ComputerVision',
+    'Vision',
     'Face',
-    'ContentModerator'
+    'Moderate'
 )
 
 # importing classes sequentially
@@ -37,14 +37,13 @@ Function New-CognitiveServiceInstance{
     [cmdletbinding()]
     param(
         [Parameter(Mandatory)]
-        [ValidateSet('ComputerVision','Face','ContentModerator')] $Name
+        [ValidateSet('Vision','Face','Moderate')] $Name
     )
 
     switch($Name){
-        
-        'ComputerVision' {[ComputerVision]::new($env:API_SubscriptionKey_ComputerVision, $env:API_Location_ComputerVision)}
+        'Vision' {[Vision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)}
         'Face' {[Face]::new($env:API_SubscriptionKey_Face, $env:API_Location_Face)}
-        'ContentModerator' {[face]::new($env:API_SubscriptionKey_ContentModerator, $env:API_Location_ContentModerator)}
+        'Moderate' {[face]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)}
     }
 
 }

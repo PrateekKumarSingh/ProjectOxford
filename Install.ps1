@@ -24,8 +24,8 @@ Try {
     $Files = @(
         'PSCognitiveService.psd1',
         'PSCognitiveService.psm1',
-        'Classes/ComputerVision.ps1',
-        'Classes/ContentModerator.ps1',
+        'Classes/Vision.ps1',
+        'Classes/Moderate.ps1',
         'Classes/Enum.ps1',
         'Classes/Face.ps1',
         'Classes/ValidateFile.ps1',

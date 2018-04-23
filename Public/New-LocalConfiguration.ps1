@@ -31,7 +31,7 @@ Function New-LocalConfiguration {
     
     if($FromAzure){
         if(Test-AzureRmLogin -verbose){
-            Write-Verbose "Already Logged in." 
+            Write-Verbose "Logged in."
             Write-Verbose "Fetching AzureRM Cognitive Service accounts" 
             $Accounts = Get-AzureRmCognitiveServicesAccount 
             Write-Verbose $("{0} Service found in AzureRM [{1}] " -f $Accounts.Count, $($Accounts.AccountType -join ', ') ) -Verbose

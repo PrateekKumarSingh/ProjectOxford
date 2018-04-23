@@ -15,7 +15,7 @@ Thumbnail -URL $URL -OutFile c:\tmp\t.png -Width 100 -Height 100 -Verbose -Smart
 
 
 # convert to thumbnail using computer vision classes and .toThumbnail() method
-$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+$Object = [Vision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
 
 # using URL
 $Object.toThumbnail([System.IO.FileInfo] $path, [System.IO.FileInfo] 'c:\tmp\test.png', 200, 200, $true)

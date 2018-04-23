@@ -9,7 +9,7 @@ $path = 'C:\tmp\q.jpg'
 $url = "http://www.imagesquotes.com/wp-content/uploads/2013/01/inspirational_quotes_motivational.jpg"
 
 # create computer vision object
-$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+$Object = [Vision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
 
 # using the OCR(url) method
 $Object.OCR([uri]$url)

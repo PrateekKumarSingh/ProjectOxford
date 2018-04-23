@@ -17,7 +17,7 @@ Get-Help analyze
 $url = "https://upload.wikimedia.org/wikipedia/commons/d/d9/Bill_gates_portrait.jpg"
 
 # create computer vision object
-$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+$Object = [Vision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
 
 # analyze image
 $Object.analyze([uri]$url)

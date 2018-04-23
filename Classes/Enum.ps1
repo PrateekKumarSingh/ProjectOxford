@@ -3,7 +3,7 @@ enum CognitiveService {
     face 
     emotion
     analytics
-    contentmoderator
+    Moderate
 }
 
 enum Location {

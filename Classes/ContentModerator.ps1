@@ -1,4 +1,4 @@
-class ContentModerator {
+class Moderate {
     # properties
     [String] $subscription_key
     [String] $location
@@ -8,7 +8,7 @@ class ContentModerator {
     [String] $endpoint
 
     # constructor
-    ContentModerator([String] $subscription_key, [Location] $location) {
+    Moderate([String] $subscription_key, [Location] $location) {
         $this.subscription_key = $subscription_key
         $this.location = $location
         $this.base_url = "https://{0}.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/" -f $this.location 

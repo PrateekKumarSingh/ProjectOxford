@@ -34,7 +34,7 @@ Function ConvertTo-Thumbnail {
     process {
         $Object = @()
         if (Test-LocalConfiguration -ServiceName 'Vision') {            
-            $Object = [ComputerVision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)
+            $Object = [Vision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)
             switch ($PsCmdlet.ParameterSetName) { 
                 "Path" { $Object.toThumbnail($Path, $OutFile, $Width, $Height, $SmartCropping); break} 
                 "URL" { $Object.toThumbnail($URL, $OutFile, $Width, $Height, $SmartCropping); break} 

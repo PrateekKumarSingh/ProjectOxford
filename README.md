@@ -44,7 +44,7 @@ Get-ImageAnalysis -path $path -VisualFeatures $visual_features -Details $details
 $url = "https://upload.wikimedia.org/wikipedia/commons/d/d9/Bill_gates_portrait.jpg"
 
 # create computer vision object
-$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+$Object = [Vision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
 
 # analyze image
 $Object.analyze([uri]$url)
@@ -73,7 +73,7 @@ $path = 'C:\temp\qoute.jpg'
 $url = "http://www.imagesquotes.com/wp-content/uploads/2013/01/inspirational_quotes_motivational.jpg"
 
 # create computer vision object
-$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+$Object = [Vision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
 
 # using the OCR(url) method
 $Object.OCR([uri]$url)
@@ -100,7 +100,7 @@ tag -URL $URL -Verbose
 tag -URL $path -Verbose
 
 # create computer vision object
-$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+$Object = [Vision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
 
 # using the tag(url) method
 $Object.tag([uri]$url)
@@ -127,7 +127,7 @@ Thumbnail -URL $URL -OutFile c:\temp\t.png -Width 100 -Height 100 -Verbose
 Thumbnail -URL $URL -OutFile c:\temp\t.png -Width 100 -Height 100 -Verbose -SmartCropping
 
 # convert to thumbnail using computer vision classes and .toThumbnail() method
-$Object = [ComputerVision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
+$Object = [Vision]::new($env:API_SubscriptionKey_vision, $env:API_Location_vision)
 
 # using URL
 $Object.toThumbnail([System.IO.FileInfo] $path, [System.IO.FileInfo] 'c:\temp\test.png', 200, 200, $true)
@@ -185,40 +185,40 @@ $object.result.faceattributes
 Adult and racy content verification
 
 ```PowerShell
-# moderate content using [ContentModerator] object and processimage(path) method
-$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+# moderate content using [Moderate] object and processimage(path) method
+$object = [Moderate]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)
 $path = [System.IO.FileInfo] 'C:\temp\test.png'
 $object.processimage($path)
 
 Test-AdultRacyContent -Text "go eff yourself" -Verbose
 Test-AdultRacyContent -Text "go eff yourself" -AutoCorrect -PersonalIdentifiableInformation -Verbose
 
-# moderate content using [ContentModerator] object and processimage(path, cachesimage) method
-$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+# moderate content using [Moderate] object and processimage(path, cachesimage) method
+$object = [Moderate]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)
 $path = [System.IO.FileInfo] 'C:\temp\test.png'
 $object.processimage($path, $true)
 Test-AdultRacyContent -Path $Path -Verbose -CachesImage
 
-# moderate content using [ContentModerator] object and processimage(url) method
-$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+# moderate content using [Moderate] object and processimage(url) method
+$object = [Moderate]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)
 $url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
 $object.processimage($url)
 
-# moderate content using [ContentModerator] object and processimage(url, cachesimage) method
-$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+# moderate content using [Moderate] object and processimage(url, cachesimage) method
+$object = [Moderate]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)
 $url = [uri] 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
 $object.processimage($url, $true)
 $object.processimage($url, $false)
 Test-AdultRacyContent -URL $url -Verbose -CachesImage
 
-# moderate content using [ContentModerator] object and processtext(text) method
-$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+# moderate content using [Moderate] object and processtext(text) method
+$object = [Moderate]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)
 $text = 'Holy shit! this is crap.'
 $object.processtext($text)
 $object.result.Classification
 
-# moderate content using [ContentModerator] object and processtext(text, autocorrect, personalIdentifiableInfo, listId, classify, language) method
-$object = [ContentModerator]::new($env:API_SubscriptionKey_contentmoderator, $env:API_Location_contentmoderator)
+# moderate content using [Moderate] object and processtext(text, autocorrect, personalIdentifiableInfo, listId, classify, language) method
+$object = [Moderate]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)
 $text = 'Holy shit! this is crap.'
 $object.processtext($text, $true, $true, '', 'eng')
 $object.result.Status

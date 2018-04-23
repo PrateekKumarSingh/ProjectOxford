@@ -20,7 +20,7 @@ Function Get-ImageTag {
     process {
         $Object = @()
         if (Test-LocalConfiguration -ServiceName 'Vision') {            
-            $Object = [ComputerVision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)
+            $Object = [Vision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)
             switch ($PsCmdlet.ParameterSetName) { 
                 "Path" { $Object.tag($path) ; break} 
                 "URL" { $Object.tag($url); break} 
