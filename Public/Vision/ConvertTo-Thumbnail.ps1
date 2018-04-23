@@ -14,7 +14,7 @@ Function ConvertTo-Thumbnail {
         [Parameter(ParameterSetName = 'URL', Mandatory, Position = 0)]
         [System.Uri] $URL,
         
-        [ValidateScript({[ValidateFile]::Extension([ValidateFile]::Path($_), [enum]::getnames([Extension]))})]
+        [ValidateScript({[ValidateFile]::Extension($_, [enum]::getnames([Extension]))})]
         [Parameter(Position = 1)]
         [System.IO.FileInfo] $OutFile = "$env:USERPROFILE\Pictures\Thumbnail.jpg", 
 
