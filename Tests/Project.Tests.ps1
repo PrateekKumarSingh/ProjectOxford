@@ -3,7 +3,6 @@ $projectRoot = Resolve-Path "$PSScriptRoot\.."
 $moduleRoot = Split-Path (Resolve-Path "$projectRoot\*\*.psd1")
 $moduleName = Split-Path $moduleRoot -Leaf
 
-Import-AdlStoreIte
 Describe "PSScriptAnalyzer rule-sets" -Tag Build {
     $Rules = Get-ScriptAnalyzerRule
     $ExcludedRules = 'PSUseShouldProcessForStateChangingFunctions', 'PSAvoidUsingWriteHost'
