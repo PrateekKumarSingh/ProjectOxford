@@ -1,5 +1,5 @@
 Function Get-ImageDescription{
-    [alias("describe")]
+    [alias("description")]
     [cmdletbinding()]
     param(
         [Parameter(ParameterSetName = 'Path',Mandatory, Position = 0)]

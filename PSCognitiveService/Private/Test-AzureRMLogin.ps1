@@ -2,6 +2,7 @@
 # returns $True if yes else throws error
 function Test-AzureRmLogin {
     [CmdletBinding()]
+    [OutputType([boolean])]
     [Alias()]
     Param()
 

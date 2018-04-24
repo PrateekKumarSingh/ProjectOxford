@@ -1,7 +1,7 @@
 # function to expose class instances and method overload definitions
 # outside the nested PowerShell module
 Function New-CognitiveServiceInstance {
-    [cmdletbinding()]
+    [cmdletbinding(SupportsShouldProcess=$false)]
     param(
         [Parameter(Mandatory)]
         [ValidateSet('Vision', 'Face', 'Moderate')] $Name
@@ -12,5 +12,4 @@ Function New-CognitiveServiceInstance {
         'Face' {[Face]::new($env:API_SubscriptionKey_Face, $env:API_Location_Face)}
         'Moderate' {[face]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)}
     }
-
 }

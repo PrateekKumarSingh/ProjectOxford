@@ -4,7 +4,7 @@ using namespace Face
 [cmdletbinding()]
 param()
 
-$BasePath = 'C:\Data\Powershell\repository\PSCognitiveService'
+$BasePath = $PSScriptRoot
 
 # define class sequence
 $classList = @(

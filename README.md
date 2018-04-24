@@ -1,3 +1,5 @@
+![Build status](https://ci.appveyor.com/api/projects/status/cgo827o4f74lmf9w/branch/master?svg=true)
+
 # PowerShell Module for Microsoft Cognitive Services (aka, ProjectOxford)
 <a href='https://www.microsoft.com/cognitive-services'>Microsoft Cognitive Services</a> are some machine learning Artificial intelligent REST API's to give Human-like cognition abilities to your applications.
 
