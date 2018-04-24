@@ -7,7 +7,7 @@ Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 Install-Module Psake, PSDeploy, Pester, BuildHelpers -Force
 
 "  Import Dependent Modules"
-Import-Module Psake, BuildHelpers, Pester
+Import-Module Psake, BuildHelpers, Pester -Verbose
 
 Set-BuildEnvironment -GitPath "C:\Program Files\Git\bin\git.exe"
 
