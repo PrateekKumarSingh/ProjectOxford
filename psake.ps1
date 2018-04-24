@@ -24,6 +24,7 @@ Task Init {
     $lines
     Set-Location $ProjectRoot
     "Build System Details:"
+    Import-Module Pester -Verbose
     Get-Item ENV:BH*
     "`n"
 }
