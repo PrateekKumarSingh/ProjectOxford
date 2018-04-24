@@ -1,29 +1,16 @@
-<#
-.Description
-Installs and loads all the required modules for the build.
-Derived from scripts written by Warren F. (RamblingCookieMonster)
-#>
-
-[cmdletbinding()]
-param ($Task = 'Default')
+param($Task = 'Default')
 "Starting build"
 
 # Grab nuget bits, install modules, set build variables, start build.
 "  Install Dependent Modules"
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
-Install-Module InvokeBuild, PSDeploy, BuildHelpers, PSScriptAnalyzer, PlatyPS -force -Scope CurrentUser -AllowClobber
-Install-Module Pester -Force -SkipPublisherCheck -Scope CurrentUser
+Install-Module Psake, PSDeploy, Pester, BuildHelpers
 
 "  Import Dependent Modules"
-Import-Module InvokeBuild, BuildHelpers, PSScriptAnalyzer
+Import-Module Psake, BuildHelpers
 
-Set-BuildEnvironment
+Set-BuildEnvironment -GitPath "C:\Program Files\Git\bin\git.exe"
 
 "  InvokeBuild"
-Invoke-Build $Task -Result result
-if ($Result.Error) {
-    exit 1
-}
-else {
-    exit 0
-}
+Invoke-psake .\psake.ps1 -taskList $Task -nologo
+exit ( [int]( -not $psake.build_success ) )

@@ -18,42 +18,31 @@ Properties {
     }
 }
 
-Task Default -Depends Deploy
+Task Default -Depends Test
 
 Task Init {
     $lines
     Set-Location $ProjectRoot
     "Build System Details:"
-    Get-Item ENV:BH* | Format-List
+    Get-Item ENV:BH*
     "`n"
 }
 
-Task UnitTests -Depends Init {
+Task Test -Depends Init {
     $lines
-    'Running quick unit tests to fail early if there is an error'
-    $TestResults = Invoke-Pester -Path $ProjectRoot\Tests\*unit* -PassThru -Tag Build
-
-    if ($TestResults.FailedCount -gt 0) {
-        Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
-    }
-    "`n"
-}
-
-Task Test -Depends UnitTests {
-    $lines
-    "`n`tSTATUS: Testing with PowerShell $PSVersion"
+    "`n`tSTATUS: Testing with PowerShell v$PSVersion"
 
     # Gather test results. Store them in a variable and file
-    #$TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -Tag Build
-    & "$ProjectRoot\Tests\Invoke-RSPester.ps1" -Path $ProjectRoot\Tests
+    $TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile"
+
     # In Appveyor?  Upload our tests! #Abstract this into a function?
     If ($ENV:BHBuildSystem -eq 'AppVeyor') {
-        # "Uploading $ProjectRoot\$TestFile to AppVeyor"
-        # "JobID: $env:APPVEYOR_JOB_ID"
-        # (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path "$ProjectRoot\$TestFile"))
+        (New-Object 'System.Net.WebClient').UploadFile(
+            "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)",
+            "$ProjectRoot\$TestFile" )
     }
 
-    # Remove-Item "$ProjectRoot\$TestFile" -Force -ErrorAction SilentlyContinue
+    Remove-Item "$ProjectRoot\$TestFile" -Force -ErrorAction SilentlyContinue
 
     # Failed tests?
     # Need to tell psake or it will proceed to the deployment. Danger!
@@ -66,45 +55,29 @@ Task Test -Depends UnitTests {
 Task Build -Depends Test {
     $lines
 
-    $functions = Get-ChildItem "$PSScriptRoot\$env:BHProjectName\Public\*.ps1" |
-        Where-Object { $_.name -notmatch 'Tests'} |
-        Select-Object -ExpandProperty basename
-
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions -Name $env:BHPSModuleManifest -FunctionsToExport $functions
+    Set-ModuleFunctions @Verbose
 
-    # Bump the module version
-    $version = [version] (Step-Version (Get-Metadata -Path $env:BHPSModuleManifest))
-    $galleryVersion = Get-NextPSGalleryVersion -Name $env:BHProjectName
-    if ($version -lt $galleryVersion) {
-        $version = $galleryVersion
+    # Bump the module version if we didn't manually bump it
+    Try {
+        $GalleryVersion = Get-NextNugetPackageVersion -Name $env:BHProjectName -ErrorAction Stop
+        $GithubVersion = Get-MetaData -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -ErrorAction Stop
+        if ($GalleryVersion -ge $GithubVersion) {
+            Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $GalleryVersion -ErrorAction stop
+        }
     }
-    $version = [version]::New($version.Major, $version.Minor, $version.Build, $env:BHBuildNumber)
-    Write-Host "Using version: $version"
-
-    Update-Metadata -Path $env:BHPSModuleManifest -PropertyName ModuleVersion -Value $version
+    Catch {
+        "Failed to update version for '$env:BHProjectName': $_.`nContinuing with existing version"
+    }
 }
 
 Task Deploy -Depends Build {
     $lines
 
-    # Gate deployment
-    if (
-        $ENV:BHBuildSystem -ne 'Unknown' -and
-        $ENV:BHBranchName -eq "master" -and
-        $ENV:BHCommitMessage -match '!deploy'
-    ) {
-        $Params = @{
-            Path  = $ProjectRoot
-            Force = $true
-        }
-
-        Invoke-PSDeploy @Verbose @Params
+    $Params = @{
+        Path    = $ProjectRoot
+        Force   = $true
+        Recurse = $false # We keep psdeploy artifacts, avoid deploying those : )
     }
-    else {
-        "Skipping deployment: To deploy, ensure that...`n" +
-        "`t* You are in a known build system (Current: $ENV:BHBuildSystem)`n" +
-        "`t* You are committing to the master branch (Current: $ENV:BHBranchName) `n" +
-        "`t* Your commit message includes !deploy (Current: $ENV:BHCommitMessage)"
-    }
+    Invoke-PSDeploy @Verbose @Params
 }
