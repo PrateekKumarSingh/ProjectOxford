@@ -47,7 +47,7 @@ $url = "https://upload.wikimedia.org/wikipedia/commons/d/d9/Bill_gates_portrait.
 
 # create computer vision object to expose [vision] class instances and method overload definitions
 # outside the nested PowerShell module
-$Object = New-CognitiveServiceInstance -Name Face
+$Object = New-CognitiveServiceInstance -Name Vision
 
 # analyze image
 $Object.analyze([uri]$url)
@@ -76,7 +76,7 @@ $path = 'C:\temp\qoute.jpg'
 $url = "http://www.imagesquotes.com/wp-content/uploads/2013/01/inspirational_quotes_motivational.jpg"
 
 # create computer vision object
-$Object = New-CognitiveServiceInstance -Name Face
+$Object = New-CognitiveServiceInstance -Name Vision
 
 # using the OCR(url) method
 $Object.OCR([uri]$url)
@@ -103,7 +103,7 @@ tag -URL $URL -Verbose
 tag -URL $path -Verbose
 
 # create computer vision object
-$Object = New-CognitiveServiceInstance -Name Face
+$Object = New-CognitiveServiceInstance -Name Vision
 
 # using the tag(url) method
 $Object.tag([uri]$url)
@@ -130,7 +130,7 @@ Thumbnail -URL $URL -OutFile c:\temp\t.png -Width 100 -Height 100 -Verbose
 Thumbnail -URL $URL -OutFile c:\temp\t.png -Width 100 -Height 100 -Verbose -SmartCropping
 
 # convert to thumbnail using computer vision classes and .toThumbnail() method
-$Object = New-CognitiveServiceInstance -Name Face
+$Object = New-CognitiveServiceInstance -Name Vision
 
 # using URL
 $Object.toThumbnail([System.IO.FileInfo] $path, [System.IO.FileInfo] 'c:\temp\test.png', 200, 200, $true)
