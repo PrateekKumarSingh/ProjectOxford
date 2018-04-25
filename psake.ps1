@@ -24,15 +24,14 @@ Task Init {
     $lines
     Set-Location $ProjectRoot
     "Build System Details:"
-    Import-Module Pester -Verbose
     Get-Item ENV:BH*
     "`n"
 }
 
 Task Test -Depends Init {
     $lines
+    Import-Module Pester -Verbose 
     "`n`tSTATUS: Testing with PowerShell v$PSVersion"
-
     # Gather test results. Store them in a variable and file
     $TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile"
 
