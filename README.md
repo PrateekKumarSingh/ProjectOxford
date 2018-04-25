@@ -8,14 +8,14 @@ You need to do one-time registration for each Microsoft Cognitive Services API f
 
 # Installation
 ### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
-You can install the `Gridify` module directly from the PowerShell Gallery
+You can install the `PSCognitiveService` module directly from the PowerShell Gallery
 * **[Recommended]** Install to your personal PowerShell Modules folder
 ```PowerShell
-Install-Module Gridify -scope CurrentUser
+Install-Module PSCognitiveService -scope CurrentUser
 ```
 * **[Requires Elevation]** Install for Everyone (computer PowerShell Modules folder)
 ```PowerShell
-Install-Module Gridify
+Install-Module PSCognitiveService
 ```
 ### PowerShell v4 and Earlier
 To install to your personal modules folder run:
