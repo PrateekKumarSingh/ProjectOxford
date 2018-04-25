@@ -18,7 +18,7 @@ Param (
 $Pre = $VerbosePreference
 $VerbosePreference = 'continue'
 
-Try {
+#Try {
     Write-Verbose "$ModuleName module installation started"
 
     $Files = @(
@@ -30,12 +30,6 @@ Try {
         'PSCognitiveService/Classes/Face.ps1',
         'PSCognitiveService/Classes/ValidateFile.ps1',
         'PSCognitiveService/Classes/ValidateImage.ps1',
-        'PSCognitiveService/Examples/ConvertTo-Thumbnail.ps1',
-        'PSCognitiveService/Examples/Get-Face.ps1',
-        'PSCognitiveService/Examples/Get-ImageAnalysis.ps1',
-        'PSCognitiveService/Examples/Get-ImageTag.ps1',
-        'PSCognitiveService/Examples/Get-ImageText.ps1',
-        'PSCognitiveService/Examples/Test-AdultRacyContent.ps1',
         'PSCognitiveService/Private/Test-AzureRMLogin.ps1',
         'PSCognitiveService/Private/Test-LocalConfiguration.ps1',
         'PSCognitiveService/Public/New-LocalConfiguration.ps1',
@@ -47,12 +41,7 @@ Try {
         'PSCognitiveService/Public/Vision/Get-ImageTag.ps1',
         'PSCognitiveService/Public/Vision/Get-Imagetext.ps1'
     )
-}
-Catch {
-    throw "Failed installing the module in the install directory '$InstallDirectory': $_"
-}
 
-Try {
     if (-not $InstallDirectory) {
         Write-Verbose "$ModuleName no installation directory provided"
 
@@ -72,13 +61,13 @@ Try {
 
     if (-not (Test-Path $InstallDirectory)) {
         New-Item -Path $InstallDirectory -ItemType Directory -EA Stop -Verbose | Out-Null
-        New-Item -Path $InstallDirectory\Classes -ItemType Directory -EA Stop -Verbose | Out-Null
-        New-Item -Path $InstallDirectory\Examples -ItemType Directory -EA Stop -Verbose | Out-Null
-        New-Item -Path $InstallDirectory\Private -ItemType Directory -EA Stop -Verbose | Out-Null
-        New-Item -Path $InstallDirectory\Public -ItemType Directory -EA Stop -Verbose | Out-Null
-        New-Item -Path $InstallDirectory\Public\Face -ItemType Directory -EA Stop -Verbose | Out-Null
-        New-Item -Path $InstallDirectory\Public\Moderator -ItemType Directory -EA Stop -Verbose | Out-Null
-        New-Item -Path $InstallDirectory\Public\Vision -ItemType Directory -EA Stop -Verbose | Out-Null
+        New-Item -Path $InstallDirectory\PSCognitiveService\Classes -ItemType Directory -EA Stop -Verbose | Out-Null
+        New-Item -Path $InstallDirectory\PSCognitiveService\Examples -ItemType Directory -EA Stop -Verbose | Out-Null
+        New-Item -Path $InstallDirectory\PSCognitiveService\Private -ItemType Directory -EA Stop -Verbose | Out-Null
+        New-Item -Path $InstallDirectory\PSCognitiveService\Public -ItemType Directory -EA Stop -Verbose | Out-Null
+        New-Item -Path $InstallDirectory\PSCognitiveService\Public\Face -ItemType Directory -EA Stop -Verbose | Out-Null
+        New-Item -Path $InstallDirectory\PSCognitiveService\Public\Moderator -ItemType Directory -EA Stop -Verbose | Out-Null
+        New-Item -Path $InstallDirectory\PSCognitiveService\Public\Vision -ItemType Directory -EA Stop -Verbose | Out-Null
         Write-Verbose "$ModuleName created module folder '$InstallDirectory'"
     }
 
@@ -92,8 +81,8 @@ Try {
     }
 
     Write-Verbose "$ModuleName module installation successful"
-}
-Catch {
-    throw "Failed installing the module in the install directory '$InstallDirectory': $_"
-}
+#}
+#Catch {
+#    throw "Failed installing the module in the install directory '$InstallDirectory': $_"
+#}
 $VerbosePreference = $Pre

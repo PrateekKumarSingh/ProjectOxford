@@ -20,7 +20,7 @@ Install-Module Gridify
 ### PowerShell v4 and Earlier
 To install to your personal modules folder run:
 ```PowerShell
-iex (new-object System.Net.WebClient).DownloadStrin('https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Install.ps1')
+iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Install.ps1')
 ```
 
 # Usage
