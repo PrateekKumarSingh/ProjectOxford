@@ -21,14 +21,14 @@ Function New-LocalConfiguration {
         $ServiceName = $data.ServiceName
         $SubscriptionKey = $data.SubscriptionKey
         $Location = $data.Location
-        Write-Verbose "Setting Environment variable: `$env:API_SubscriptionKey_$ServiceName for Cognitive Service: $($ServiceName.ToString().ToUpper())" 
+        Write-Verbose "Setting Environment variable: `$env:API_SubscriptionKey_$ServiceName for Cognitive Service: $ServiceName" 
         Set-Item -Path "env:API_SubscriptionKey_$ServiceName" -Value $SubscriptionKey
-        Write-Verbose "Setting Environment variable: `$env:API_Location_$ServiceName for Cognitive Service: $($ServiceName.ToString().ToUpper())" 
-        Set-Item -Path "env:API_Location_$ServiceName" -Value $Location -Verbose
+        Write-Verbose "Setting Environment variable: `$env:API_Location_$ServiceName for Cognitive Service: $ServiceName" 
+        Set-Item -Path "env:API_Location_$ServiceName" -Value $Location
         if($AddKeysToProfile){
             Write-Verbose "Adding Environment variable(s) to Profile: $Profile" -Verbose
-            Add-Content $profile -Value "`$env:API_SubscriptionKey_$ServiceName = '$SubscriptionKey'"
-            Add-Content $profile -Value "`$env:API_Location_$ServiceName = '$Location'"
+            Update-ProfileVariable "env:API_SubscriptionKey_$ServiceName" $SubscriptionKey
+            Update-ProfileVariable "env:API_Location_$ServiceName" $Location
         }
     }
     
