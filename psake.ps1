@@ -10,7 +10,6 @@ Properties {
     $Timestamp = Get-date -uformat "%Y%m%d-%H%M%S"
     $PSVersion = $PSVersionTable.PSVersion.Major
     $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
-    $MediaDir = "$ProjectRoot\Media\"
     $lines = '----------------------------------------------------------------------'
 
     $Verbose = @{}
@@ -33,7 +32,7 @@ Task Test -Depends Init {
     $lines
     "`n`tSTATUS: Testing with PowerShell v$PSVersion"
     # Gather test results. Store them in a variable and file
-    $TestResults = Invoke-Pester -Path $ProjectRoot\Tests -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile"
+    $TestResults = Invoke-Pester -Path $ProjectRoot\Tests\Project.Tests.ps1 -PassThru -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile"
 
     # In Appveyor?  Upload our tests! #Abstract this into a function?
     If ($ENV:BHBuildSystem -eq 'AppVeyor') {

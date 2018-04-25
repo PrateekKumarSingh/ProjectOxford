@@ -8,10 +8,10 @@ InModuleScope -ModuleName PSCognitiveService {
     Describe "Test Face API Function" -Tag Build {  
         Context 'Get-Face' {            
             It "Should not throw with a local file PATH" {
-                {Get-Face -Path "$ENV:BHProjectPath\Media\BillGates.jpg"} | Should Not throw
+                {Get-Face -Path ".\Media\BillGates.jpg"} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-Face -Path "$ENV:BHProjectPath\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
+                (Get-Face -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
                 {Get-Face -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
@@ -25,10 +25,10 @@ InModuleScope -ModuleName PSCognitiveService {
     Describe "Test Vision API Function" -Tag Build {
         Context 'Get-ImageAnalysis' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageAnalysis -Path "$ENV:BHProjectPath\Media\BillGates.jpg"} | Should Not throw
+                {Get-ImageAnalysis -Path ".\Media\BillGates.jpg"} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageAnalysis -Path "$ENV:BHProjectPath\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
+                (Get-ImageAnalysis -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
                 {Get-ImageAnalysis -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
@@ -40,10 +40,10 @@ InModuleScope -ModuleName PSCognitiveService {
 
         Context 'Get-ImageDescription' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageDescription -Path "$ENV:BHProjectPath\Media\BillGates.jpg"} | Should Not throw
+                {Get-ImageDescription -Path ".\Media\BillGates.jpg"} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageDescription -Path "$ENV:BHProjectPath\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
+                (Get-ImageDescription -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
                 {Get-ImageDescription -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
@@ -55,10 +55,10 @@ InModuleScope -ModuleName PSCognitiveService {
      
         Context 'Get-ImageTag' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageTag -Path "$ENV:BHProjectPath\Media\BillGates.jpg"} | Should Not throw
+                {Get-ImageTag -Path ".\Media\BillGates.jpg"} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageTag -Path "$ENV:BHProjectPath\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
+                (Get-ImageTag -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
                 {Get-ImageTag -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
@@ -70,10 +70,10 @@ InModuleScope -ModuleName PSCognitiveService {
 
         Context 'Get-ImageText' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageText -Path "$ENV:BHProjectPath\Media\BillGates.jpg"} | Should Not throw
+                {Get-ImageText -Path ".\Media\BillGates.jpg"} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageText -Path "$ENV:BHProjectPath\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
+                (Get-ImageText -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
                 {Get-ImageText -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
