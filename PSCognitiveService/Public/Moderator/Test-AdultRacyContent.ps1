@@ -38,7 +38,7 @@ Function Test-AdultRacyContent {
     }
     process {
         $Object = @()
-        if (Test-LocalConfiguration -ServiceName 'Moderate') {            
+        if (Test-LocalConfiguration -ServiceName 'ContentModerator') {            
             $Object = [Moderate]::new($env:API_SubscriptionKey_ContentModerator, $env:API_Location_ContentModerator)
             switch ($PsCmdlet.ParameterSetName) { 
                 "Path" { $Object.processimage($path, $cachesImage) ; break} 

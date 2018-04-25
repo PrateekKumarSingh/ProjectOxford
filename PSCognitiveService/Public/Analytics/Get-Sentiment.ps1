@@ -1,5 +1,5 @@
-Function Trace-Language {
-    [alias("Lang")]
+Function Get-Sentiment {
+    [alias("sentiment")]
     [cmdletbinding()]
     param(
         [Parameter(Mandatory, Position = 0)]
@@ -13,7 +13,7 @@ Function Trace-Language {
         $Object = @()
         if (Test-LocalConfiguration -ServiceName 'Text') {            
             $Object = [Analytics]::new($env:API_SubscriptionKey_Text, $env:API_Location_Text)
-            $Object.detectLanguage($Text)     
+            $Object.getSentiment($Text)     
         }
         Remove-Variable -Name Object
     }

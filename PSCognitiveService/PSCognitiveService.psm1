@@ -13,7 +13,8 @@ $classList = @(
     'ValidateImage',
     'Vision',
     'Face',
-    'Moderate'
+    'Moderate',
+    'Analytics'
 )
 
 # importing classes sequentially

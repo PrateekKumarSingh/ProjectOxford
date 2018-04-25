@@ -47,8 +47,8 @@ Function New-LocalConfiguration {
                         EndPoint        =   $_.Endpoint
                     }
 
-                    if($AddKeysToProfile){ & $Configuration -addKeysToProfile $data}
-                    else{ & $Configuration $data}
+                    #if($AddKeysToProfile){ & $Configuration -addKeysToProfile $data}
+                    #else{ & $Configuration $data}
 
                     $data
                 }

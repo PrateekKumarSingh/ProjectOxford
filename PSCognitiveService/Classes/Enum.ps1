@@ -2,8 +2,8 @@ enum CognitiveService {
     vision
     face 
     emotion
-    analytics
-    moderate
+    text
+    ContentModerator
 }
 
 enum Location {
