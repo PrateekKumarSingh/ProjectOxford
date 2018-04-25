@@ -2,6 +2,8 @@ $projectRoot = Resolve-Path "$PSScriptRoot\.."
 $moduleRoot = Split-Path (Resolve-Path "$projectRoot\*\*.psd1")
 $moduleName = Split-Path $moduleRoot -Leaf
 
+Import-Module $projectRoot\PSCognitiveService\PSCognitiveService.psm1
+
 InModuleScope -ModuleName PSCognitiveService {
     Describe "Test Face API Function" -Tag Build {  
         $Path = '.\Media\BillGates.jpg'
