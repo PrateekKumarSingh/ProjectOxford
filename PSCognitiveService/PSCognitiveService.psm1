@@ -18,7 +18,7 @@ $classList = @(
 
 # importing classes sequentially
 foreach ($class in $classList) {
-    Write-Verbose "Dot sourcing class '$class'" -Verbose
+    Write-Verbose "Dot sourcing class '$class'"
     . "$BasePath\classes\$class.ps1"
 }
 
