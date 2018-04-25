@@ -6,84 +6,80 @@ Import-Module $projectRoot\PSCognitiveService\PSCognitiveService.psm1
 
 InModuleScope -ModuleName PSCognitiveService {
     Describe "Test Face API Function" -Tag Build {  
-        $Path = '.\Media\BillGates.jpg'
-        $Url = 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
         Context 'Get-Face' {            
             It "Should not throw with a local file PATH" {
-                {Get-Face -Path $Path} | Should Not throw
+                {Get-Face -Path .\Media\BillGates.jpg} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-Face -Path $Path).gettype().Name | Should Be PSCustomObject
+                (Get-Face -Path .\Media\BillGates.jpg).gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-Face -URL $Url} | Should Not throw
+                {Get-Face -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-Face -URL $Url).gettype().Name | Should Be PSCustomObject
+                (Get-Face -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
     }
 
     Describe "Test Vision API Function" -Tag Build {
-        $Path = '.\Media\BillGates.jpg'
-        $Url = 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'
         Context 'Get-ImageAnalysis' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageAnalysis -Path $Path} | Should Not throw
+                {Get-ImageAnalysis -Path .\Media\BillGates.jpg} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageAnalysis -Path $Path).gettype().Name | Should Be PSCustomObject
+                (Get-ImageAnalysis -Path .\Media\BillGates.jpg).gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageAnalysis -URL $Url} | Should Not throw
+                {Get-ImageAnalysis -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageAnalysis -URL $Url).gettype().Name | Should Be PSCustomObject
+                (Get-ImageAnalysis -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
 
         Context 'Get-ImageDescription' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageDescription -Path $Path} | Should Not throw
+                {Get-ImageDescription -Path .\Media\BillGates.jpg} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageDescription -Path $Path).gettype().Name | Should Be PSCustomObject
+                (Get-ImageDescription -Path .\Media\BillGates.jpg).gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageDescription -URL $Url} | Should Not throw
+                {Get-ImageDescription -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageDescription -URL $Url).gettype().Name | Should Be PSCustomObject
+                (Get-ImageDescription -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
      
         Context 'Get-ImageTag' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageTag -Path $Path} | Should Not throw
+                {Get-ImageTag -Path .\Media\BillGates.jpg} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageTag -Path $Path).gettype().Name | Should Be PSCustomObject
+                (Get-ImageTag -Path .\Media\BillGates.jpg).gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageTag -URL $Url} | Should Not throw
+                {Get-ImageTag -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageTag -URL $Url).gettype().Name | Should Be PSCustomObject
+                (Get-ImageTag -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
 
         Context 'Get-ImageText' {            
             It "Should not throw with a local file PATH" {
-                {Get-ImageText -Path $Path} | Should Not throw
+                {Get-ImageText -Path .\Media\BillGates.jpg} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a local file PATH" {
-                (Get-ImageText -Path $Path).gettype().Name | Should Be PSCustomObject
+                (Get-ImageText -Path .\Media\BillGates.jpg).gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageText -URL $Url} | Should Not throw
+                {Get-ImageText -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageText -URL $Url).gettype().Name | Should Be PSCustomObject
+                (Get-ImageText -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
     }
