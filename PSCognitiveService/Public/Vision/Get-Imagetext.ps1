@@ -19,7 +19,7 @@ Function Get-ImageText{
     }
     process {
         $Object = @()
-        if (Test-LocalConfiguration -ServiceName 'Vision') {            
+        if (Test-LocalConfiguration -ServiceName 'ComputerVision') {            
             $Object = [Vision]::new($env:API_SubscriptionKey_ComputerVision, $env:API_Location_ComputerVision)
             switch ($PsCmdlet.ParameterSetName) { 
                 "Path" { $Object.ocr($path) ; break} 

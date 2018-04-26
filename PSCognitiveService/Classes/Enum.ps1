@@ -1,8 +1,8 @@
 enum CognitiveService {
-    vision
-    face 
-    emotion
-    text
+    ComputerVision
+    Face 
+    Emotion
+    TextAnalytics
     ContentModerator
 }
 
