@@ -12,7 +12,7 @@ Function Get-Sentiment {
     process {
         $Object = @()
         if (Test-LocalConfiguration -ServiceName 'Text') {            
-            $Object = [Analytics]::new($env:API_SubscriptionKey_Text, $env:API_Location_Text)
+            $Object = [Analytics]::new($env:API_SubscriptionKey_TextAnalytics, $env:API_Location_TextAnalytics)
             $Object.getSentiment($Text)     
         }
         Remove-Variable -Name Object

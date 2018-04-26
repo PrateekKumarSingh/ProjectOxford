@@ -11,6 +11,7 @@ $classList = @(
     'Enum',
     'ValidateFile',
     'ValidateImage',
+    'ValidateMarket',
     'Vision',
     'Face',
     'Moderate',

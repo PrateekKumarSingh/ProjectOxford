@@ -41,14 +41,14 @@ Function New-LocalConfiguration {
             if($Accounts){
                 $Accounts | ForEach-Object {                   
                     $data = [System.Object] [Ordered] @{
-                        ServiceName     =   ([uri]$_.Endpoint).segments[1] -replace "/",""
+                        ServiceName     =   $_.AccountType -replace "\.","_"
                         Location        =   $_.Location
                         SubscriptionKey =   ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
                         EndPoint        =   $_.Endpoint
                     }
 
-                    #if($AddKeysToProfile){ & $Configuration -addKeysToProfile $data}
-                    #else{ & $Configuration $data}
+                    if($AddKeysToProfile){ & $Configuration -addKeysToProfile $data}
+                    else{ & $Configuration $data}
 
                     $data
                 }

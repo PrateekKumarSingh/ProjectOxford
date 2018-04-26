@@ -76,3 +76,22 @@ enum FaceAttributes {
     exposure
     noise
 }
+
+
+enum SafeSearch {
+    off
+    moderate
+    strict
+}
+
+enum ResponseFilters {
+    Computation
+    Entities
+    Images
+    News
+    RelatedSearches
+    SpellSuggestions
+    TimeZone
+    Videos
+    Webpages
+}
