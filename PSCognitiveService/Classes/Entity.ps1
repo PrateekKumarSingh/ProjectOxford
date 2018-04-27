@@ -32,7 +32,7 @@ class Entity {
     #endregion methods    
 }
 
-$ob = [Entity]::new($env:API_SubscriptionKey_Bing_EntitySearch)
-#$ob.response_filter = [ResponseFilters]::Computation
-$ob.Search('brad pit',10, 0 , 'en-CA', [SafeSearch]::off)
-$ob.result.entities.value
+#$ob = [Entity]::new($env:API_SubscriptionKey_Bing_EntitySearch)
+##$ob.response_filter = [ResponseFilters]::Computation
+#$ob.Search('brad pit',10, 0 , 'en-CA', [SafeSearch]::off)
+#$ob.result.entities.value

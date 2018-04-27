@@ -49,9 +49,9 @@ class Bing {
     #endregion methods    
 }
 
-$ob = [Bing]::new($env:API_SubscriptionKey_Bing_Search_v7)
-#$ob.response_filter = [ResponseFilters]::Computation
-$ob.Search('ridicurious.com') 
-$ob.result.webPages.value
-$ob.Search('powershell',1, 20 , 'en-CA', [SafeSearch]::off)
-$ob.result.webPages.value
+#$ob = [Bing]::new($env:API_SubscriptionKey_Bing_Search_v7)
+##$ob.response_filter = [ResponseFilters]::Computation
+#$ob.Search('ridicurious.com') 
+#$ob.result.webPages.value
+#$ob.Search('powershell',1, 20 , 'en-CA', [SafeSearch]::off)
+#$ob.result.webPages.value

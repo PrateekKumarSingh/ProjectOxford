@@ -1,6 +1,4 @@
 using assembly System.Drawing
-using namespace Vision
-using namespace Face
 [cmdletbinding()]
 param()
 
@@ -15,12 +13,13 @@ $classList = @(
     'Vision',
     'Face',
     'Moderate',
-    'Analytics'
+    'Analytics',
+    'Bing'
 )
 
 # importing classes sequentially
 foreach ($class in $classList) {
-    Write-Verbose "Dot sourcing class '$class'"
+    Write-Verbose "Dot sourcing class '$class'" -Verbose
     . "$BasePath\classes\$class.ps1"
 }
 
