@@ -7,7 +7,7 @@ class Bing {
     hidden $base_url 
     [String] $endpoint
     # constructor
-    Search ([String] $subscription_key) {
+    Bing ([String] $subscription_key) {
         $this.subscription_key = $subscription_key
         $this.base_url = "https://api.cognitive.microsoft.com/bing/v7.0/"
     }
