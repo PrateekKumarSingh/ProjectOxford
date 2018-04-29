@@ -1,4 +1,4 @@
-class Vision {
+class ComputerVision {
     # properties
     [String] $subscription_key
     [String] $location
@@ -8,7 +8,7 @@ class Vision {
     [String] $endpoint
 
     # constructor
-    Vision([String] $subscription_key, [Location] $location) {
+    CopmuterVision([String] $subscription_key, [Location] $location) {
         $this.subscription_key = $subscription_key
         $this.location = $location
         $this.base_url = "https://{0}.api.cognitive.microsoft.com/vision/v1.0/" -f $this.location

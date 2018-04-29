@@ -10,11 +10,11 @@ $classList = @(
     'ValidateFile',
     'ValidateImage',
     'ValidateMarket',
-    'Vision',
+    'ComputerVision',
     'Face',
-    'Moderate',
-    'Analytics',
-    'Bing'
+    'TextAnalytics',
+    'ContentModerator',
+    'BingSearchV7'
 )
 
 # importing classes sequentially

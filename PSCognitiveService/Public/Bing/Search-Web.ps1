@@ -11,8 +11,8 @@ Function Search-Web {
     }
     process {
         $Object = @()
-        if (Test-LocalConfiguration -ServiceName 'Bing_Search_v7') {            
-            $Object = [Bing]::new($env:API_SubscriptionKey_Bing_Search_v7, $env:API_Location_Bing_Search_v7)
+        if (Test-LocalConfiguration -ServiceName 'BingSearchv7') {            
+            $Object = [BingSearchV7]::new($env:API_SubscriptionKey_BingSearchv7)
             $Object.Search($Text)     
         }
         Remove-Variable -Name Object

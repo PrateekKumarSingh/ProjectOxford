@@ -4,12 +4,15 @@ Function New-CognitiveServiceInstance {
     [cmdletbinding(SupportsShouldProcess=$false)]
     param(
         [Parameter(Mandatory)]
-        [ValidateSet('Vision', 'Face', 'Moderate')] $Name
+        #[ValidateSet('ComputerVision', 'Face', 'ContentModerator','TextAnalytics','Bing')] $Name
+        [CognitiveService] $Name
     )
 
     switch ($Name) {
-        'Vision' {[Vision]::new($env:API_SubscriptionKey_Vision, $env:API_Location_Vision)}
+        'ComputerVision' {[ComputerVision]::new($env:API_SubscriptionKey_ComputerVision, $env:API_Location_ComputerVision)}
         'Face' {[Face]::new($env:API_SubscriptionKey_Face, $env:API_Location_Face)}
-        'Moderate' {[face]::new($env:API_SubscriptionKey_Moderate, $env:API_Location_Moderate)}
+        'ContentModerator' {[ContentModerator]::new($env:API_SubscriptionKey_ContentModerator, $env:API_Location_ContentModerator)}
+        'TextAnalytics' {[TextAnalytics]::new($env:API_SubscriptionKey_TextAnalytics, $env:API_Location_TextAnalytics)}
+        'BingSearchV7' {[BingSearchV7]::new($env:API_SubscriptionKey_BingSearchV7)}
     }
 }

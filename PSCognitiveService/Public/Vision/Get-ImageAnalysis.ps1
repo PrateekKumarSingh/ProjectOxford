@@ -24,7 +24,7 @@ Function Get-ImageAnalysis {
     process {
         $Object = @()
         if (Test-LocalConfiguration -ServiceName 'ComputerVision') {            
-            $Object = [Vision]::new($env:API_SubscriptionKey_ComputerVision, $env:API_Location_ComputerVision)
+            $Object = [ComputerVision]::new($env:API_SubscriptionKey_ComputerVision, $env:API_Location_ComputerVision)
             switch ($PsCmdlet.ParameterSetName) { 
                 "Path" { $Object.analyze($path, $VisualFeatures, $Details) ; break} 
                 "URL" { $Object.analyze($url, $VisualFeatures, $Details); break} 

@@ -22,7 +22,7 @@ InModuleScope -ModuleName PSCognitiveService {
         }
     }
 
-    Describe "Test Vision API Function" -Tag Build {
+    Describe "Test ComputerVision API Function" -Tag Build {
         Context 'Get-ImageAnalysis' {            
             It "Should not throw with a local file PATH" {
                 {Get-ImageAnalysis -Path ".\Media\BillGates.jpg"} | Should Not throw
@@ -80,6 +80,20 @@ InModuleScope -ModuleName PSCognitiveService {
             }
             It "Should return a [PSCustomObject] with a URL" {
                 (Get-ImageText -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
+            }
+        }
+    }
+
+    Describe "Test ContentModerator API Function" -Tag Build {  
+        Context 'Test-AdultRacyContent' {            
+            It "Should not throw" {
+                {Test-AdultRacyContent -Text "What the hell is wrong with you" -AutoCorrect -PersonalIdentifiableInformation} | Should Not throw
+            }
+            It "Should return a [PSCustomObject]" {
+                (Test-AdultRacyContent -Text "What the hell is wrong with you" -AutoCorrect -PersonalIdentifiableInformation).gettype().Name | Should Be PSCustomObject
+            }
+            It "Should not throw with a local file PATH" {
+                {Test-AdultRacyContent -Path ".\Media\BillGates.jpg" -Verbose -CachesImage} | Should Not throw
             }
         }
     }

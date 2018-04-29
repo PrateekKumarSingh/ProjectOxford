@@ -12,7 +12,7 @@ Function Get-KeyPhrase {
     process {
         $Object = @()
         if (Test-LocalConfiguration -ServiceName 'TextAnalytics') {            
-            $Object = [Analytics]::new($env:API_SubscriptionKey_TextAnalytics, $env:API_Location_TextAnalytics)
+            $Object = [TextAnalytics]::new($env:API_SubscriptionKey_TextAnalytics, $env:API_Location_TextAnalytics)
             $Object.getKeyPhrase($Text)     
         }
         Remove-Variable -Name Object

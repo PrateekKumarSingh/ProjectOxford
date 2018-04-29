@@ -23,12 +23,17 @@ Function New-LocalConfiguration {
         $Location = $data.Location
         Write-Verbose "Setting Environment variable: `$env:API_SubscriptionKey_$ServiceName for Cognitive Service: $ServiceName" 
         Set-Item -Path "env:API_SubscriptionKey_$ServiceName" -Value $SubscriptionKey
-        Write-Verbose "Setting Environment variable: `$env:API_Location_$ServiceName for Cognitive Service: $ServiceName" 
-        Set-Item -Path "env:API_Location_$ServiceName" -Value $Location
+        if($Location -ne 'global'){
+            Write-Verbose "Setting Environment variable: `$env:API_Location_$ServiceName for Cognitive Service: $ServiceName" 
+            Set-Item -Path "env:API_Location_$ServiceName" -Value $Location
+        }
         if($AddKeysToProfile){
             Write-Verbose "Adding Environment variable(s) to Profile: $Profile" -Verbose
             Update-ProfileVariable "env:API_SubscriptionKey_$ServiceName" $SubscriptionKey
-            Update-ProfileVariable "env:API_Location_$ServiceName" $Location
+            if($Location -ne 'global'){
+                Update-ProfileVariable "env:API_Location_$ServiceName" $Location
+                Start-Sleep -Seconds 1
+            }
         }
     }
     
@@ -41,7 +46,7 @@ Function New-LocalConfiguration {
             if($Accounts){
                 $Accounts | ForEach-Object {                   
                     $data = [System.Object] [Ordered] @{
-                        ServiceName     =   $_.AccountType -replace "\.","_"
+                        ServiceName     =   $_.AccountType -replace "\.",""
                         Location        =   $_.Location
                         SubscriptionKey =   ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
                         EndPoint        =   $_.Endpoint

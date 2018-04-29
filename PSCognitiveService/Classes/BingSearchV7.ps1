@@ -1,4 +1,4 @@
-class Bing {
+class BingSearchV7 {
     # properties
     [String] $subscription_key
     [String] $query
@@ -7,7 +7,7 @@ class Bing {
     hidden $base_url 
     [String] $endpoint
     # constructor
-    Bing ([String] $subscription_key) {
+    BingSearchV7 ([String] $subscription_key) {
         $this.subscription_key = $subscription_key
         $this.base_url = "https://api.cognitive.microsoft.com/bing/v7.0/"
     }
@@ -49,7 +49,7 @@ class Bing {
     #endregion methods    
 }
 
-#$ob = [Bing]::new($env:API_SubscriptionKey_Bing_Search_v7)
+#$ob = [BingSearchV7]::new($env:API_SubscriptionKey_BingSearchV7)
 ##$ob.response_filter = [ResponseFilters]::Computation
 #$ob.Search('ridicurious.com') 
 #$ob.result.webPages.value
