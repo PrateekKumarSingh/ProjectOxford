@@ -4,7 +4,7 @@ $moduleName = Split-Path $moduleRoot -Leaf
 
 Describe "PSScriptAnalyzer rule-sets" -Tag Build {
     $Rules = Get-ScriptAnalyzerRule
-    $ExcludedRules = 'PSUseShouldProcessForStateChangingFunctions', 'PSAvoidUsingWriteHost'
+    $ExcludedRules = 'PSUseShouldProcessForStateChangingFunctions', 'PSAvoidUsingWriteHost', 'PSProvideCommentHelp'
     $scripts = Get-ChildItem $moduleRoot -Include *.ps1, *.psm1, *.psd1 -Recurse | Where-Object fullname -notmatch 'classes'
 
     foreach ( $Script in $scripts ) {
