@@ -24,3 +24,5 @@ Function Search-Entity {
     }
 
 }
+
+Export-ModuleMember -Function Search-Entity -Alias Entity

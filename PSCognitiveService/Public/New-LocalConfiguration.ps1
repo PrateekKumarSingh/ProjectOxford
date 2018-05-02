@@ -1,5 +1,5 @@
 Function New-LocalConfiguration {
-    [alias("config")]
+    [alias("lcfg")]
     [cmdletbinding()]
     param(
         [Parameter(Mandatory, ParameterSetName='Manual')]
@@ -74,3 +74,5 @@ Function New-LocalConfiguration {
 
 }
 #New-LocalConfiguration -FromAzure -verbose
+
+Export-ModuleMember -Function New-LocalConfiguration -Alias LCfg

@@ -52,3 +52,5 @@ Function Test-AdultRacyContent {
     }
 
 }
+
+Export-ModuleMember -Function Test-AdultRacyContent -Alias moderate

@@ -32,3 +32,5 @@ Function Get-ImageText{
     }
 
 }
+
+Export-ModuleMember -Function Get-ImageText -Alias ocr

@@ -38,3 +38,5 @@ Function Get-Face {
     }
 
 }
+
+Export-ModuleMember -Function Get-Face -Alias Face

@@ -47,3 +47,4 @@ Function ConvertTo-Thumbnail {
 
 }
 
+Export-ModuleMember -Function ConvertTo-Thumbnail -Alias thumbnail

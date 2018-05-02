@@ -21,3 +21,5 @@ Function Get-Sentiment {
     }
 
 }
+
+Export-ModuleMember -Function Get-Sentiment -Alias Sentiment

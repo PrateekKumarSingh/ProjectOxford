@@ -21,3 +21,5 @@ Function Trace-Language {
     }
 
 }
+
+Export-ModuleMember -Function Trace-Language -Alias Lang

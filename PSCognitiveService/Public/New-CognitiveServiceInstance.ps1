@@ -1,6 +1,7 @@
 # function to expose class instances and method overload definitions
 # outside the nested PowerShell module
 Function New-CognitiveServiceInstance {
+    [Alias('cognsvc')]
     [cmdletbinding(SupportsShouldProcess=$false)]
     param(
         [Parameter(Mandatory)]
@@ -16,3 +17,5 @@ Function New-CognitiveServiceInstance {
         'BingSearchV7' {[BingSearchV7]::new($env:API_SubscriptionKey_BingSearchV7)}
     }
 }
+
+Export-ModuleMember -Function New-CognitiveServiceInstance -Alias CognSVC

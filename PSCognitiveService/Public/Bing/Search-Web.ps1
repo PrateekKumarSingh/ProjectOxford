@@ -40,3 +40,4 @@ Function Search-Web {
 
 }
 
+Export-ModuleMember -Function Search-Web -Alias Bing

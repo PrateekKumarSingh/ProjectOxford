@@ -32,3 +32,5 @@ Function Get-ImageTag {
     }
 
 }
+
+Export-ModuleMember -Function Get-ImageTag -Alias tag

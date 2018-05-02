@@ -1,5 +1,5 @@
 Function Get-KeyPhrase {
-    [alias("KeyPhrase")]
+    [alias("KeyPh")]
     [cmdletbinding()]
     param(
         [Parameter(Mandatory, Position = 0)]
@@ -21,3 +21,5 @@ Function Get-KeyPhrase {
     }
 
 }
+
+Export-ModuleMember -Function Get-KeyPhrase -Alias KeyPh

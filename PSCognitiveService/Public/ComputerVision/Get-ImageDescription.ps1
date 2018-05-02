@@ -1,5 +1,5 @@
 Function Get-ImageDescription{
-    [alias("description")]
+    [alias("desc")]
     [cmdletbinding()]
     param(
         [Parameter(ParameterSetName = 'Path',Mandatory, Position = 0)]
@@ -34,3 +34,5 @@ Function Get-ImageDescription{
     }
 
 }
+
+Export-ModuleMember -Function Get-ImageDescription -Alias desc

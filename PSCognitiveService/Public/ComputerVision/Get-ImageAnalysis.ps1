@@ -36,3 +36,5 @@ Function Get-ImageAnalysis {
     }
 
 }
+
+Export-ModuleMember -Function Get-ImageAnalysis -Alias analyze
