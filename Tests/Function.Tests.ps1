@@ -90,10 +90,97 @@ InModuleScope -ModuleName PSCognitiveService {
                 {Test-AdultRacyContent -Text "What the hell is wrong with you" -AutoCorrect -PersonalIdentifiableInformation} | Should Not throw
             }
             It "Should return a [PSCustomObject]" {
+                Start-Sleep -Seconds 1 # to avoid rate limit thresholds
                 (Test-AdultRacyContent -Text "What the hell is wrong with you" -AutoCorrect -PersonalIdentifiableInformation).gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a local file PATH" {
-                {Test-AdultRacyContent -Path ".\Media\BillGates.jpg" -Verbose -CachesImage} | Should Not throw
+                Start-Sleep -Seconds 1 # to avoid rate limit thresholds
+                {Test-AdultRacyContent -Path ".\Media\BillGates.jpg"} | Should Not throw
+            }
+            It "Should not throw with a URL" {
+                Start-Sleep -Seconds 1 # to avoid rate limit thresholds
+                {Test-AdultRacyContent -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
+            }
+        }
+    }
+    
+    Describe "Test TextAnalytics API Function" -Tag Build {  
+        Context 'Get-Sentiment' {      
+            $ScriptBlock = {Get-Sentiment -Text "This is a test!"}
+            It "Should not throw" {
+                $ScriptBlock | Should Not throw
+            }
+            It "Should return a [PSCustomObject]" {
+                $result = & $ScriptBlock
+                $result.gettype().Name | Should Be PSCustomObject
+            }
+            It "Should analyze and return documents" {
+                $result = & $ScriptBlock
+                $result.documents | Should Not BeNullOrEmpty
+            }
+            It "Should not return any errors" {
+                $result = & $ScriptBlock
+                $result.errors | Should BeNullOrEmpty
+            }
+        }
+
+        Context 'Get-KeyPhrase' {      
+            $ScriptBlock = {Get-KeyPhrase -Text "This is a test!"}
+            It "Should not throw" {
+                $ScriptBlock | Should Not throw
+            }
+            It "Should return a [PSCustomObject]" {
+                $result = & $ScriptBlock
+                $result.gettype().Name | Should Be PSCustomObject
+            }
+            It "Should analyze and return documents" {
+                $result = & $ScriptBlock
+                $result.documents | Should Not BeNullOrEmpty
+            }
+            It "Should not return any errors" {
+                $result = & $ScriptBlock
+                $result.errors | Should BeNullOrEmpty
+            }
+        }
+
+        Context 'Trace-Language' {      
+            $ScriptBlock = {Trace-Language -Text "This is a test!"}
+            It "Should not throw" {
+                $ScriptBlock | Should Not throw
+            }
+            It "Should return a [PSCustomObject]" {
+                $result = & $ScriptBlock
+                $result.gettype().Name | Should Be PSCustomObject
+            }
+            It "Should analyze and return documents" {
+                $result = & $ScriptBlock
+                $result.documents | Should Not BeNullOrEmpty
+            }
+            It "Should not return any errors" {
+                $result = & $ScriptBlock
+                $result.errors | Should BeNullOrEmpty
+            }
+        }
+    }
+
+    Describe "Test Bing API Function" -Tag Build {  
+        Context 'Search-Web' {            
+            It "Should not throw" {
+                {Search-Web -Text "PowerShell"} | Should Not throw
+            }
+            It "Should return webpages Object[]" {
+                (Search-Web -Text "PowerShell").webpages.value.gettype().Name | Should Be 'Object[]'
+            }
+        }
+
+        Context 'Search-Entity' {            
+            It "Should not throw" {
+                Start-Sleep -Seconds 1 # to avoid rate limit thresholds
+                {Search-Entity -Text "PowerShell"} | Should Not throw
+            }
+            It "Should return entities Object[]" {
+                Start-Sleep -Seconds 1 # to avoid rate limit thresholds
+                (Search-Entity -Text "PowerShell").Entities.value.gettype().Name | Should Be 'Object[]'
             }
         }
     }

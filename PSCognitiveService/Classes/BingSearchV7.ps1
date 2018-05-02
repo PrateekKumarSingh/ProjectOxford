@@ -27,7 +27,7 @@ class BingSearchV7 {
             ContentType = 'application/json'
             Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
-        $this.result = Invoke-RestMethod @params -Verbose
+        $this.result = Invoke-RestMethod @params
         return $this.result
     }
     # Search(string query, numofresults, offset, market, safesearch)
@@ -43,15 +43,8 @@ class BingSearchV7 {
             ContentType = 'application/json'
             Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
-        $this.result = Invoke-RestMethod @params -Verbose
+        $this.result = Invoke-RestMethod @params
         return $this.result
     }
     #endregion methods    
 }
-
-#$ob = [BingSearchV7]::new($env:API_SubscriptionKey_BingSearchV7)
-##$ob.response_filter = [ResponseFilters]::Computation
-#$ob.Search('ridicurious.com') 
-#$ob.result.webPages.value
-#$ob.Search('powershell',1, 20 , 'en-CA', [SafeSearch]::off)
-#$ob.result.webPages.value

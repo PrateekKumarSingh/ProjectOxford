@@ -16,7 +16,7 @@ Function Test-AdultRacyContent {
         
         [Parameter(ParameterSetName = 'URL')]
         [Parameter(ParameterSetName = 'Path')]
-        [switch] $CachesImage,
+        [switch] $CachesImage = $false,
         
         [Parameter(ParameterSetName = 'Text')]
         [System.String] $Text,

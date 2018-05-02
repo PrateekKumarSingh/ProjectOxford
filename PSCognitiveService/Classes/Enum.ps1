@@ -4,7 +4,8 @@ enum CognitiveService {
     Emotion
     TextAnalytics
     ContentModerator
-    BingSearchV7    
+    BingSearchV7
+    BingEntitySearch
 }
 
 enum Location {

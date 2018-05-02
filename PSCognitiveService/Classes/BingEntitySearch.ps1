@@ -1,4 +1,4 @@
-class Entity {
+class BingEntitySearch {
     # properties
     [String] $subscription_key
     [String] $query
@@ -7,7 +7,7 @@ class Entity {
     hidden $base_url 
     [String] $endpoint
     # constructor
-    Entity ([String] $subscription_key) {
+    BingEntitySearch ([String] $subscription_key) {
         $this.subscription_key = $subscription_key
         $this.base_url = "https://api.cognitive.microsoft.com/bing/v7.0/"
     }
@@ -26,13 +26,12 @@ class Entity {
             ContentType = 'application/json'
             Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
-        $this.result = Invoke-RestMethod @params -Verbose
+        $this.result = Invoke-RestMethod @params
         return $this.result
     }
     #endregion methods    
 }
 
-#$ob = [Entity]::new($env:API_SubscriptionKey_Bing_EntitySearch)
-##$ob.response_filter = [ResponseFilters]::Computation
+#$ob = [BingEntitySearch]::new($env:API_SubscriptionKey_BingEntitySearch)
 #$ob.Search('brad pit',10, 0 , 'en-CA', [SafeSearch]::off)
 #$ob.result.entities.value

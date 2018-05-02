@@ -4,9 +4,13 @@ param()
 
 $BasePath = $PSScriptRoot
 
+$dependencies = @(
+    'Enum',
+    'HashTable'
+)
+
 # define class sequence
 $classList = @(
-    'Enum',
     'ValidateFile',
     'ValidateImage',
     'ValidateMarket',
@@ -14,8 +18,15 @@ $classList = @(
     'Face',
     'TextAnalytics',
     'ContentModerator',
-    'BingSearchV7'
+    'BingSearchV7',
+    'BingEntitySearch'
 )
+
+# importing enumerators and hashtables sequentially
+foreach ($item in $dependencies) {
+    Write-Verbose "Dot sourcing '$item.ps1'" -Verbose
+    . "$BasePath\classes\$item.ps1"
+}
 
 # importing classes sequentially
 foreach ($class in $classList) {

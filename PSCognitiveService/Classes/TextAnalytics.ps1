@@ -1,4 +1,4 @@
-class Analytics {
+class TextAnalytics {
     # properties
     [String] $subscription_key
     [String] $location
@@ -8,7 +8,7 @@ class Analytics {
     [String] $endpoint
 
     # constructor
-    Analytics([String] $subscription_key, [Location] $location) {
+    TextAnalytics([String] $subscription_key, [Location] $location) {
         $this.subscription_key = $subscription_key
         $this.location = $location
         $this.base_url = "https://{0}.api.cognitive.microsoft.com/text/analytics/v2.0/" -f $this.location 
@@ -30,7 +30,7 @@ class Analytics {
             Body        = $request
             Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
-        $this.result = Invoke-RestMethod @params -Verbose
+        $this.result = Invoke-RestMethod @params
         return $this.result
     }
     # detectLanguage(string[] text)
@@ -48,7 +48,7 @@ class Analytics {
             Body        = $request
             Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
-        $this.result = Invoke-RestMethod @params -Verbose
+        $this.result = Invoke-RestMethod @params
         return $this.result
     }
 
@@ -66,7 +66,7 @@ class Analytics {
             Body        = $request
             Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
         }
-        $this.result = Invoke-RestMethod @params -Verbose
+        $this.result = Invoke-RestMethod @params
         return $this.result
     }
     #endregion methods    
