@@ -70,16 +70,22 @@ Description       = "PowerShell wrapper around Microsoft Cognitive Services REST
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-#adding function FunctionsToExport = @(
-#adding function         'ConvertTo-Thumbnail',
-#adding function         'Get-ImageAnalysis',
-#adding function         'Get-ImageDescription',
-#adding function         'Get-ImageTag',
-#adding function         'Get-ImageText',
-#adding function         'Get-Face', 
-#adding function         'Set-LocalCognitiveServiceConfiguration',
-#adding function         'Test-AdultRacyContent'
-#adding function )
+FunctionsToExport = @(
+    'ConvertTo-Thumbnail',
+    'Get-Face',
+    'Get-ImageAnalysis',
+    'Get-ImageDescription',
+    'Get-ImageTag',
+    'Get-Imagetext',
+    'Get-KeyPhrase',
+    'Get-Sentiment',
+    'New-CognitiveServiceInstance',
+    'New-LocalConfiguration',
+    'Search-Entity',
+    'Search-Web',
+    'Test-AdultRacyContent',
+    'Trace-Language'
+)
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
