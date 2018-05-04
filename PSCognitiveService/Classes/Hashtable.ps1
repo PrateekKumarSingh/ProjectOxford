@@ -58,3 +58,36 @@ $MarketCodes = @{
 'Chinese-Hong Kong SAR' = 'zh-HK';
 'Chinese-Taiwan' = 'zh-T'
 }
+
+$Matrix = @{
+        'Bing.Search.v7' = @{ 
+            AvailableLocations = 'Global'
+            PriceTiers = 'S1','S2','S3','S4','S5','S6','S7','S8'
+        }
+        'Bing.EntitySearch' = @{ 
+            AvailableLocations = 'Global'
+            PriceTiers = 'F0','S1'
+        }
+        'ComputerVision' = @{ 
+            AvailableLocations = 'westus','westus2','eastus','eastus2','westcentralus','southcentralus','westeurope','northeurope','southeastasia','eastasia','australiaeast','brazilsouth'
+            PriceTiers = 'F0','S1'
+        }
+        'Face' = @{ 
+            AvailableLocations = 'westus','westus2','eastus','eastus2','westcentralus','southcentralus','westeurope','northeurope','southeastasia','eastasia','australiaeast','brazilsouth'
+            PriceTiers = 'F0','S0'
+        }
+        'ContentModerator' = @{ 
+            AvailableLocations = 'westus','westus2','eastus','eastus2','westcentralus','southcentralus','westeurope','northeurope','southeastasia','eastasia','australiaeast','brazilsouth'
+            PriceTiers = 'F0','S0'
+        }
+        'TextAnalytics' = @{ 
+            AvailableLocations = 'westus','westus2','eastus','eastus2','westcentralus','southcentralus','westeurope','northeurope','southeastasia','eastasia','australiaeast','brazilsouth'
+            PriceTiers = 'S0','S1','S2','S3','S4'
+        }
+    }
+    
+$PriceTiers = @{
+    F = 'Free'
+    S = 'Standard'
+    P = 'Premium'
+}

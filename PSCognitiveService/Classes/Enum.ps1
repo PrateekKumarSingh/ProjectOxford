@@ -6,8 +6,30 @@ enum CognitiveService {
     ContentModerator
     BingSearchV7
     BingEntitySearch
+    
 }
-
+# "Academic",
+# "Bing.Autosuggest",
+# "Bing.Autosuggest.v7",
+# "Bing.CustomSearch",
+# "Bing.Search",
+# "Bing.Search.v7",
+# "Bing.Speech",
+# "Bing.SpellCheck",
+# "Bing.SpellCheck.v7",
+# "ComputerVision",
+# "ContentModerator",
+# "CustomSpeech",
+# "Emotion",
+# "Face",
+# "LUIS",
+# "Recommendations",
+# "SpeakerRecognition",
+# "Speech",
+# "SpeechTranslation",
+# "TextAnalytics"
+# "TextTranslation",
+# "WebLM"
 enum Location {
     eastasia
     southeastasia
@@ -37,6 +59,7 @@ enum Location {
     koreasouth
     francecentral
     francesouth
+    global
 }
 
 enum Extension {

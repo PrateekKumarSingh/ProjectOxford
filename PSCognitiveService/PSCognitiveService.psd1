@@ -30,7 +30,7 @@ CompanyName = 'Prateek Singh'
 Copyright = '(c) 2018 Prateek Singh. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description       = "PowerShell wrapper around Microsoft Cognitive Services REST API's"
+Description       = "PowerShell wrapper around Microsoft Azure Cognitive Services REST API's, to bring powershell of Machine Learning to your console and applications"
 
 # Minimum version of the Windows PowerShell engine required by this module
 # PowerShellVersion = ''
