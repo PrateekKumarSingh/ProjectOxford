@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Version number of this module.
-ModuleVersion = '0.2.0'
+ModuleVersion = '0.3.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@ CompanyName = 'Prateek Singh'
 Copyright = '(c) 2018 Prateek Singh. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description       = "PowerShell wrapper around Microsoft Azure Cognitive Services REST API's, to bring powershell of Machine Learning to your console and applications"
+Description       = "PowerShell wrapper around Microsoft Azure Cognitive Services REST API's, to bring power of Machine Learning to your console and applications"
 
 # Minimum version of the Windows PowerShell engine required by this module
 # PowerShellVersion = ''
@@ -51,7 +51,7 @@ Description       = "PowerShell wrapper around Microsoft Azure Cognitive Service
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @('AzureRM')
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -80,6 +80,7 @@ FunctionsToExport = @(
     'Get-KeyPhrase',
     'Get-Sentiment',
     'New-CognitiveServiceInstance',
+    'New-CognitiveServiceAccount'
     'New-LocalConfiguration',
     'Search-Entity',
     'Search-Web',
@@ -111,7 +112,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('azure','AzureRM','CognitiveService','AI')
 
         # A URL to the license for this module.
         # LicenseUri = ''
@@ -123,7 +124,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'Error Fixes, New cmdlet: New-CognitiveServiceAccount added to the module'
 
     } # End of PSData hashtable
 
