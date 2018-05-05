@@ -12,13 +12,13 @@ function Test-AzureRmLogin {
         # Verify we are signed into an Azure account
         try {
             Import-Module AzureRM.profile -Verbose:$false   
-            Write-Verbose 'Checking if logged into Azure'
+            Write-Verbose 'Testing Azure login'
             $isLoggedIn = Get-AzureRmSubscription -ErrorAction Stop
         }
         catch [System.Management.Automation.PSInvalidOperationException] {
-            Write-Verbose 'Not logged into Azure. Login now.'
-            Write-Host 'Enter your Credentials in the Pop-up window' -ForegroundColor Yellow
-            Login-AzureRmAccount
+            Write-Verbose 'Not logged into Azure. Initiate login now.'
+            Write-Host 'Enter your credentials in the pop-up window' -ForegroundColor Yellow
+            $isLoggedIn = Login-AzureRmAccount
         }
         catch {
             Throw $_.Exception.Message

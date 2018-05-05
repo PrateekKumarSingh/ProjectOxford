@@ -24,13 +24,13 @@ $classList = @(
 
 # importing enumerators and hashtables sequentially
 foreach ($item in $dependencies) {
-    Write-Verbose "Dot sourcing '$item.ps1'" -Verbose
+    Write-Verbose "Dot sourcing '$item.ps1'" 
     . "$BasePath\classes\$item.ps1"
 }
 
 # importing classes sequentially
 foreach ($class in $classList) {
-    Write-Verbose "Dot sourcing class '$class'" -Verbose
+    Write-Verbose "Dot sourcing class '$class'"
     . "$BasePath\classes\$class.ps1"
 }
 
