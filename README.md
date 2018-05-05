@@ -11,7 +11,7 @@ You need to do one-time registration for each Microsoft Cognitive Services API f
 ### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
 You can install the `PSCognitiveService` module directly from the PowerShell Gallery
 
-<img href=https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Media/Install.jpg>
+<img src=https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Media/Install.jpg>
 
 * **[Recommended]** Install to your personal PowerShell Modules folder
 ```PowerShell
@@ -49,7 +49,7 @@ And preferably add them to your ```$Profile``` for future use and avoid reconfig
 ```PowerShell
 New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose
 ```
-<img href=https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Media/Subscribe.gif>
+<img src=https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Media/Subscribe.gif>
 
 # Usage
 
