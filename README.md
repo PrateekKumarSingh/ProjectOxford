@@ -6,9 +6,13 @@
 # Pre-Requisites
 You need to do one-time registration for each Microsoft Cognitive Services API from <a href="https://www.microsoft.com/cognitive-services/en-us/sign-up">HERE</a>, before start using the module, because it won’t work without an API Key.
 
-# Installation
+## Installation
+
 ### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
 You can install the `PSCognitiveService` module directly from the PowerShell Gallery
+
+![](https://github.com/PrateekKumarSingh/PSCognitiveService/blob/master/Media/Install.jpg)
+
 * **[Recommended]** Install to your personal PowerShell Modules folder
 ```PowerShell
 Install-Module PSCognitiveService -scope CurrentUser
@@ -22,6 +26,31 @@ To install to your personal modules folder run:
 ```PowerShell
 iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Install.ps1')
 ```
+
+## Subscription
+Microsoft Cognitive services are offered through the ![Azure Portal](https://portal.azure.com) You need to create cognitive service accounts and obtain subscription keys and set $Env variables, which are consumed by the module cmdlets to make REST API call's.
+
+Before, you loose me here - This module includes a cmdlet to do that for you in an automated approach.
+
+For example, if you want to use the ```Search-Web``` cmdlet that utlizes ```Bing Search``` capabilities you need to subscribe to Cognitive Service account of type: ```Bing.Search.v7``` 
+
+```PowerShell
+New-CognitiveServiceAccount -AccountType Bing.Search.v7
+
+# alternatively, specify ResourceGroup, Location and SKU
+New-CognitiveServiceAccount -AccountType ComputerVision -ResourceGroupName ResourceGroup1 -Location centralindia -SKUName S1
+```
+
+## Local Configuration
+After you've created AzureRM Cognitive Service accounts, we need to obtain the subscription key and set-up ```$ENV``` variables in the session to run the cmdlets. 
+
+And preferably add them to your ```$Profile``` for future use and avoid reconfiguration.
+
+```PowerShell
+New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose
+```
+
+![](https://github.com/PrateekKumarSingh/PSCognitiveService/blob/master/Media/Subscribe.gif)
 
 # Usage
 
