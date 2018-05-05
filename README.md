@@ -28,7 +28,7 @@ iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercont
 ```
 
 ## Subscription
-Microsoft Cognitive services are offered through the ![Azure Portal](https://portal.azure.com) You need to create cognitive service accounts and obtain subscription keys and set $Env variables, which are consumed by the module cmdlets to make REST API call's.
+Microsoft Cognitive services are offered through the <a href ='https://portal.azure.com'>Azure Portal</a> You need to create cognitive service accounts and obtain subscription keys and set $Env variables, which are consumed by the module cmdlets to make REST API call's.
 
 Before, you loose me here - This module includes a cmdlet to do that for you in an automated approach.
 
