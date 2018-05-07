@@ -3,7 +3,8 @@ $object = [Moderate]::new($env:API_SubscriptionKey_ContentModerator, $env:API_Lo
 $path = [System.IO.FileInfo] 'C:\Tmp\test.png'
 $object.processimage($path)
 
-Test-AdultRacyContent -Text "go eff yourself" -Verbose
+Test-AdultRacyContent -Text "Hello World" -Verbose | % Classification
+Test-AdultRacyContent -Text "go eff yourself" -Verbose | % Classification
 Test-AdultRacyContent -Text "go eff yourself" -AutoCorrect -PersonalIdentifiableInformation -Verbose
 
 # moderate content using [Moderate] object and processimage(path, cachesimage) method

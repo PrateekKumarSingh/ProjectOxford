@@ -4,7 +4,7 @@ function New-CognitiveServiceAccount {
         # Cognitive service account type 
         [Parameter(Mandatory)]
         [ValidateSet('Bing.Search.v7', 'Bing.EntitySearch', 'ComputerVision', 'Face', 'ContentModerator', 'TextAnalytics')]
-        $AccountType,
+        [String[]] $AccountType,
         [String] $ResourceGroupName,
         [Location] $Location,
         [ValidateSet('F0','F1','S0','S1','S2','S3','S4','S5','S6','S7','S8')]

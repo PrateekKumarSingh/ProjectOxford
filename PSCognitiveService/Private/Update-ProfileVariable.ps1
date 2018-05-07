@@ -28,7 +28,7 @@ function Update-ProfileVariable {
         if ($fileContent[$line] -like "*$name*") {
             $newline = "`$$name = '$value'"
             $fileContent[$line] = $newline # updating the variable
-            Write-Verbose "Updated variable $newline" -Verbose
+            Write-Verbose "Updated variable: `$$name in `$Profile" -Verbose
             $found = $true
         }
     }

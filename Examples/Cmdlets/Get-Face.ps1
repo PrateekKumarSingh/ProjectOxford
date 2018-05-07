@@ -4,14 +4,14 @@ Get-Face -Path $path -FaceId -FaceLandmarks
 Get-Face -Path $path -FaceId -FaceLandmarks -FaceAttributes age, gender |fl *
 
 # detect face using [face] object and detect(path) method
-$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
+$Object = New-CognitiveServiceInstance -Name Face -Verbose
 $path = [System.IO.FileInfo] 'C:\Tmp\Bill.jpg'
 $object.detect($path)
 $object.result.facerectangle
 $object.result.facelandmarks
 
 # detect face using [face] object and detect(path, Face_Attributes, FaceID, FaceLandmarks) method
-$object = [Face]::new($env:API_SubscriptionKey_face, $env:API_Location_face)
+$Object = New-CognitiveServiceInstance -Name Face -Verbose
 $path = [System.IO.FileInfo] 'C:\Tmp\Bill.jpg'
 $Face_Attributes = [enum]::GetNames([FaceAttributes])
 $object.detect($path, $Face_Attributes, $true, $true)
