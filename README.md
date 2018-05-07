@@ -6,7 +6,7 @@
 # Pre-Requisites
 You need to do one-time registration for each Microsoft Cognitive Services API from <a href="https://www.microsoft.com/cognitive-services/en-us/sign-up">HERE</a>, before start using the module, because it won’t work without an API Key.
 
-## Installation
+## 1. Installation
 
 ### [PowerShell v5](https://www.microsoft.com/en-us/download/details.aspx?id=50395) and Later
 You can install the `PSCognitiveService` module directly from the PowerShell Gallery
@@ -27,12 +27,18 @@ To install to your personal modules folder run:
 iex (new-object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Install.ps1')
 ```
 
-## Subscription
-Microsoft Cognitive services are offered through the <a href ='https://portal.azure.com'>Azure Portal</a> You need to create cognitive service accounts and obtain subscription keys and set $Env variables, which are consumed by the module cmdlets to make REST API call's.
+## 2. Subscribe
+Microsoft Cognitive services are offered and subscribed through the <a href ='https://portal.azure.com'>Azure Portal</a> to achieve that -
 
-Before, you loose me here - This module includes a cmdlet to do that for you in an automated approach.
+- **Create cognitive service accounts** in azure portal.
+- **Obtain subscription keys** 
+- **Set $Env variables** locally, which would consumed by the module cmdlets to make REST API call's.
 
-For example, if you want to use the ```Search-Web``` cmdlet that utlizes ```Bing Search``` capabilities you need to subscribe to Cognitive Service account of type: ```Bing.Search.v7``` 
+Personally, going to azure portal and obtaining subscription keys is a turn down for me. 
+
+But, ```New-CognitiveServiceAccount```cmdlet that is included in this module to create Azure cognitive service accounts/subscription from your console.
+
+Example, if you want to use the ```Search-Web``` cmdlet that utlizes ```Bing Search``` capabilities, you need to subscribe to Cognitive Service account of type: ```Bing.Search.v7```, just run the below cmdlet.
 
 ```PowerShell
 New-CognitiveServiceAccount -AccountType Bing.Search.v7
@@ -41,21 +47,26 @@ New-CognitiveServiceAccount -AccountType Bing.Search.v7
 New-CognitiveServiceAccount -AccountType ComputerVision -ResourceGroupName ResourceGroup1 -Location centralindia -SKUName S1
 ```
 
-## Local Configuration
-After you've created AzureRM Cognitive Service accounts, we need to obtain the subscription key and set-up ```$ENV``` variables in the session to run the cmdlets. 
+## 3. Configure Locally
 
-And preferably add them to your ```$Profile``` for future use and avoid reconfiguration.
+Alright, you are now subscribed, but how to obtain the subscription key(s) and set-up ```$ENV``` variable(s) in the session to run these cmdlets. 
+
+It is as simple as a below cmdlet and Kaboom! you are subscribed and local configuration is complete!
 
 ```PowerShell
 New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose
 ```
+**NOTE** - Please add the subscription keys to your ```$Profile``` using ```-AddKeysToProfile``` switch for future use and to avoid above configuration step.
+
 <img src=https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Media/Subscribe.gif width=100% height=90%>
+
+
 
 # Usage
 
 This module provides a set of PowerShell cmdlets, which are PowerShell wrappers to query and access MS Cognitve service APIs and endpoints with ease and simplicity.
 
-### Computer Vision
+## Computer Vision
 
 #### Get-ImageAnalysis
 Analyze an image and returns visual features and other details
