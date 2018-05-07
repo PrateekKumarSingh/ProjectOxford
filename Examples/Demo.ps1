@@ -5,9 +5,9 @@ Import-Module PSCognitiveService -Force -Verbose
 # get module
 Get-Command -Module PSCognitiveService
 # login and obtain subscription keys, local config
-New-LocalConfiguration -FromAzure -AddKeysToProfile | Out-Null
-# face features & emotion recognitionc
-Get-Face -Path 'C:\tmp\Bill.jpg' |Format-List *
+New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose | Out-Null
+# face features & emotion recognition
+Get-Face -Path 'C:\tmp\Bill.jpg' | ForEach-Object faceAttributes |Format-List *
 # image analysis
 Get-ImageAnalysis -Path 'C:\tmp\Bill.jpg'
 # image description

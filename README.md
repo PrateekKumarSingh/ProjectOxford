@@ -6,6 +6,8 @@
 
 # What this module can do?
 
+<img src=https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Media/demo.gif width=100% height=90%>
+
 ```PowerShell
 # install module
 Install-Module PSCognitiveService -Force -Scope CurrentUser -Verbose
