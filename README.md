@@ -6,7 +6,7 @@
 
 # What this module can do?
 
-<img src=https://raw.githubusercontent.com/PrateekKumarSingh/PSCognitiveService/master/Media/demo.gif width=100% height=90%>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/REgTjVodlXI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ```PowerShell
 # install module
