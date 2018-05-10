@@ -124,7 +124,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Issues with New-CognitiveService fixed'
+        ReleaseNotes = 'Issues with New-CognitiveService cmdlet fixed'
 
     } # End of PSData hashtable
 
