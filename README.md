@@ -1,4 +1,6 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/jgiom7ww0nhc5kt7?svg=true)](https://ci.appveyor.com/project/PrateekKumarSingh/pscognitiveservice) [![PowerShell Gallery][psgallery-badge]][psgallery]
+[![Build status](https://ci.appveyor.com/api/projects/status/jgiom7ww0nhc5kt7?svg=true)](https://ci.appveyor.com/project/PrateekKumarSingh/pscognitiveservice) 
+[![powershellgallery](https://img.shields.io/powershellgallery/v/PSCognitiveService.svg)](https://www.powershellgallery.com/packages/PSCognitiveService)
+
 # PowerShell Module for Microsoft Cognitive Services (aka, ProjectOxford)
 <a href='https://www.microsoft.com/cognitive-services'>Microsoft Cognitive Services</a> are some machine learning Artificial intelligent REST API's to give Human-like cognition abilities to your applications.
 
