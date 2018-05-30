@@ -1,4 +1,4 @@
-Function Search-Web {
+Function Search-Image {
     [alias("bing")]
     [cmdletbinding()]
     param(
@@ -22,17 +22,15 @@ Function Search-Web {
             'Arabic-Arabia','Thai-Thailand','Japanese-Japan'
         )]
         [String] $Market = 'English-United States' ,
-        [SafeSearch] $SafeSearch = [SafeSearch]::Moderate,
-        [Switch] $Image,
-        [Switch] $News
+        [SafeSearch] $SafeSearch = [SafeSearch]::Moderate
     )
 
     begin {
     }
     process {
         $Object = @()
-        if (Test-LocalConfiguration -ServiceName 'BingSearchv7') {           
-            $Object = [BingSearchV7]::new($env:API_SubscriptionKey_BingSearchv7)
+        if (Test-LocalConfiguration -ServiceName 'BingSearchv7') {
+            $Object = [BingImageSearch]::new($env:API_SubscriptionKey_BingSearchv7)
             $Object.Search($Text, $Count, $OffSet, $MarketCodes[$Market], $SafeSearch)     
         }
         Remove-Variable -Name Object
@@ -42,4 +40,4 @@ Function Search-Web {
 
 }
 
-Export-ModuleMember -Function Search-Web -Alias Bing
+Export-ModuleMember -Function Search-Image -Alias Bing

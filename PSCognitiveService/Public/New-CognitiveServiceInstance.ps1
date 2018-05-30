@@ -15,6 +15,8 @@ Function New-CognitiveServiceInstance {
         'ContentModerator' {[ContentModerator]::new($env:API_SubscriptionKey_ContentModerator, $env:API_Location_ContentModerator)}
         'TextAnalytics' {[TextAnalytics]::new($env:API_SubscriptionKey_TextAnalytics, $env:API_Location_TextAnalytics)}
         'BingSearchV7' {[BingSearchV7]::new($env:API_SubscriptionKey_BingSearchV7)}
+        'BingEntitySearch' {[BingEntitySearch]::new($env:API_SubscriptionKey_BingEntitySearch)}
+        'BingImageSearch' {[BingImageSearch]::new($env:API_SubscriptionKey_BingImageSearch)}
     }
 }
 

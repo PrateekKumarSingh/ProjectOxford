@@ -19,7 +19,8 @@ $classList = @(
     'TextAnalytics',
     'ContentModerator',
     'BingSearchV7',
-    'BingEntitySearch'
+    'BingEntitySearch',
+    'BingImageSearch'
 )
 
 # importing enumerators and hashtables sequentially

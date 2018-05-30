@@ -6,7 +6,7 @@ enum CognitiveService {
     ContentModerator
     BingSearchV7
     BingEntitySearch
-    
+    BingImageSearch
 }
 # "Academic",
 # "Bing.Autosuggest",

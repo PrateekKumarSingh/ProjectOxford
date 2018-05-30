@@ -84,6 +84,7 @@ FunctionsToExport = @(
     'New-LocalConfiguration',
     'Search-Entity',
     'Search-Web',
+    'Search-Image',
     'Test-AdultRacyContent',
     'Trace-Language'
 )
