@@ -1,6 +1,6 @@
 Import-Module .\PSCognitiveService\PSCognitiveService.psm1
 New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose | Out-Null
-$url = Search-Image -Text 'Joey Aiello powershell' -Count 20 -Verbose | ForEach-Object value | ForEach-Object contentURL
+$url = Search-Image -Text 'jeffery snover' -Count 20 -Verbose | ForEach-Object value | ForEach-Object contentURL
 $data = $url | ForEach-Object {
     [PSCustomObject]@{
         link = $_
@@ -8,4 +8,4 @@ $data = $url | ForEach-Object {
     }
 }    
 
-$data| Where-Object{$_.emotions.happiness -gt .5} | %{start $_.link}
+$data|fl| Where-Object{$_.emotions.anger -eq 1} | %{start $_.link}

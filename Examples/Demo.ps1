@@ -15,8 +15,8 @@ Get-ImageDescription -Path 'C:\tmp\Bill.jpg' | ForEach-Object Description | Form
 # tag image and convert to hashtags
 Get-ImageTag -URL https://goo.gl/Q73Qtw | ForEach-Object{$_.tags.name} | ForEach-Object {'#'+$_ -join ' '}
 # optical character recognition
-Get-ImageText -URL https://goo.gl/XyP6LJ | ForEach-Object {$_.regions.lines.words.text -join ' '}
-# convert to thumbnail
+Get-ImageText -URL https://goo.gl/XyP6LJ | ForEach-Object {$_.regions.lines} |  ForEach-Object { $_.words.text -join ' '}
+# convert to thumbnail 
 ConvertTo-Thumbnail -URL https://goo.gl/XyP6LJ -SmartCropping
 # bing search
 Search-Web 'powershell 6.1' -c 3 |ForEach-Object {$_.webpages.value} | Format-List name, url, snippet
