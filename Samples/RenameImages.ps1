@@ -9,10 +9,12 @@ New-CognitiveServiceAccount -AccountType ComputerVision -Verbose
 # login and obtain subscription keys, local config
 New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose | Out-Null
 # collect target file paths
-$Images = Get-ChildItem C:\Temp\ | % FullName
-# get image descripton using ComputerVision cognitive service and rename files
+$Images = Get-ChildItem C:\Temp\ | ForEach-Object FullName
+# get image analysis using ComputerVision Cognitive Service and rename files
 $Images | ForEach-Object {
-    $NewName = (Get-ImageAnalysis -path $_).description.captions.text
+    $Result = (Get-ImageAnalysis -path $_)
+    $NewName = $Result.description.captions.text
+    # use tags as name if captions are not returned
+    if(!$NewName){$NewName = $Result.description.tags -join ' '}
     Rename-Item -Path $_ -NewName $NewName -Verbose
 }
-
