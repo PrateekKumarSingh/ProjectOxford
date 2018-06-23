@@ -11,11 +11,6 @@ Properties {
     $PSVersion = $PSVersionTable.PSVersion.Major
     $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
     $lines = '----------------------------------------------------------------------'
-
-    $Verbose = @{}
-    if ($ENV:BHCommitMessage -match "!verbose") {
-        $Verbose = @{Verbose = $True}
-    }
 }
 
 Task Default -Depends Test
@@ -55,7 +50,7 @@ Task Build -Depends Test {
     $lines
 
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions @Verbose
+    Set-ModuleFunctions -Name $env:BHProjectName -Verbose
 
     # Bump the module version if we didn't manually bump it
     Try {

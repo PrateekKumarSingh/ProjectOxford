@@ -5,10 +5,6 @@ param($Task = 'Default')
 "  Install Dependent Modules"
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 Install-Module Psake, PSDeploy, Pester, BuildHelpers -Force
-Install-Module -Name 'AzureRM.Profile' -Force -AllowClobber -Verbose
-Install-Module -Name 'AzureRM.CognitiveServices' -Force -AllowClobber -Verbose
-Install-Module -Name 'AzureRM.Profile.NetCore' -Force -AllowClobber -Verbose
-Install-Module -Name 'AzureRM.CognitiveServices.NetCore' -Force -AllowClobber -Verbose
 
 "  Import Dependent Modules"
 Import-Module Psake, BuildHelpers, Pester -Verbose
