@@ -57,11 +57,11 @@ RequiredModules = if($PSEdition -eq 'core')
 }
 else
 { 
-    @('AzureRM) 
+    @('AzureRM') 
 }
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
-#
+
 # Script files (.ps1) that are run in the caller's environment prior to importing this module.
 #    ScriptsToProcess = @(
 #        )
