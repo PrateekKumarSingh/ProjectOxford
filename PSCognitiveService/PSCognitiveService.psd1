@@ -51,14 +51,14 @@ Description       = "PowerShell wrapper around Microsoft Azure Cognitive Service
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = if($PSEdition -eq 'core')
-{
-    @('AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore')
-}
-else
-{ 
-    @('AzureRM.Profile','AzureRM.CognitiveServices') 
-}
+#RequiredModules = if($PSEdition -eq 'core')
+#{
+#    @('AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore')
+#}
+#else
+#{ 
+#    @('AzureRM.Profile','AzureRM.CognitiveServices') 
+#}
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
 
