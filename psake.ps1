@@ -50,7 +50,7 @@ Task Build -Depends Test {
     $lines
 
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions -Name $env:BHProjectName -Verbose
+    Set-ModuleFunctions -Verbose
 
     # Bump the module version if we didn't manually bump it
     Try {
