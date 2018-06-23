@@ -10,7 +10,7 @@ if ($PSEdition -in $null,'Desktop') {
 }
 elseif ($PSEdition -eq 'core') {
     # PowerShell Core Edition(Win,Linux,Mac)
-    # * pre-installation of libgdiplus is required on linux/mac
+    # pre-installation of libgdiplus is required on linux/mac
     Add-Type -AssemblyName (Join-Path $PSScriptRoot 'lib\CoreCompat.System.Drawing.dll')
 }
 
