@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'PSCognitiveService.psm1'
+RootModule = '.\PSCognitiveService.psm1'
 
 # Version number of this module.
 ModuleVersion = '0.3.6'
@@ -53,7 +53,7 @@ PowerShellVersion = '5.1'
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules = if($PSEdition -eq 'core')
 {
-    @('AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore')
+    @('AzureRM.Profile.netcore','AzureRM.CognitiveServices.netcore')
 }
 else
 { 
