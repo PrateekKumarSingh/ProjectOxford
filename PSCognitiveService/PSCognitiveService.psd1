@@ -52,10 +52,10 @@ PowerShellVersion = '5.1'
 
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules = $(if($PSEdition -in $null,'Desktop'){ 
-                        @('AzureRM.Profile','AzureRM.CognitiveService') 
+                        @('AzureRM.Profile','AzureRM.CognitiveServices') 
                     }
                     elseif($PSEdition -eq 'core') {
-                        @('AzureRM.Profile.NetCore','AzureRM.CognitiveService.NetCore')
+                        @('AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore')
                     })
 
 # Assemblies that must be loaded prior to importing this module
