@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'PSCognitiveService.psm1'
+RootModule = 'pscognitiveservice.psm1'
 
 # Version number of this module.
 ModuleVersion = '0.3.6'
