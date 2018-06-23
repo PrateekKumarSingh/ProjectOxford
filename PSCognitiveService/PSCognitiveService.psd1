@@ -33,7 +33,7 @@ Copyright = '(c) 2018 Prateek Singh. All rights reserved.'
 Description       = "PowerShell wrapper around Microsoft Azure Cognitive Services REST API's, to bring power of Machine Learning to your console and applications"
 
 # Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '5.1'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -51,7 +51,12 @@ Description       = "PowerShell wrapper around Microsoft Azure Cognitive Service
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-#RequiredModules = @('AzureRM')
+RequiredModules = $(if($PSEdition -in $null,'Desktop'){ 
+                        @('AzureRM.Profile','AzureRM.CognitiveService') 
+                    }
+                    elseif($PSEdition -eq 'core') {
+                        @('AzureRM.Profile.NetCore','AzureRM.CognitiveService.NetCore')
+                    })
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()

@@ -1,3 +1,7 @@
+#$assembly = 'C:\Data\Powershell\repository\PSCognitiveService\PSCognitiveService\lib\CoreCompat.System.Drawing.dll
+#Write-Host $assembly -fore Green
+#Add-Type -AssemblyName $assembly
+
 Class ValidateImage {
     ValidateImage() {}
     static [IO.Fileinfo] Dimensions($path, $WidthLower, $HeightLower, $WidthUpper, $HeightUpper) {

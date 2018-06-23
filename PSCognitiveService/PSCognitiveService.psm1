@@ -1,8 +1,18 @@
-using assembly System.Drawing
 [cmdletbinding()]
 param()
 
 $BasePath = $PSScriptRoot
+
+# load assemblies
+if ($PSEdition -in $null,'Desktop') {
+    # PowerShell Desktop Edtion
+    Add-Type -AssemblyName 'System.Drawing'
+}
+elseif ($PSEdition -eq 'core') {
+    # PowerShell Core Edition(Win,Linux,Mac)
+    # * pre-installation of libgdiplus is required on linux/mac
+    Add-Type -AssemblyName (Join-Path $PSScriptRoot 'lib\CoreCompat.System.Drawing.dll')
+}
 
 $dependencies = @(
     'Enum',
