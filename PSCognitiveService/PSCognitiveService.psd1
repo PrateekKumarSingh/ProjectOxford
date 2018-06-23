@@ -53,11 +53,11 @@ PowerShellVersion = '5.1'
 # Modules that must be imported into the global environment prior to importing this module
 RequiredModules = if($PSEdition -eq 'core')
 {
-    @('AzureRM.Profile.netcore','AzureRM.CognitiveServices.netcore')
+    @('AzureRM.netcore')
 }
 else
 { 
-    @('AzureRM.Profile','AzureRM.CognitiveServices') 
+    @('AzureRM) 
 }
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
