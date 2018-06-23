@@ -14,10 +14,10 @@ skip_commits:
 install:
   - ps: Install-PackageProvider -Name NuGet -Force
   - ps: Install-Module PsScriptAnalyzer -Force
-  - ps: Install-Module 'AzureRM.CognitiveServices' -Force
-  - ps: Install-Module 'AzureRM.Profile' -Force
-  - ps: Install-Module 'AzureRM.CognitiveServices.Netcore' -Force
-  - ps: Install-Module 'AzureRM.Profile.Netcore' -Force
+  - ps: Install-Module -Name AzureRM.CognitiveServices -Force
+  - ps: Install-Module -Name AzureRM.Profile -Force
+  - ps: Install-Module -Name AzureRM.CognitiveServices.Netcore -Force
+  - ps: Install-Module -Name AzureRM.Profile.Netcore -Force
 
 build: false
 
