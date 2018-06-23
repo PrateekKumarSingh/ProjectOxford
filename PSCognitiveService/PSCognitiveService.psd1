@@ -15,7 +15,7 @@ RootModule = 'PSCognitiveService.psm1'
 ModuleVersion = '0.3.6'
 
 # Supported PSEditions
-# CompatiblePSEditions = @()
+CompatiblePSEditions = @('Desktop','Core')
 
 # ID used to uniquely identify this module
 GUID = 'c2e17d6f-16c1-4afd-aad0-5c8ba0be10ee'
@@ -33,7 +33,7 @@ Copyright = '(c) 2018 Prateek Singh. All rights reserved.'
 Description       = "PowerShell wrapper around Microsoft Azure Cognitive Services REST API's, to bring power of Machine Learning to your console and applications"
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '5.1'
+# PowerShellVersion = '5.1'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -51,13 +51,14 @@ PowerShellVersion = '5.1'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = $(if($PSEdition -in $null,'Desktop'){ 
-                        @('AzureRM.Profile','AzureRM.CognitiveServices') 
-                    }
-                    elseif($PSEdition -eq 'core') {
-                        @('AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore')
-                    })
-
+RequiredModules = if($PSEdition -eq 'core')
+{
+    @('AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore')
+}
+else
+{ 
+    @('AzureRM.Profile','AzureRM.CognitiveServices') 
+}
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
 
