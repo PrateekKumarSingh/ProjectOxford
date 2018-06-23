@@ -4,10 +4,12 @@ param($Task = 'Default')
 # Grab nuget bits, install modules, set build variables, start build.
 "  Install Dependent Modules"
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
-Install-Module Psake, PSDeploy, Pester, BuildHelpers, AzureRM.Profile,AzureRM.CognitiveServices, AzureRM.Profile.NetCore, AzureRM.CognitiveServices.NetCore -Force -AllowClobber
+Install-Module Psake, PSDeploy, Pester, BuildHelpers
+Install-MOdule -Name 'AzureRM.Profile','AzureRM.CognitiveServices','AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore' -Force -AllowClobber
 
 "  Import Dependent Modules"
-Import-Module Psake, BuildHelpers, Pester, AzureRM.Profile, AzureRM.Profile.NetCore, AzureRM.CognitiveServices.NetCore, AzureRM.CognitiveServices
+Import-Module Psake, BuildHelpers, Pester
+Import-Module -Name 'AzureRM.Profile','AzureRM.CognitiveServices','AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore'
 
 Set-BuildEnvironment -GitPath "C:\Program Files\Git\bin\git.exe"
 
