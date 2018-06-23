@@ -33,7 +33,7 @@ Copyright = '(c) 2018 Prateek Singh. All rights reserved.'
 Description       = "PowerShell wrapper around Microsoft Azure Cognitive Services REST API's, to bring power of Machine Learning to your console and applications"
 
 # Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = '5.1'
+PowerShellVersion = '5.1'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
