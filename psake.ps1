@@ -50,8 +50,8 @@ Task Build -Depends Test {
     $lines
 
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions -Verbose
-
+    $path = Join-Path $bhmodulePath $($BHProjectName+'.psm1')
+    Set-ModuleFunctions -Name $path -Verbose
     # Bump the module version if we didn't manually bump it
     Try {
         $GalleryVersion = Get-NextNugetPackageVersion -Name $env:BHProjectName -ErrorAction Stop
