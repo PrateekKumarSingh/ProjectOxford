@@ -50,8 +50,7 @@ Task Build -Depends Test {
     $lines
 
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    $path = Join-Path -Path $BHPSModulePath -ChildPath $($BHProjectName+'.psm1')
-    Set-ModuleFunctions -Name $path -Verbose
+    Set-ModuleFunctions -Name C:\projects\pscognitiveservice\pscognitiveservice\pscognitiveservice.psm1 -Verbose
     # Bump the module version if we didn't manually bump it
     Try {
         $GalleryVersion = Get-NextNugetPackageVersion -Name $env:BHProjectName -ErrorAction Stop
