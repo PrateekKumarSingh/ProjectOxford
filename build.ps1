@@ -8,7 +8,6 @@ Install-Module Psake, PSDeploy, Pester, BuildHelpers -Force
 
 "  Import Dependent Modules"
 Import-Module Psake, BuildHelpers, Pester -Verbose
-Import-Module -Name @('AzureRM.Profile','AzureRM.CognitiveServices','AzureRM.Profile.NetCore','AzureRM.CognitiveServices.NetCore') -Verbose
 
 Set-BuildEnvironment -GitPath "C:\Program Files\Git\bin\git.exe"
 

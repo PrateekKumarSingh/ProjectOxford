@@ -50,7 +50,7 @@ Task Build -Depends Test {
     $lines
 
     # Load the module, read the exported functions, update the psd1 FunctionsToExport
-    Set-ModuleFunctions -Name C:\projects\pscognitiveservice\pscognitiveservice\pscognitiveservice.psm1 -Verbose
+    Set-ModuleFunctions -Name C:\projects\pscognitiveservice\pscognitiveservice\pscognitiveservice.psm1
     # Bump the module version if we didn't manually bump it
     Try {
         $GalleryVersion = Get-NextNugetPackageVersion -Name $env:BHProjectName -ErrorAction Stop
@@ -73,5 +73,5 @@ Task Deploy -Depends Build {
         Recurse = $false # We keep psdeploy artifacts, avoid deploying those : )
         ErrorAction = 'SilentlyContinue'
     }
-    Invoke-PSDeploy -Verbose @Params
+    Invoke-PSDeploy @Params
 }
