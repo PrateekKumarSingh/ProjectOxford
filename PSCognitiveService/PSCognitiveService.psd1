@@ -117,7 +117,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('azure','AzureRM','CognitiveService','AI')
+        Tags = @('azure','AzureRM','CognitiveService','AI','NetCore','Core')
 
         # A URL to the license for this module.
         # LicenseUri = ''
@@ -129,7 +129,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Issues with New-CognitiveService cmdlet fixed'
+        ReleaseNotes = 'Supported cross platform'
 
     } # End of PSData hashtable
 
