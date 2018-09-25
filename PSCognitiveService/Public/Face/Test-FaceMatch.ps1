@@ -18,7 +18,6 @@ Function Test-FaceMatch {
     }
     end {
     }
-
 }
 
-Export-ModuleMember -Function Get-Face -Alias tfm
+Export-ModuleMember -Function Test-FaceMatch -Alias tfm

@@ -80,7 +80,7 @@ class Face {
         return $this.result
     }
 
-    # detect(url)
+    # verify(url)
     [System.Object] verify([System.Guid]$referenceFaceId,[System.Guid]$differenceFaceId) {
         $Service = 'verify'
         $this.endpoint = $this.base_url + $Service        
