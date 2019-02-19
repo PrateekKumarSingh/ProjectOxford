@@ -79,5 +79,20 @@ class Face {
         $this.result = Invoke-RestMethod @params
         return $this.result
     }
+
+    # verify(url)
+    [System.Object] verify([System.Guid]$referenceFaceId,[System.Guid]$differenceFaceId) {
+        $Service = 'verify'
+        $this.endpoint = $this.base_url + $Service        
+        $params = @{
+            Uri         = $this.endpoint
+            Method      = 'POST'
+            ContentType = 'application/json'
+            Body        = @{faceId1 = $referenceFaceId;faceId2 = $differenceFaceId} | ConvertTo-Json
+            Headers     = @{'Ocp-Apim-Subscription-Key' = $this.subscription_key}
+        }
+        $this.result = Invoke-RestMethod @params
+        return $this.result
+    }
     #endregion detect-overload-methods    
 }

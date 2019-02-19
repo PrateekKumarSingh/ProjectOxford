@@ -90,6 +90,7 @@ FunctionsToExport = @(
     'Search-Web',
     'Search-Image',
     'Test-AdultRacyContent',
+    'Test-FaceMatch',
     'Trace-Language'
 )
 
