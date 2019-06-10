@@ -102,7 +102,6 @@ enum FaceAttributes {
     noise
 }
 
-
 enum SafeSearch {
     off
     moderate

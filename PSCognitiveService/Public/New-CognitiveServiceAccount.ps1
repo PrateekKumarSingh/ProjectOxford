@@ -12,7 +12,7 @@ function New-CognitiveServiceAccount {
     )
 
     process {
-        try{
+        # try{
             if(Test-AzureRMLogin){
                 Write-Verbose "Logged in."
                 if(!$ResourceGroupName){
@@ -79,10 +79,10 @@ function New-CognitiveServiceAccount {
             
             New-AzureRmCognitiveServicesAccount @splat -Confirm:$false -Force -Verbose -WarningAction Ignore
             
-        }
-        catch{
-                throw $_.exception.message
-        }
+        # }
+        # catch{
+        #         throw $_.exception.message
+        # }
     }
 }
 
