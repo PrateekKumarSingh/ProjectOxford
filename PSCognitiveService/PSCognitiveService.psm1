@@ -9,13 +9,13 @@ $BasePath = $PSScriptRoot
 if ($PSEdition -in $null,'Desktop') {
     # PowerShell Desktop Edtion
     Add-Type -AssemblyName 'System.Drawing'
-    Install-Module AzureRM.Profile, AzureRM.CognitiveServices -Force -Scope CurrentUser
+    Install-Module AzureRM.Profile, AzureRM.CognitiveServices, AzureRM.Resources -Force -Scope CurrentUser -Verbose
 }
 elseif ($PSEdition -eq 'core') {
     # PowerShell Core Edition(Win,Linux,Mac)
     # pre-installation of libgdiplus is required on linux/mac
     Add-Type -AssemblyName (Join-Path $PSScriptRoot 'lib\CoreCompat.System.Drawing.dll')
-    Install-Module AzureRM.Profile.NetCore, AzureRM.CognitiveServices.NetCore -Force -Scope CurrentUser
+    Install-Module AzureRM.Profile.NetCore, AzureRM.CognitiveServices.NetCore, AzureRM.Resources.NetCore -Force -Scope CurrentUser -Verbose
 }
 
 $dependencies = @(

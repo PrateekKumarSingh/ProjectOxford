@@ -7,11 +7,11 @@ Get-Command -Module PSCognitiveService
 # login and obtain subscription keys, local config
 New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose | Out-Null
 # face features & emotion recognition
-Get-Face -Path 'C:\tmp\Bill.jpg' | ForEach-Object faceAttributes |Format-List *
+Get-Face -Path 'D:\Workspace\Repository\Pscognitiveservice\media\Billgates.jpg' | ForEach-Object faceAttributes |Format-List *
 # image analysis
-Get-ImageAnalysis -Path 'C:\tmp\Bill.jpg'
+Get-ImageAnalysis -Path 'D:\Workspace\Repository\Pscognitiveservice\media\Billgates.jpg' | ConvertFrom-Json
 # image description
-Get-ImageDescription -Path 'C:\tmp\Bill.jpg' | ForEach-Object Description | Format-List
+Get-ImageDescription -Path 'D:\Workspace\Repository\Pscognitiveservice\media\Billgates.jpg' | ForEach-Object Description | Format-List
 # tag image and convert to hashtags
 Get-ImageTag -URL https://goo.gl/Q73Qtw | ForEach-Object{$_.tags.name} | ForEach-Object {'#'+$_ -join ' '}
 # optical character recognition
@@ -28,5 +28,5 @@ Trace-Language -Text "Hey good morning!", "Bonjour tout le monde", "La carretera
 # moderate content - text, image (path/url)
 Test-AdultRacyContent -Text "Hello World" | ForEach-Object Classification # clean
 Test-AdultRacyContent -Text "go eff yourself" | ForEach-Object Classification # not good/review required
-Test-AdultRacyContent -Path 'C:\Tmp\test.png'
+Test-AdultRacyContent -Path 'D:\Workspace\Repository\Pscognitiveservice\media\test.png'
 Test-AdultRacyContent -URL https://goo.gl/uY2PS6
