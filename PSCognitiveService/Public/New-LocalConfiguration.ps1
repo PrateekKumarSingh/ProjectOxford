@@ -28,7 +28,7 @@ Function New-LocalConfiguration {
             Set-Item -Path "env:API_Location_$ServiceName" -Value $Location
         }
         if($AddKeysToProfile){
-            Write-Verbose "Adding `$env variable(s) to Profile: $Profile" -Verbose
+            #Write-Verbose "Adding `$env variable(s) to Profile: $Profile" -Verbose
             Update-ProfileVariable "env:API_SubscriptionKey_$ServiceName" $SubscriptionKey
             if($Location -ne 'global'){
                 Update-ProfileVariable "env:API_Location_$ServiceName" $Location

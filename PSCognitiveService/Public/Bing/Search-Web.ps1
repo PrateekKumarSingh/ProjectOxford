@@ -1,3 +1,49 @@
+<#
+.SYNOPSIS
+Short description
+
+.DESCRIPTION
+Long description
+
+.PARAMETER Text
+Parameter description
+
+.PARAMETER Count
+Parameter description
+
+.PARAMETER OffSet
+Parameter description
+
+.PARAMETER Market
+Parameter description
+
+.PARAMETER SafeSearch
+Parameter description
+
+.PARAMETER Image
+Parameter description
+
+.PARAMETER News
+Parameter description
+
+.EXAMPLE
+Before using the 'Web-Search' cmdlet make sure you have created the a Cognitive Service account for 'Bing.Search.v7' on Azure. Unless you have the Cognitive Service account on Azure and configured it locally on machine using the 'New-LocalConfiguration' cmdlet the Web search will not work.
+
+New-CognitiveServiceAccount -AccountType Bing.Search.v7 -ResourceGroupName ResourceGroup1 -Location global -Verbose -SKUName F0
+
+.EXAMPLE
+An example
+
+.EXAMPLE
+An example
+
+.EXAMPLE
+An example
+
+.NOTES
+General notes
+#>
+
 Function Search-Web {
     [alias("bing")]
     [cmdletbinding()]
