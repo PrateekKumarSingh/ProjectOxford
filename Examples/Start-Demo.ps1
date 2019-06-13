@@ -1,6 +1,6 @@
 function Start-Demo
 {
-    param($file=".\demo.ps1", [int]$command=0)
+    param($file=".\examples\demo.ps1", [int]$command=0)
     Clear-Host
 
     $_lines = Get-Content $file

@@ -1,8 +1,9 @@
-$projectRoot = Resolve-Path "$PSScriptRoot\.."
+$projectRoot = Resolve-Path "$PSScriptRoot\.." | % Path
 $moduleRoot = Split-Path (Resolve-Path "$projectRoot\*\*.psd1")
 $moduleName = Split-Path $moduleRoot -Leaf
-
+#$projectRoot
 Import-Module $projectRoot\PSCognitiveService\PSCognitiveService.psm1
+
 
 InModuleScope -ModuleName PSCognitiveService {
     Describe "Test Face API Function" -Tag Build {  
@@ -14,10 +15,10 @@ InModuleScope -ModuleName PSCognitiveService {
                 (Get-Face -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-Face -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
+                {Get-Face -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-Face -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
+                (Get-Face -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
     }
@@ -31,10 +32,10 @@ InModuleScope -ModuleName PSCognitiveService {
                 (Get-ImageAnalysis -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageAnalysis -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
+                {Get-ImageAnalysis -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageAnalysis -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
+                (Get-ImageAnalysis -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
 
@@ -46,10 +47,10 @@ InModuleScope -ModuleName PSCognitiveService {
                 (Get-ImageDescription -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageDescription -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
+                {Get-ImageDescription -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageDescription -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
+                (Get-ImageDescription -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
      
@@ -61,10 +62,10 @@ InModuleScope -ModuleName PSCognitiveService {
                 (Get-ImageTag -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageTag -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
+                {Get-ImageTag -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageTag -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
+                (Get-ImageTag -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
 
@@ -76,10 +77,10 @@ InModuleScope -ModuleName PSCognitiveService {
                 (Get-ImageText -Path ".\Media\BillGates.jpg").gettype().Name | Should Be PSCustomObject
             }
             It "Should not throw with a URL" {
-                {Get-ImageText -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
+                {Get-ImageText -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg'} | Should Not throw
             }
             It "Should return a [PSCustomObject] with a URL" {
-                (Get-ImageText -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg').gettype().Name | Should Be PSCustomObject
+                (Get-ImageText -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg').gettype().Name | Should Be PSCustomObject
             }
         }
     }
@@ -99,7 +100,7 @@ InModuleScope -ModuleName PSCognitiveService {
             }
             It "Should not throw with a URL" {
                 Start-Sleep -Seconds 1 # to avoid rate limit thresholds
-                {Test-AdultRacyContent -URL 'https://pbs.twimg.com/profile_images/963507920016216064/Ug29J5-J.jpg'} | Should Not throw
+                {Test-AdultRacyContent -URL 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Steve_Jobs_Headshot_2010-CROP2.jpg'} | Should Not throw
             }
         }
     }
