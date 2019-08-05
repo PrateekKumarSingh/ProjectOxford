@@ -30,7 +30,7 @@ $VerbosePreference = 'continue'
         'PSCognitiveService/Classes/Face.ps1',
         'PSCognitiveService/Classes/ValidateFile.ps1',
         'PSCognitiveService/Classes/ValidateImage.ps1',
-        'PSCognitiveService/Private/Test-AzureRMLogin.ps1',
+        'PSCognitiveService/Private/Test-AzLogin.ps1',
         'PSCognitiveService/Private/Test-LocalConfiguration.ps1',
         'PSCognitiveService/Public/New-LocalConfiguration.ps1',
         'PSCognitiveService/Public/Face/Get-Face.ps1',

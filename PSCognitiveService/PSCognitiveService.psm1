@@ -9,15 +9,17 @@ $BasePath = $PSScriptRoot
 if ($PSEdition -in $null,'Desktop') {
     # PowerShell Desktop Edtion
     Add-Type -AssemblyName 'System.Drawing'
-    #Install-Module AzureRM.Profile, AzureRM.CognitiveServices, AzureRM.Resources -Force -Scope CurrentUser -Verbose
-    Import-Module AzureRM.Profile, AzureRM.CognitiveServices, AzureRM.Resources -Verbose
 }
 elseif ($PSEdition -eq 'core') {
     # PowerShell Core Edition(Win,Linux,Mac)
     # pre-installation of libgdiplus is required on linux/mac
     Add-Type -AssemblyName (Join-Path $PSScriptRoot 'lib\CoreCompat.System.Drawing.dll')
-    #Install-Module AzureRM.Profile.NetCore, AzureRM.CognitiveServices.NetCore, AzureRM.Resources.NetCore -Force -Scope CurrentUser -Verbose
-    Import-Module AzureRM.Profile.NetCore, AzureRM.CognitiveServices.NetCore, AzureRM.Resources.NetCore
+}
+
+$DependentModules = 'az.Profile', 'az.CognitiveServices', 'az.Resources'
+if(($NotInstalledDependentModules = Import-Module $DependentModules -PassThru | Where-Object Name -NotIn $DependentModules)){
+    Write-Verbose "Module dependencies not found [$NotInstalledDependentModules]. Attempting to install."
+    Install-Module $NotInstalledDependentModules -Force
 }
 
 $dependencies = @(
@@ -42,13 +44,13 @@ $classList = @(
 # importing enumerators and hashtables sequentially
 foreach ($item in $dependencies) {
     Write-Verbose "Dot sourcing '$item.ps1'" 
-    . "$BasePath\classes\$item.ps1"
+    . ([IO.Path]::Combine($BasePath,'classes',"$item.ps1"))
 }
 
 # importing classes sequentially
 foreach ($class in $classList) {
     Write-Verbose "Dot sourcing class '$class'"
-    . "$BasePath\classes\$class.ps1"
+    . ([IO.Path]::Combine($BasePath,'classes',"$class.ps1"))
 }
 
 
@@ -58,4 +60,4 @@ $FolderNames = @(
     'Public'
 )
 
-Get-ChildItem $($FolderNames.ForEach({"$BasePath\$_\"})) -Recurse -Filter *.ps1 | ForEach-Object {. $_.FullName}
+Get-ChildItem $($FolderNames.ForEach({ Join-Path $BasePath $_})) -Recurse -Filter *.ps1 | ForEach-Object {. $_.FullName}

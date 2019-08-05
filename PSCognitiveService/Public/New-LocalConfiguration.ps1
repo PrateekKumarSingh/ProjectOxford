@@ -38,17 +38,17 @@ Function New-LocalConfiguration {
     }
     
     if($FromAzure){
-        if(Test-AzureRmLogin){
+        if(Test-azLogin){
             Write-Verbose "Logged in."
-            Write-Verbose "Fetching AzureRM Cognitive Service accounts" 
-            $Accounts = Get-AzureRmCognitiveServicesAccount 
-            Write-Verbose $("{0} Service found in AzureRM [{1}] " -f $Accounts.Count, $($Accounts.AccountType -join ', ') ) -Verbose
+            Write-Verbose "Fetching Azure Cognitive Service accounts" 
+            $Accounts = Get-azCognitiveServicesAccount 
+            Write-Verbose $("{0} Service found in Azure [{1}] " -f $Accounts.Count, $($Accounts.AccountType -join ', ') ) -Verbose
             if($Accounts){
                 $Accounts | ForEach-Object {                   
                     $data = [System.Object] [Ordered] @{
                         ServiceName     =   $_.AccountType -replace "\.",""
                         Location        =   $_.Location
-                        SubscriptionKey =   ($_ | Get-AzureRmCognitiveServicesAccountKey).Key1
+                        SubscriptionKey =   ($_ | Get-azCognitiveServicesAccountKey).Key1
                         EndPoint        =   $_.Endpoint
                     }
 

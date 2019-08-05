@@ -60,7 +60,7 @@ $urls = (Invoke-WebRequest ridicurious.com).links.href
 $urls | select -Unique | where{$_ -like "http*"} | ForEach-Object { Test-AdultRacyContent -URL $_;Start-Sleep -s 1}
 
 # capturing images from a image search and storing it on a local machine
-$images = (Search-Image -Text 'Jeffery Snover' -Count 20 -SafeSearch strict -Verbose).value.contenturl
+$images = (Search-Image -Text 'Bangalore' -Count 20 -SafeSearch strict -Verbose).value.contenturl
 $images | ForEach-Object {
     try{
         Start-Sleep -s 1
