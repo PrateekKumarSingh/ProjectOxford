@@ -3,13 +3,13 @@ $PWD = Get-Location | ForEach-Object Path
 Install-Module PSCognitiveService -Force -Scope CurrentUser -Verbose
 
 # import module
-Import-Module PSCognitiveService -Force -Verbose
+Import-Module .\PSCognitiveService\PSCognitiveService.psd1 -Force -Verbose
 
 # get module
 Get-Command -Module PSCognitiveService
 
 # create cognitive service accounts in azure
-$ResrouceGroup = 'RG1'
+$ResrouceGroup = 'demo-resource-group'
 
 'ComputerVision','ContentModerator','Face','TextAnalytics' | ForEach-Object {
     New-CognitiveServiceAccount -AccountType $_ -ResourceGroupName $ResrouceGroup -SKUName F0 -Location centralindia | Out-Null
