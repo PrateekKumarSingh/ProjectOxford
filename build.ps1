@@ -6,7 +6,7 @@ param($Task = 'Default')
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 # Get-Module AzureRM* -ListAvailable | Uninstall-Module -Force -Verbose -Confirm:$false
 # Get-Module az* -ListAvailable
-# Install-Module PsScriptAnalyzer, Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources #-Force -AllowClobber
+Install-Module PsScriptAnalyzer, Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources #-Force -AllowClobber
 
 "  Import Dependent Modules"
 Import-Module PsScriptAnalyzer, Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources
