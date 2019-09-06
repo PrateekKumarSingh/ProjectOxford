@@ -4,7 +4,7 @@ Install-Module PSCognitiveService -Force -Scope CurrentUser -Verbose
 Import-Module PSCognitiveService -Force -Verbose
 # get module
 Get-Command -Module PSCognitiveService
-# create new cognitive subscription in AzureRM
+# create new cognitive subscription in Azure
 New-CognitiveServiceAccount -AccountType ComputerVision -Verbose
 # login and obtain subscription keys, local config
 New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose | Out-Null

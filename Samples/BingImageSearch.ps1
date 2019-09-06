@@ -2,12 +2,12 @@
 Install-Module PSCognitiveService -Force -Scope CurrentUser -Verbose
 Import-Module PSCognitiveService -Force -Verbose
 
-# create AzureRM Cognitive Service subscription
+# create Azure Cognitive Service subscription
 New-CognitiveServiceAccount -AccountType Face `
     -ResourceGroupName RG1 -Location southeastasia -SKUName F0 -Verbose | Out-Null
 New-CognitiveServiceAccount -AccountType ComputerVision `
     -ResourceGroupName RG1 -Location southeastasia -SKUName F0 -Verbose | Out-Null
-# create AzureRM Cognitive Service subscription with this approach
+# create Azure Cognitive Service subscription with this approach
 # when you're unsure of resource groups, price tier and location
 New-CognitiveServiceAccount -AccountType Bing.Search.v7 -Verbose
 

@@ -51,11 +51,7 @@ PowerShellVersion = '5.1'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = if($PSEdition -eq 'core'){
-    @("AzureRM.Profile.Netcore","AzureRM.CognitiveServices.Netcore")
-} 
-else{ 
-    @("AzureRM.Profile","AzureRM.CognitiveServices")
+RequiredModules = @("az.Profile","az.CognitiveServices","az.Resources")
 }
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -65,7 +61,7 @@ else{
 #        )
 #
 # Type files (.ps1xml) to be loaded when importing this module
-# TypesToProcess = @()
+# TypesToProcess = @()  
 
 # Format files (.ps1xml) to be loaded when importing this module
 # FormatsToProcess = @()
@@ -118,7 +114,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = @('azure','AzureRM','CognitiveService','AI','NetCore','Core')
+        Tags = @('azure','AzureRM','az','CognitiveService','AI','NetCore','Core')
 
         # A URL to the license for this module.
         # LicenseUri = ''

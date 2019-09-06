@@ -13,13 +13,13 @@ function New-CognitiveServiceAccount {
 
     process {
         try{
-            if(Test-AzureRMLogin){
+            if(Test-AzLogin){
                 Write-Verbose "Logged in."
                 if(!$ResourceGroupName){
-                    Write-Verbose "Fetching AzureRM Resource groups"
-                    $ResourceGroupArray = Get-AzureRmResourceGroup| ForEach-Object ResourceGroupName
+                    Write-Verbose "Fetching Azure Resource groups"
+                    $ResourceGroupArray = Get-AzResourceGroup| ForEach-Object ResourceGroupName
                     do{
-                        Write-host "Select a AzureRM 'Resource Group' to create new Cognitive Service Account type: '$AccountType'" -ForegroundColor Yellow
+                        Write-host "Select a Azure 'Resource Group' to create new Cognitive Service Account type: '$AccountType'" -ForegroundColor Yellow
                         for($i=1;$i -le $ResourceGroupArray.Count;$i++){
                             if($ResourceGroupArray.Count -gt 1){
                                 " [{0}] {1}" -f ($i), $ResourceGroupArray[$i-1]
@@ -36,7 +36,7 @@ function New-CognitiveServiceAccount {
                 $LocationArray = $Matrix[$AccountType]['AvailableLocations']
                 do{
                     if($LocationArray.count -gt 1){
-                        Write-host "Select a AzureRM 'Location' to create new Cognitive Service Account type: '$AccountType'" -ForegroundColor Yellow                
+                        Write-host "Select a Azure 'Location' to create new Cognitive Service Account type: '$AccountType'" -ForegroundColor Yellow                
                         for($i=1;$i -le $LocationArray.Count;$i++){
                             if($LocationArray.Count -gt 1){
                                 " [{0}] {1}" -f ($i), $LocationArray[$i-1]
@@ -57,7 +57,7 @@ function New-CognitiveServiceAccount {
             if(!$SKUName){            
                 $SKUNameArray = $Matrix[$AccountType]['PriceTiers']
                 do{
-                    Write-host "Select a AzureRM 'PriceTier' to create new Cognitive Service Account type: '$AccountType'" -ForegroundColor Yellow                  
+                    Write-host "Select a Azure 'PriceTier' to create new Cognitive Service Account type: '$AccountType'" -ForegroundColor Yellow                  
                     for($i=1;$i -le $SKUNameArray.Count;$i++){
                         if($SKUNameArray.Count -gt 1){
                             " [{0}] {1} - {2}" -f ($i), $SKUNameArray[$i-1] , $PriceTiers[$SKUNameArray[$i-1][0].ToString()]
@@ -77,7 +77,7 @@ function New-CognitiveServiceAccount {
                 Type = $AccountType
             }
             
-            New-AzureRmCognitiveServicesAccount @splat -Confirm:$false -Force -Verbose -WarningAction Ignore
+            New-AzCognitiveServicesAccount @splat -Confirm:$false -Force -Verbose -WarningAction Ignore
             
         }
         catch{
