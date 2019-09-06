@@ -27,7 +27,7 @@
     CompanyName          = 'Prateek Singh'
 
     # Copyright statement for this module
-    Copyright            = '(c) 2018 Prateek Singh. All rights reserved.'
+    Copyright            = '(c) 2019 Prateek Singh. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description          = "PowerShell wrapper around Microsoft Azure Cognitive Services REST API's, to bring power of Machine Learning to your console and applications"
@@ -126,7 +126,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Supported cross platform'
+        ReleaseNotes = "Adapted to to new 'Az' modules"
 
     } # End of PSData hashtable
 
