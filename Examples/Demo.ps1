@@ -22,6 +22,7 @@ New-LocalConfiguration -FromAzure -AddKeysToProfile -Verbose | Out-Null
 Get-Face -Path "$PWD\media\Billgates.jpg" | ForEach-Object faceAttributes |Format-List *
 # image analysis
 Get-ImageAnalysis -Path "$pwd\media\Billgates.jpg" | ConvertFrom-Json
+Get-ImageAnalysis -URL https://goo.gl/Q73Qtw  | ConvertFrom-Json
 # image description
 Get-ImageDescription -Path "$pwd\media\Billgates.jpg" | ForEach-Object Description | Format-List
 # tag image and convert to hashtags
@@ -31,9 +32,10 @@ Get-ImageText -URL https://goo.gl/XyP6LJ | ForEach-Object {$_.regions.lines} |  
 # convert to thumbnail 
 ConvertTo-Thumbnail -URL https://goo.gl/XyP6LJ -SmartCropping
 # bing search
-Search-Web "powershell 7" -c 13 |ForEach-Object {$_.webpages.value} | Format-List name, url, snippet
+Search-Web "powershell 7" -c 130 |ForEach-Object {$_.webpages.value} | Format-List name, url, snippet
 Search-Entity -Text "brad pitt" | ForEach-Object {$_.entities.value} | Format-List name, description, image, webSearchUrl
 # text analytics
+Get-Sentiment -Text "I don't write pester tests!" | % { if($_.documents.score -lt 0.5){'negetive'}else{'positive'} }
 Get-Sentiment -Text "Hey good morning!","Such a wonderful day","I feel sad about you" |  ForEach-Object documents
 Get-KeyPhrase -Text "Hey good morning!","Such a wonderful day","I feel sad about these poor people" | ForEach-Object documents
 Trace-Language -Text "Hey good morning!", "Bonjour tout le monde", "La carretera estaba atascada" | ForEach-Object {$_.documents.detectedlanguages}
