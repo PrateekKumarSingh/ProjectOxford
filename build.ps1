@@ -6,10 +6,10 @@ param($Task = 'Default')
 Get-PackageProvider -Name NuGet -ForceBootstrap | Out-Null
 # Get-Module AzureRM* -ListAvailable | Uninstall-Module -Force -Verbose -Confirm:$false
 # Get-Module az* -ListAvailable
-Install-Module Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources -Force -AllowClobber
+Install-Module PsScriptAnalyzer, Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources #-Force -AllowClobber
 
 "  Import Dependent Modules"
-Import-Module Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources
+Import-Module PsScriptAnalyzer, Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources
 
 # Uninstall-AzureRm -Verbose
 Set-BuildEnvironment -GitPath "C:\Program Files\Git\bin\git.exe"
