@@ -28,11 +28,8 @@ Get-Face -Path "$PWD\media\Billgates.jpg" | ForEach-Object faceAttributes |Forma
 
 # image analysis
 Get-ImageAnalysis -Path "$pwd\media\Billgates.jpg" | ConvertFrom-Json
-<<<<<<< HEAD
 Get-ImageAnalysis -URL https://goo.gl/Q73Qtw  | ConvertFrom-Json
-=======
 
->>>>>>> fac19229dc5ca51913f6f3c2bba3e06b13a1ef2a
 # image description
 Get-ImageDescription -Path "$pwd\media\Billgates.jpg" | ForEach-Object Description | Format-List
 
@@ -46,11 +43,7 @@ Get-ImageText -URL https://goo.gl/XyP6LJ | ForEach-Object {$_.regions.lines} |  
 ConvertTo-Thumbnail -URL https://goo.gl/XyP6LJ -SmartCropping
 
 # bing search
-<<<<<<< HEAD
 Search-Web "powershell 7" -c 130 |ForEach-Object {$_.webpages.value} | Format-List name, url, snippet
-=======
-Search-Web "ransomware wannacry" -c 5 |ForEach-Object {$_.webpages.value} | Format-List name, url, snippet
->>>>>>> fac19229dc5ca51913f6f3c2bba3e06b13a1ef2a
 Search-Entity -Text "brad pitt" | ForEach-Object {$_.entities.value} | Format-List name, description, image, webSearchUrl
 
 # text analytics
