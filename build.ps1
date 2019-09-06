@@ -11,7 +11,7 @@ Install-Module Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveSe
 "  Import Dependent Modules"
 Import-Module Psake, PSDeploy, Pester, BuildHelpers, az.Profile, az.CognitiveServices, az.Resources
 
-Uninstall-AzureRm -Verbose
+# Uninstall-AzureRm -Verbose
 Set-BuildEnvironment -GitPath "C:\Program Files\Git\bin\git.exe"
 
 "  InvokeBuild"
