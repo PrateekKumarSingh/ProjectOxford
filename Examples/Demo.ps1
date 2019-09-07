@@ -9,14 +9,14 @@ Import-Module .\PSCognitiveService\PSCognitiveService.psd1 -Force -Verbose
 Get-Command -Module PSCognitiveService
 
 # create cognitive service accounts in azure
-$ResrouceGroup = 'demo-resource-group'
+$ResourceGroup = 'demo-resource-group'
 
 'ComputerVision','ContentModerator','Face','TextAnalytics' | ForEach-Object {
-    New-CognitiveServiceAccount -AccountType $_ -ResourceGroupName $ResrouceGroup -SKUName F0 -Location centralindia | Out-Null
+    New-CognitiveServiceAccount -AccountType $_ -ResourceGroupName $ResourceGroup -SKUName F0 -Location centralindia | Out-Null
 } 
 
 'Bing.EntitySearch','Bing.Search.v7'| ForEach-Object {
-    New-CognitiveServiceAccount -AccountType $_ -ResourceGroupName $ResrouceGroup -SKUName F0 -Location Global | Out-Null
+    New-CognitiveServiceAccount -AccountType $_ -ResourceGroupName $ResourceGroup -SKUName F0 -Location Global | Out-Null
 } 
 
 # add subscription key and location from azure to local session \ $profile as environment variable
