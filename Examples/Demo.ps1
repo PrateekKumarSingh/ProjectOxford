@@ -1,9 +1,9 @@
 $PWD = Get-Location | ForEach-Object Path
 # install module
-Install-Module PSCognitiveService -Force -Scope CurrentUser -Verbose
+Install-Module PSCognitiveService -Force -Verbose
 
 # import module
-Import-Module .\PSCognitiveService\PSCognitiveService.psd1 -Force -Verbose
+Import-Module PSCognitiveService -Force -Verbose
 
 # get module
 Get-Command -Module PSCognitiveService

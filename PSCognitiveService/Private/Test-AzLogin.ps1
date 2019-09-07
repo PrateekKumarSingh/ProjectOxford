@@ -11,7 +11,10 @@ function Test-AzLogin {
     Process {
         # Verify we are signed into an Azure account
         try {
-            Import-Module Az.profile -Verbose:$false   
+            try{
+                Import-Module Az.profile -Verbose:$false   
+            }
+            catch {}
             Write-Verbose 'Testing Azure login'
             $isLoggedIn = [bool](Get-AzSubscription -ErrorAction Stop)
             if(!$isLoggedIn){                
