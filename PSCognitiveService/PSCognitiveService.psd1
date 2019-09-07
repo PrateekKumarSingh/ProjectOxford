@@ -12,7 +12,7 @@
     RootModule           = '.\PSCognitiveService.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '0.3.8'
+    ModuleVersion        = '0.4.0'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Desktop', 'Core')
