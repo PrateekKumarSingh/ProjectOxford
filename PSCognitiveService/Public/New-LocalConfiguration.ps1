@@ -42,8 +42,8 @@ Function New-LocalConfiguration {
             Write-Verbose "Logged in."
             Write-Verbose "Fetching Azure Cognitive Service accounts" 
             $Accounts = Get-azCognitiveServicesAccount 
-            Write-Verbose $("{0} Service found in Azure [{1}] " -f $Accounts.Count, $($Accounts.AccountType -join ', ') ) -Verbose
             if($Accounts){
+                Write-Verbose $("{0} Cognitive Services found in Azure [{1}] " -f $Accounts.Count, $($Accounts.AccountType -join ', ') ) -Verbose
                 $Accounts | ForEach-Object {                   
                     $data = [System.Object] [Ordered] @{
                         ServiceName     =   $_.AccountType -replace "\.",""
@@ -57,6 +57,9 @@ Function New-LocalConfiguration {
 
                     $data
                 }
+            }
+            else{
+                Write-Verbose "No Cognitive Services found in Azure" -Verbose
             }
         }
     }

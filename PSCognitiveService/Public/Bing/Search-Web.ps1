@@ -69,7 +69,6 @@ Function Search-Web {
         )]
         [String] $Market = 'English-United States' ,
         [SafeSearch] $SafeSearch = [SafeSearch]::Moderate,
-        [Switch] $Image,
         [Switch] $News
     )
 
