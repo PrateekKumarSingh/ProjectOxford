@@ -16,7 +16,7 @@ function Test-AzLogin {
             }
             catch {}
             Write-Verbose 'Testing Azure login'
-            $isLoggedIn = [bool](Get-AzSubscription -ErrorAction Stop)
+            $isLoggedIn = [bool](Get-AzContext -ErrorAction Stop)
             if(!$isLoggedIn){                
                 Write-Verbose 'Not logged into Azure. Initiate login now.'
                 Write-Host 'Enter your credentials in the pop-up window' -ForegroundColor Yellow
