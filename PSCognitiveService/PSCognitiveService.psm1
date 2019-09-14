@@ -27,7 +27,7 @@ if ($missing) {
 
 $dependencies = @(
     'Enum',
-    'HashTable'
+    'Hashtable'
 )
 
 # define class sequence
