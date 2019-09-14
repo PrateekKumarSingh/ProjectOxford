@@ -47,13 +47,13 @@ $classList = @(
 # importing enumerators and hashtables sequentially
 foreach ($item in $dependencies) {
     Write-Verbose "Dot sourcing '$item.ps1'" 
-    . ([IO.Path]::Combine($BasePath, 'classes', "$item.ps1"))
+    . ([IO.Path]::Combine($BasePath, 'Classes', "$item.ps1"))
 }
 
 # importing classes sequentially
 foreach ($class in $classList) {
     Write-Verbose "Dot sourcing class '$class'"
-    . ([IO.Path]::Combine($BasePath, 'classes', "$class.ps1"))
+    . ([IO.Path]::Combine($BasePath, 'Classes', "$class.ps1"))
 }
 
 
